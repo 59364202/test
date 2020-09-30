@@ -1,0 +1,784 @@
+[
+  {
+    "province_id": "10",
+    "P_CODE": "BKK",
+    "name_t": "กรุงเทพมหานคร",
+    "name_e": "Bangkok",
+    "radar_id": [
+      "njk",
+      "svp240",
+      "sattahip"
+    ]
+  },
+  {
+    "province_id": "81",
+    "P_CODE": "KB",
+    "name_t": "กระบี่",
+    "name_e": "Krabi",
+    "radar_id": [
+      "pkt240",
+      "krb240",
+      "stp240"
+    ]
+  },
+  {
+    "province_id": "71",
+    "P_CODE": "KBR",
+    "name_t": "กาญจนบุรี",
+    "name_e": "Kanchanaburi",
+    "radar_id": [
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "46",
+    "P_CODE": "KS",
+    "name_t": "กาฬสินธุ์",
+    "name_e": "Kalasin",
+    "radar_id": [
+      "kkn240",
+      "skn240",
+      "ubn240"
+    ]
+  },
+  {
+    "province_id": "62",
+    "P_CODE": "KP",
+    "name_t": "กำแพงเพชร",
+    "name_e": "Kampaeng Phet",
+    "radar_id": [
+      "phs240"
+    ]
+  },
+  {
+    "province_id": "40",
+    "P_CODE": "KK",
+    "name_t": "ขอนแก่น",
+    "name_e": "Khon Kaen",
+    "radar_id": [
+      "kkn240",
+      "skn240"
+    ]
+  },
+  {
+    "province_id": "22",
+    "P_CODE": "JB",
+    "name_t": "จันทบุรี",
+    "name_e": "Chanthaburi",
+    "radar_id": [
+      "sattahip",
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "24",
+    "P_CODE": "CHS",
+    "name_t": "ฉะเชิงเทรา",
+    "name_e": "Chachoengsao",
+    "radar_id": [
+      "sattahip",
+      "njk",
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "20",
+    "P_CODE": "CH",
+    "name_t": "ชลบุรี",
+    "name_e": "Chonburi",
+    "radar_id": [
+      "sattahip",
+      "hhn240",
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "18",
+    "P_CODE": "CHN",
+    "name_t": "ชัยนาท",
+    "name_e": "Chainat",
+    "radar_id": [
+      "phs240",
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "36",
+    "P_CODE": "SHP",
+    "name_t": "ชัยภูมิ",
+    "name_e": "Chaiyaphum",
+    "radar_id": [
+      "kkn240",
+      "kkn240"
+    ]
+  },
+  {
+    "province_id": "86",
+    "P_CODE": "CHP",
+    "name_t": "ชุมพร",
+    "name_e": "Chumphon",
+    "radar_id": [
+      "cmp240",
+      "pathiu"
+    ]
+  },
+  {
+    "province_id": "92",
+    "P_CODE": "TR",
+    "name_t": "ตรัง",
+    "name_e": "Trang",
+    "radar_id": [
+      "stp240",
+      "pkt240",
+      "krb240"
+    ]
+  },
+  {
+    "province_id": "23",
+    "P_CODE": "TD",
+    "name_t": "ตราด",
+    "name_e": "Trat",
+    "radar_id": [
+      "sattahip",
+      "hhn240",
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "63",
+    "P_CODE": "TK",
+    "name_t": "ตาก",
+    "name_e": "Tak",
+    "radar_id": [
+      "lmp240"
+    ]
+  },
+  {
+    "province_id": "26",
+    "P_CODE": "NY",
+    "name_t": "นครนายก",
+    "name_e": "Nakhon Nayok",
+    "radar_id": [
+      "sattahip",
+      "hhn240",
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "73",
+    "P_CODE": "NP",
+    "name_t": "นครปฐม",
+    "name_e": "Nakhon Prathom",
+    "radar_id": [
+      "hhn240",
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "48",
+    "P_CODE": "NPN",
+    "name_t": "นครพนม",
+    "name_e": "Nakhon Phanom",
+    "radar_id": [
+      "skn240",
+      "kkn240",
+      "ubn240"
+    ]
+  },
+  {
+    "province_id": "30",
+    "P_CODE": "NR",
+    "name_t": "นครราชสีมา",
+    "name_e": "Nakhon Ratchasima",
+    "radar_id": [
+      "kkn240",
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "80",
+    "P_CODE": "NSR",
+    "name_t": "นครศรีธรรมราช",
+    "name_e": "Nakhon Si Thammarat",
+    "radar_id": [
+      "stp240",
+      "pkt240",
+      "krb240"
+    ]
+  },
+  {
+    "province_id": "60",
+    "P_CODE": "NS",
+    "name_t": "นครสวรรค์",
+    "name_e": "Nakhon Sawan",
+    "radar_id": [
+      "phs240"
+    ]
+  },
+  {
+    "province_id": "12",
+    "P_CODE": "NB",
+    "name_t": "นนทบุรี",
+    "name_e": "Nonthaburi",
+    "radar_id": [
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "96",
+    "P_CODE": "NRV",
+    "name_t": "นราธิวาส",
+    "name_e": "Narathiwat",
+    "radar_id": [
+      "stp240"
+    ]
+  },
+  {
+    "province_id": "55",
+    "P_CODE": "NN",
+    "name_t": "น่าน",
+    "name_e": "Nan",
+    "radar_id": [
+      "cri240"
+    ]
+  },
+  {
+    "province_id": "97",
+    "P_CODE": "BK",
+    "name_t": "บึงกาฬ",
+    "name_e": "Bung Kan",
+    "radar_id": [
+      "skn240",
+      "kkn240"
+    ]
+  },
+  {
+    "province_id": "31",
+    "P_CODE": "BR",
+    "name_t": "บุรีรัมย์",
+    "name_e": "Burirum",
+    "radar_id": [
+      "kkn240",
+      "ubn240"
+    ]
+  },
+  {
+    "province_id": "13",
+    "P_CODE": "PN",
+    "name_t": "ปทุมธานี",
+    "name_e": "Pathum Thani",
+    "radar_id": [
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "77",
+    "P_CODE": "PKK",
+    "name_t": "ประจวบคีรีขันธ์",
+    "name_e": "Prachuap Khilikhan",
+    "radar_id": [
+      "cmp240",
+      "hhn240",
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "25",
+    "P_CODE": "PBR",
+    "name_t": "ปราจีนบุรี",
+    "name_e": "Prachinburi",
+    "radar_id": [
+      "sattahip",
+      "hhn240",
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "94",
+    "P_CODE": "PTI",
+    "name_t": "ปัตตานี",
+    "name_e": "Pattani",
+    "radar_id": [
+      "stp240"
+    ]
+  },
+  {
+    "province_id": "14",
+    "P_CODE": "AY",
+    "name_t": "พระนครศรีอยุธยา",
+    "name_e": "Phra Nakhon Si Ayudhya",
+    "radar_id": [
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "56",
+    "P_CODE": "PY",
+    "name_t": "พะเยา",
+    "name_e": "Phayao",
+    "radar_id": [
+      "cri240"
+    ]
+  },
+  {
+    "province_id": "82",
+    "P_CODE": "PHG",
+    "name_t": "พังงา",
+    "name_e": "Phang Nga",
+    "radar_id": [
+      "pkt240",
+      "cmp240",
+      "krb240"
+    ]
+  },
+  {
+    "province_id": "93",
+    "P_CODE": "PL",
+    "name_t": "พัทลุง",
+    "name_e": "Phatthalung",
+    "radar_id": [
+      "stp240",
+      "pkt240",
+      "krb240"
+    ]
+  },
+  {
+    "province_id": "66",
+    "P_CODE": "PJ",
+    "name_t": "พิจิตร",
+    "name_e": "Phichit",
+    "radar_id": [
+      "phs240"
+    ]
+  },
+  {
+    "province_id": "65",
+    "P_CODE": "PNL",
+    "name_t": "พิษณุโลก",
+    "name_e": "Phitsanu Lok",
+    "radar_id": [
+      "phs240",
+      "kkn240"
+    ]
+  },
+  {
+    "province_id": "83",
+    "P_CODE": "PK",
+    "name_t": "ภูเก็ต",
+    "name_e": "Phuket",
+    "radar_id": [
+      "pkt240",
+      "krb240"
+    ]
+  },
+  {
+    "province_id": "44",
+    "P_CODE": "MSK",
+    "name_t": "มหาสารคาม",
+    "name_e": "Mahasarakham",
+    "radar_id": [
+      "kkn240",
+      "skn240",
+      "ubn240"
+    ]
+  },
+  {
+    "province_id": "49",
+    "P_CODE": "MH",
+    "name_t": "มุกดาหาร",
+    "name_e": "Mukdahan",
+    "radar_id": [
+      "kkn240",
+      "skn240",
+      "ubn240"
+    ]
+  },
+  {
+    "province_id": "95",
+    "P_CODE": "YL",
+    "name_t": "ยะลา",
+    "name_e": "Yala",
+    "radar_id": [
+      "stp240"
+    ]
+  },
+  {
+    "province_id": "35",
+    "P_CODE": "YS",
+    "name_t": "ยโสธร",
+    "name_e": "Yasothon",
+    "radar_id": [
+      "kkn240",
+      "skn240",
+      "ubn240"
+    ]
+  },
+  {
+    "province_id": "85",
+    "P_CODE": "RN",
+    "name_t": "ระนอง",
+    "name_e": "Ranong",
+    "radar_id": [
+      "cmp240"
+    ]
+  },
+  {
+    "province_id": "21",
+    "P_CODE": "RY",
+    "name_t": "ระยอง",
+    "name_e": "Rayong",
+    "radar_id": [
+      "ryg240",
+      "sattahip",
+      "hhn240",
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "70",
+    "P_CODE": "RB",
+    "name_t": "ราชบุรี",
+    "name_e": "Ratchaburi",
+    "radar_id": [
+      "hhn240",
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "45",
+    "P_CODE": "RE",
+    "name_t": "ร้อยเอ็ด",
+    "name_e": "Roi Et",
+    "radar_id": [
+      "chatu",
+      "kkn240",
+      "skn240",
+      "ubn240"
+    ]
+  },
+  {
+    "province_id": "16",
+    "P_CODE": "LB",
+    "name_t": "ลพบุรี",
+    "name_e": "Lopburi",
+    "radar_id": [
+      "phs240",
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "52",
+    "P_CODE": "LP",
+    "name_t": "ลำปาง",
+    "name_e": "Lampang",
+    "radar_id": [
+      "phs240",
+      "cri240",
+      "lmp240"
+    ]
+  },
+  {
+    "province_id": "51",
+    "P_CODE": "LPN",
+    "name_t": "ลำพูน",
+    "name_e": "Lamphun",
+    "radar_id": [
+      "lmp240",
+      "cri240",
+      "phs240"
+    ]
+  },
+  {
+    "province_id": "33",
+    "P_CODE": "SK",
+    "name_t": "ศรีสะเกษ",
+    "name_e": "Sisaket",
+    "radar_id": [
+      "kkn240",
+      "ubn240"
+    ]
+  },
+  {
+    "province_id": "47",
+    "P_CODE": "SN",
+    "name_t": "สกลนคร",
+    "name_e": "Sakon Nakhon",
+    "radar_id": [
+      "kkn240",
+      "skn240"
+    ]
+  },
+  {
+    "province_id": "90",
+    "P_CODE": "SKL",
+    "name_t": "สงขลา",
+    "name_e": "Songkhla",
+    "radar_id": [
+      "stp240",
+      "krb240"
+    ]
+  },
+  {
+    "province_id": "91",
+    "P_CODE": "ST",
+    "name_t": "สตูล",
+    "name_e": "Satun",
+    "radar_id": [
+      "stp240",
+      "pkt240",
+      "krb240"
+    ]
+  },
+  {
+    "province_id": "11",
+    "P_CODE": "SPK",
+    "name_t": "สมุทรปราการ",
+    "name_e": "Samut Prakarn",
+    "radar_id": [
+      "svp240",
+      "hhn240"
+    ]
+  },
+  {
+    "province_id": "75",
+    "P_CODE": "SKM",
+    "name_t": "สมุทรสงคราม",
+    "name_e": "Samut Songkham",
+    "radar_id": [
+      "hhn240"
+    ]
+  },
+  {
+    "province_id": "74",
+    "P_CODE": "SMR",
+    "name_t": "สมุทรสาคร",
+    "name_e": "Samut Sakhon",
+    "radar_id": [
+      "hhn240"
+    ]
+  },
+  {
+    "province_id": "19",
+    "P_CODE": "SB",
+    "name_t": "สระบุรี",
+    "name_e": "Saraburi",
+    "radar_id": [
+      "phs240",
+      "kkn240",
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "27",
+    "P_CODE": "SAK",
+    "name_t": "สระแก้ว",
+    "name_e": "Srakaeo",
+    "radar_id": [
+      "sattahip",
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "17",
+    "P_CODE": "SH",
+    "name_t": "สิงห์บุรี",
+    "name_e": "Singburi",
+    "radar_id": [
+      "inburi"
+    ]
+  },
+  {
+    "province_id": "72",
+    "P_CODE": "SP",
+    "name_t": "สุพรรณบุรี",
+    "name_e": "Suphan Buri",
+    "radar_id": [
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "84",
+    "P_CODE": "STH",
+    "name_t": "สุราษฎร์ธานี",
+    "name_e": "Surat Thani",
+    "radar_id": [
+      "srt240",
+      "pkt240",
+      "krb240"
+    ]
+  },
+  {
+    "province_id": "32",
+    "P_CODE": "SR",
+    "name_t": "สุรินทร์",
+    "name_e": "Surin",
+    "radar_id": [
+      "srn240",
+      "svp240",
+      "sattahip",
+      "hhn240"
+    ]
+  },
+  {
+    "province_id": "64",
+    "P_CODE": "SKT",
+    "name_t": "สุโขทัย",
+    "name_e": "Sukhothai",
+    "radar_id": [
+      "phs240",
+      "lmp240"
+    ]
+  },
+  {
+    "province_id": "43",
+    "P_CODE": "NK",
+    "name_t": "หนองคาย",
+    "name_e": "Nong Khai",
+    "radar_id": [
+      "skn240",
+      "kkn240"
+    ]
+  },
+  {
+    "province_id": "39",
+    "P_CODE": "NBP",
+    "name_t": "หนองบัวลำภู",
+    "name_e": "Nong Bua Lamphu",
+    "radar_id": [
+      "kkn240",
+      "skn240"
+    ]
+  },
+  {
+    "province_id": "37",
+    "P_CODE": "ANR",
+    "name_t": "อำนาจเจริญ",
+    "name_e": "Amnaj Charoen",
+    "radar_id": [
+      "kkn240",
+      "skn240",
+      "ubn240"
+    ]
+  },
+  {
+    "province_id": "41",
+    "P_CODE": "UD",
+    "name_t": "อุดรธานี",
+    "name_e": "Udon Thani",
+    "radar_id": [
+      "skn240",
+      "kkn240"
+    ]
+  },
+  {
+    "province_id": "53",
+    "P_CODE": "UTD",
+    "name_t": "อุตรดิตถ์",
+    "name_e": "Auttaradit",
+    "radar_id": [
+      "phs240",
+      "lmp240"
+    ]
+  },
+  {
+    "province_id": "61",
+    "P_CODE": "UT",
+    "name_t": "อุทัยธานี",
+    "name_e": "Uthai Thani",
+    "radar_id": [
+      "phs240"
+    ]
+  },
+  {
+    "province_id": "34",
+    "P_CODE": "UB",
+    "name_t": "อุบลราชธานี",
+    "name_e": "Ubon Ratchathani",
+    "radar_id": [
+      "kkn240",
+      "ubn240"
+    ]
+  },
+  {
+    "province_id": "15",
+    "P_CODE": "AT",
+    "name_t": "อ่างทอง",
+    "name_e": "Ang Thong",
+    "radar_id": [
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "57",
+    "P_CODE": "CHR",
+    "name_t": "เชียงราย",
+    "name_e": "Chiangrai",
+    "radar_id": [
+      "cri240",
+      "lmp240"
+    ]
+  },
+  {
+    "province_id": "50",
+    "P_CODE": "CHM",
+    "name_t": "เชียงใหม่",
+    "name_e": "Chiang Mai",
+    "radar_id": [
+      "cri240",
+      "lmp240"
+    ]
+  },
+  {
+    "province_id": "76",
+    "P_CODE": "PB",
+    "name_t": "เพชรบุรี",
+    "name_e": "Phetchaburi",
+    "radar_id": [
+      "hhn240",
+      "svp240"
+    ]
+  },
+  {
+    "province_id": "67",
+    "P_CODE": "PCH",
+    "name_t": "เพชรบูรณ์",
+    "name_e": "Phetchabun",
+    "radar_id": [
+      "phb240",
+      "phs240",
+      "kkn240"
+    ]
+  },
+  {
+    "province_id": "42",
+    "P_CODE": "LY",
+    "name_t": "เลย",
+    "name_e": "Loei",
+    "radar_id": [
+      "kkn240",
+      "phs240"
+    ]
+  },
+  {
+    "province_id": "54",
+    "P_CODE": "PR",
+    "name_t": "แพร่",
+    "name_e": "Phrae",
+    "radar_id": [
+      "rongkwang",
+      "phs240",
+      "cri240",
+      "lmp240"
+    ]
+  },
+  {
+    "province_id": "58",
+    "P_CODE": "MS",
+    "name_t": "แม่ฮ่องสอน",
+    "name_e": "Mae Hong Son",
+    "radar_id": [
+      "lmp240",
+      "cri240"
+    ]
+  }
+]

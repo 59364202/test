@@ -1,0 +1,7 @@
+#deploy_production:
+#  script:
+#    - ssh cim@api2.thaiwater.net './make_pull_install.sh'
+#    - ssh cim@192.168.201.191 './make_pull_install.sh'
+#  only:
+#    - master
+#  when: on_success

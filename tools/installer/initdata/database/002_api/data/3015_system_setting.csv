@@ -1,0 +1,1765 @@
+"user_id:lookup(api.user,id,account)"|"is_public"|"name"|"value"|"description"
+"(system)"|t|"dataservice.MaxRowInFile"|"65000"|"จำนวนแถวต่อ 1 csv"
+"(system)"|f|"server.service.dataimport.DataPathPrefix"|"/data/thaiwater/thaiwaterdata/test1"|"Data Path In Converter"
+"(system)"|f|"server.model.dataimport.MaxImportRows"|"250000"|""
+"(system)"|t|"server.model.agent.MaxConcurrentRequests"|"3000"|""
+"(system)"|t|"bof.DataIntegration.dl.DownloadScript"|"[
+  {
+    ""text"": ""dl-basic"",
+    ""value"": ""dl-basic""
+  },
+  {
+    ""text"": ""dl-collector"",
+    ""value"": ""dl-collector"",
+    ""enable"": ""collector""
+  }
+]"|"Dropdown List ของกระบวนการดาวน์โหลด"
+"(system)"|t|"service.api-service.download.ExpireDate"|"7"|"วันหมดอายุของเซอวิส api-service download"
+"(system)"|f|"setting.Default.DateFormat"|"2006-01-02"|"Default DateFormat"
+"(system)"|t|"bof.EventMgt.PermissionGroup.Color_11"|""|"Color Setting PermissionGroup ID 11"
+"(system)"|t|"bof.EventMgt.PermissionGroup.Color_121"|""|"Color Setting PermissionGroup ID 121"
+"(system)"|t|"server.model.uac.PermissionGroupColor_231"|"3527FF"|""
+"(system)"|t|"server.model.uac.PermissionGroupColor_19"|"3D1AFF"|""
+"(system)"|t|"server.service.uac.DefaultLDAPAgencyID"|"9"|"ค่าเริ่มต้นของหน่วยงานสำหรับผู้ใช้ที่ Sync มาจาก LDAP"
+"(system)"|t|"bof.EventMgt.PermissionGroup.Color_26"|""|"Color Setting PermissionGroup ID 26"
+"(system)"|f|"server.service.auth.BadAttemptUserCaptcha"|"3"|"จำนวนครั้งของการแสดง Captcha เมื่อเข้าใช้งานระบบผิดพลาด"
+"(system)"|t|"bof.EventMgt.PermissionGroup.Color_100"|""|"Color Setting PermissionGroup ID 100"
+"(system)"|f|"bof.Shared.DataTypeOption"|"[
+  {
+    ""name"": ""ฝน"",
+    ""data_type"": ""rainfall"",
+    ""data_type_cache"": ""cache.latest_rainfall24h"",
+    ""station_table"": ""m_tele_station"",
+    ""station_column_name"": ""tele_station_id""
+  },
+  {
+    ""name"": ""เขื่อนรายชั่วโมง"",
+    ""data_type"": ""dam_hourly"",
+    ""data_type_cache"": ""dam_hourly"",
+    ""station_table"": ""m_dam"",
+    ""station_column_name"": ""dam_id""
+  },
+  {
+    ""name"": ""เขื่อนรายวัน"",
+    ""data_type"": ""dam_daily"",
+    ""data_type_cache"": ""dam_daily"",
+    ""station_table"": ""m_dam"",
+    ""station_column_name"": ""dam_id""
+  },
+  {
+    ""name"": ""ระดับน้ำ"",
+    ""data_type"": ""tele_waterlevel"",
+    ""data_type_cache"": ""cache.latest_waterlevel"",
+    ""station_table"": ""m_tele_station"",
+    ""station_column_name"": ""tele_station_id""
+  }
+]"|"Data Type Dropdown List for Lastest Data"
+"(system)"|f|"bof.EventMgt.EventLogCategory.Color_2"|"FFF045"|"Setting for EventLogCategory ID '2'"
+"(system)"|t|"Frontend.public.rain_setting"|"{
+  ""rule"": {
+    ""01"": [
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""30"",
+        ""rain24h"": ""80"",
+        ""rain3d"": ""160"",
+        ""level"": ""4""
+      },
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""25"",
+        ""rain24h"": ""65"",
+        ""rain3d"": ""95"",
+        ""level"": ""3""
+      }
+    ],
+    ""02"": [
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""40"",
+        ""rain24h"": ""120"",
+        ""rain3d"": ""210"",
+        ""level"": ""4""
+      },
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""35"",
+        ""rain24h"": ""70"",
+        ""rain3d"": ""175"",
+        ""level"": ""3""
+      }
+    ],
+    ""03"": [
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""40"",
+        ""rain24h"": ""120"",
+        ""rain3d"": ""200"",
+        ""level"": ""4""
+      },
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""35"",
+        ""rain24h"": ""85"",
+        ""rain3d"": ""150"",
+        ""level"": ""3""
+      }
+    ],
+    ""04"": [
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""35"",
+        ""rain24h"": ""100"",
+        ""rain3d"": ""225"",
+        ""level"": ""4""
+      },
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""30"",
+        ""rain24h"": ""85"",
+        ""rain3d"": ""150"",
+        ""level"": ""3""
+      }
+    ],
+    ""05"": [
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""35"",
+        ""rain24h"": ""110"",
+        ""rain3d"": ""200"",
+        ""level"": ""4""
+      },
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""30"",
+        ""rain24h"": ""85"",
+        ""rain3d"": ""175"",
+        ""level"": ""3""
+      }
+    ],
+    ""06"": [
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""40"",
+        ""rain24h"": ""120"",
+        ""rain3d"": ""200"",
+        ""level"": ""4""
+      },
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""35"",
+        ""rain24h"": ""95"",
+        ""rain3d"": ""150"",
+        ""level"": ""3""
+      }
+    ],
+    ""07"": [
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""40"",
+        ""rain24h"": ""150"",
+        ""rain3d"": ""240"",
+        ""level"": ""4""
+      },
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""35"",
+        ""rain24h"": ""95"",
+        ""rain3d"": ""175"",
+        ""level"": ""3""
+      }
+    ],
+    ""08"": [
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""45"",
+        ""rain24h"": ""110"",
+        ""rain3d"": ""200"",
+        ""level"": ""4""
+      },
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""40"",
+        ""rain24h"": ""90"",
+        ""rain3d"": ""150"",
+        ""level"": ""3""
+      }
+    ],
+    ""09"": [
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""40"",
+        ""rain24h"": ""120"",
+        ""rain3d"": ""200"",
+        ""level"": ""4""
+      },
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""35"",
+        ""rain24h"": ""90"",
+        ""rain3d"": ""175"",
+        ""level"": ""3""
+      }
+    ],
+    ""10"": [
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""40"",
+        ""rain24h"": ""150"",
+        ""rain3d"": ""240"",
+        ""level"": ""4""
+      },
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""35"",
+        ""rain24h"": ""95"",
+        ""rain3d"": ""180"",
+        ""level"": ""3""
+      }
+    ],
+    ""11"": [
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""40"",
+        ""rain24h"": ""90"",
+        ""rain3d"": ""200"",
+        ""level"": ""4""
+      },
+      {
+        ""operator"": "">="",
+        ""rain1h"": ""35"",
+        ""rain24h"": ""60"",
+        ""rain3d"": ""150"",
+        ""level"": ""3""
+      }
+    ]
+  },
+  ""level_color"": {
+    ""3"": {
+      ""color"": ""#FE8A04"",
+      ""colorname"": ""orange"",
+      ""name"": ""เฝ้าระวังพิเศษ"",
+      ""trans"": ""rain_level_3""
+    },
+    ""4"": {
+      ""color"": ""#EE141F"",
+      ""colorname"": ""red"",
+      ""name"": ""วิกฤต"",
+      ""trans"": ""rain_level_4""
+    }
+  },
+  ""scale"": [
+    {
+      ""operator"": "">"",
+      ""term"": ""90"",
+      ""color"": ""#EE141F"",
+      ""colorname"": ""red""
+    },
+    {
+      ""operator"": "">"",
+      ""term"": ""70"",
+      ""color"": ""#CA6504"",
+      ""colorname"": ""tawny""
+    },
+    {
+      ""operator"": "">"",
+      ""term"": ""50"",
+      ""color"": ""#FE8A04"",
+      ""colorname"": ""orange""
+    },
+    {
+      ""operator"": "">"",
+      ""term"": ""35"",
+      ""color"": ""#F6D300"",
+      ""colorname"": ""gold""
+    },
+    {
+      ""operator"": "">"",
+      ""term"": ""20"",
+      ""color"": ""#66C803"",
+      ""colorname"": ""green""
+    },
+    {
+      ""operator"": "">"",
+      ""term"": ""10"",
+      ""color"": ""#9CEEB2"",
+      ""colorname"": ""celadon""
+    },
+    {
+      ""operator"": "">"",
+      ""term"": ""0"",
+      ""color"": ""#A9D1FC"",
+      ""colorname"": ""blue""
+    }
+  ]
+}"|"ตั้งค่าฝน (เกณฑ์ฝน , ระดับสีเกณฑ์ , สเกลสีของฝน)"
+"(system)"|f|"server.service.uac.DefaultPasswordLifeSpanDays"|"1000"|"Default ของการกำหนดวันหมดอายุรหัสผ่าน"
+"(system)"|f|"server.service.uac.DefaultAccountLifeSpanDays"|"1000"|"Default ของจำนวนวันหมดอายุผู้ใช้งาน"
+"(system)"|f|"server.service.uac.DefaultNewUserGroup"|"0"|"Default ID ของกลุ่มผู้ใช้งานสำหรับผู้ใช้งานใหม่"
+"(system)"|t|"server.model.uac.PermissionGroupColor_237"|"3D1AFF"|""
+"(system)"|t|"Frontend.public.waterquality_setting"|"{
+	""scale"": {
+		""salinity"": [{
+				""operator"": "">"",
+				""term"": ""2"",
+				""color"": ""#EE141F"",
+				""text"": ""> 2"",
+				""trans"": ""salinity_2"",
+				""inGraph"": true
+			}, {
+				""operator"": "">"",
+				""term"": ""0.50"",
+				""color"": ""#EE141F"",
+				""text"": ""> 0.5"",
+				""trans"": ""salinity_0.5"",
+				""inGraph"": true
+			}, {
+				""operator"": "">"",
+				""term"": ""0.25"",
+				""color"": ""#FFA500"",
+				""text"": ""> 0.25"",
+				""trans"": ""salinity_0.25"",
+				""inGraph"": true
+			}
+		],
+		""do"": [{
+				""operator"": ""<"",
+				""term"": ""3"",
+				""color"": ""#EE141F"",
+				""text"": ""< 3"",
+				""trans"": ""standard_>"",
+				""inGraph"": true
+			}
+		],
+		""ph"": [{
+				""operator"": ""between"",
+				""term"": ""6.5"",
+				""term_2"": ""9"",
+				""color"": ""#66C803"",
+				""trans"": ""standard"",
+				""text"": ""6.5 - 9""
+			}, {
+				""operator"": "">"",
+				""term"": ""9"",
+				""color"": ""#EE141F"",
+				""text"": ""สูงกว่ามาตรฐาน"",
+				""trans"": ""standard_>"",
+				""text"": ""> 9"",
+				""inGraph"": true
+			}, {
+				""operator"": ""<"",
+				""term"": ""6.5"",
+				""color"": ""#EE141F"",
+				""text"": ""ต่ำกว่ามาตรฐาน"",
+				""trans"": ""standard_<"",
+				""text"": ""< 6.5"",
+				""inGraph"": true
+			}
+		],
+		""turbid"": [{
+				""operator"": ""=="",
+				""term"": ""5"",
+				""color"": ""#66C803"",
+				""trans"": ""standard"",
+				""text"": ""= 5""
+			}, {
+				""operator"": "">"",
+				""term"": ""5"",
+				""color"": ""#EE141F"",
+				""trans"": ""standard_>"",
+				""text"": ""> 5 ntu"",
+				""inGraph"": true
+			}, {
+				""operator"": ""<"",
+				""term"": ""5"",
+				""color"": ""#EE141F"",
+				""trans"": ""standard_<"",
+				""text"": ""< 5 ntu"",
+				""inGraph"": true
+			}
+		],
+		""tds"": [{
+				""operator"": ""<="",
+				""term"": ""1000"",
+				""color"": ""#66C803"",
+				""text"": ""<= 1,000"",
+				""trans"": ""standard""
+			}, {
+				""operator"": "">"",
+				""term"": ""1000"",
+				""color"": ""#EE141F"",
+				""text"": ""> 1,000"",
+				""trans"": ""standard_>"",
+				""inGraph"": true
+			}
+		]
+	},
+	""criteria"": {
+		""salinity"": [{
+				""operator"": ""<"",
+				""term"": ""0.25"",
+				""color"": ""#EE141F""
+			}
+		],
+		""do"": [{
+				""operator"": "">"",
+				""term"": ""2"",
+				""color"": ""#EE141F""
+			}
+		],
+		""conductivity"": [{
+				""operator"": ""<"",
+				""term"": ""500"",
+				""color"": ""#EE141F""
+			}
+		],
+		""ph"": [{
+				""operator"": ""between"",
+				""term"": ""5"",
+				""term_2"": ""9"",
+				""color"": ""#66C803""
+			}
+		],
+		""id"":144,
+		""name"":""สำเหร่""
+	},
+	""default"": {
+		""color"": ""#66C803"",
+		""colorname"": ""green""
+	},
+	""not_today"": {
+		""color"": ""gray"",
+		""colorname"": ""gray"",
+		""text"": ""-""
+	}
+}
+"|"เกณฑ์ของคุณภาพน้ำ"
+"(system)"|t|"bof.order_detail.PrepareFileForZip"|"/data/thaiwater/thaiwaterdata/test1/tempf"|"เตรียมไฟล์สำหรับทำเป็น zip เพื่อให้ download ใน api_service"
+"(system)"|t|"Frontend.public.pre_rain_setting"|"{
+  ""rule"": {
+    ""1"": [
+      {
+        ""operator"": "">="",
+        ""term"": ""71"",
+        ""level"": ""1""
+      },
+      {
+        ""operator"": "">="",
+        ""term"": ""51"",
+        ""level"": ""2""
+      }
+    ],
+    ""2"": [
+      {
+        ""operator"": "">="",
+        ""term"": ""86"",
+        ""level"": ""1""
+      },
+      {
+        ""operator"": "">="",
+        ""term"": ""56"",
+        ""level"": ""2""
+      }
+    ],
+    ""3"": [
+      {
+        ""operator"": "">="",
+        ""term"": ""91"",
+        ""level"": ""1""
+      },
+      {
+        ""operator"": "">="",
+        ""term"": ""56"",
+        ""level"": ""2""
+      }
+    ],
+    ""4"": [
+      {
+        ""operator"": "">="",
+        ""term"": ""71"",
+        ""level"": ""1""
+      },
+      {
+        ""operator"": "">="",
+        ""term"": ""51"",
+        ""level"": ""2""
+      }
+    ],
+    ""5"": [
+      {
+        ""operator"": "">="",
+        ""term"": ""91"",
+        ""level"": ""1""
+      },
+      {
+        ""operator"": "">="",
+        ""term"": ""56"",
+        ""level"": ""2""
+      }
+    ],
+    ""6"": [
+      {
+        ""operator"": "">="",
+        ""term"": ""86"",
+        ""level"": ""1""
+      },
+      {
+        ""operator"": "">="",
+        ""term"": ""56"",
+        ""level"": ""2""
+      }
+    ],
+    ""7"": [
+      {
+        ""operator"": "">="",
+        ""term"": ""51"",
+        ""level"": ""1""
+      },
+      {
+        ""operator"": "">="",
+        ""term"": ""36"",
+        ""level"": ""2""
+      }
+    ]
+  },
+  ""level-text"": {
+    ""1"": {
+      ""colorname"": ""red"",
+      ""color"": ""#ff0000"",
+      ""text"": ""ฝนตกหนักมาก"",
+      ""trans"": ""predict_rain_level_2""
+    },
+    ""2"": {
+      ""colorname"": ""orange"",
+      ""color"": ""#f0ad4e"",
+      ""text"": ""ฝนตกหนัก"",
+      ""trans"": ""predict_rain_level_1""
+    }
+  }
+}"|"เกณฑ์ฝน"
+"(system)"|f|"bof.EventMgt.EventLogCategory.Color_1"|"FFB777"|"Setting for EventLogCategory ID '1'"
+"(system)"|f|"thaiwater30.util.b64.key"|"d73befaf0b46d870"|"คีย์สำหรับการเข้ารหัส"
+"(system)"|f|"bof.analyst.advance_load.scope"|"[{""name"":""Thailand"",""value"":1},{""name"":""Region"",""value"":2},{""name"":""Province"",""value"":3},{""name"":""Amphoe"",""value"":4},{""name"":""Tumbon"",""value"":5},{""name"":""Basin"",""value"":6},{""name"":""Subbasin"",""value"":7}]"|"ขอบเขตที่ใช้ใน analyst advance_load"
+"(system)"|t|"Frontend.public.waterlevel_setting"|"{
+  ""scale"": [
+    {
+      ""operator"": "">"",
+      ""term"": ""100"",
+      ""color"": ""#FF0000"",
+      ""colorname"": ""red"",
+      ""situation"": ""น้ำล้นตลิ่ง"",
+      ""trans"": ""waterlevel_level_5"",
+      ""text"": "">100""
+    },
+    {
+      ""operator"": "">"",
+      ""term"": ""70"",
+      ""color"": ""#003CFA"",
+      ""colorname"": ""blue"",
+      ""situation"": ""น้ำมาก"",
+      ""trans"": ""waterlevel_level_4"",
+      ""text"": "">70""
+    },
+    {
+      ""operator"": "">"",
+      ""term"": ""30"",
+      ""color"": ""#00B050"",
+      ""colorname"": ""green"",
+      ""situation"": ""น้ำปกติ"",
+      ""trans"": ""waterlevel_level_3"",
+      ""text"": "">30""
+    },
+    {
+      ""operator"": "">"",
+      ""term"": ""10"",
+      ""color"": ""#FFC000"",
+      ""colorname"": ""yellow"",
+      ""situation"": ""น้ำน้อย"",
+      ""trans"": ""waterlevel_level_2"",
+      ""text"": "">10""
+    },
+    {
+      ""operator"": ""<="",
+      ""term"": ""10"",
+      ""color"": ""#DB802B"",
+      ""colorname"": ""gold"",
+      ""situation"": ""น้ำน้อยวิกฤติ"",
+      ""trans"": ""waterlevel_level_1"",
+      ""text"": ""<=10""
+    }
+  ],
+  ""rule"": [
+    {
+      ""operator"": "">"",
+      ""term"": ""100"",
+      ""level"": 2
+    },
+    {
+      ""operator"": ""<="",
+      ""term"": ""10"",
+      ""level"": 1
+    }
+  ],
+  ""level"": {
+    ""1"": {
+      ""color"": ""#DB802B"",
+      ""colorname"": ""gold"",
+      ""trans"": ""waterlevel_level_1""
+    },
+    ""2"": {
+      ""color"": ""#FF0000"",
+      ""colorname"": ""red"",
+      ""trans"": ""waterlevel_level_5""
+    }
+  },
+  ""no_storage"": """",
+  ""not_today"": {
+    ""color"": ""gray"",
+    ""colorname"": ""gray"",
+    ""text"": ""-""
+  }
+}"|"สเกลสีของระดับน้ำ"
+"(system)"|f|"server.service.uac.SessionLogSingleUserCountTimeMaxDays"|"31"|"จำนวนวันสูงสุดที่สามารถดูข้อมูลได้สำหรับผู้ใช้งาน 1 คน ของการตั้งค่าหน้าแสดงประวัติ UAC"
+"(system)"|f|"server.TrustedProxy"|"192.168.12.191"|"IP TrustedProxy"
+"(system)"|f|"Frontend.Analyst.Dam.OnLoadDamGraph"|"[
+  {
+    ""dam_id"": 24,
+    ""dam_data"": ""dam_storage"",
+    ""dam_data_name"": ""ปริมาณน้ำในอ่าง""
+  },
+  {
+    ""dam_id"": 24,
+    ""dam_data"": ""dam_inflow"",
+    ""dam_data_name"": ""ปริมาณน้ำไหลลงอ่าง""
+  },
+  {
+    ""dam_id"": 24,
+    ""dam_data"": ""dam_released"",
+    ""dam_data_name"": ""ปริมาณน้ำกักเก็บ""
+  },
+  {
+    ""dam_id"": 37,
+    ""dam_data"": ""dam_storage"",
+    ""dam_data_name"": ""ปริมาณน้ำในอ่าง""
+  },
+  {
+    ""dam_id"": 37,
+    ""dam_data"": ""dam_inflow"",
+    ""dam_data_name"": ""ปริมาณน้ำไหลลงอ่าง""
+  },
+  {
+    ""dam_id"": 37,
+    ""dam_data"": ""dam_released"",
+    ""dam_data_name"": ""ปริมาณน้ำกักเก็บ""
+  },
+  {
+    ""dam_id"": 28,
+    ""dam_data"": ""dam_storage"",
+    ""dam_data_name"": ""ปริมาณน้ำในอ่าง""
+  },
+  {
+    ""dam_id"": 28,
+    ""dam_data"": ""dam_inflow"",
+    ""dam_data_name"": ""ปริมาณน้ำไหลลงอ่าง""
+  },
+  {
+    ""dam_id"": 28,
+    ""dam_data"": ""dam_released"",
+    ""dam_data_name"": ""ปริมาณน้ำกักเก็บ""
+  },
+  {
+    ""dam_id"": 20,
+    ""dam_data"": ""dam_storage"",
+    ""dam_data_name"": ""ปริมาณน้ำในอ่าง""
+  },
+  {
+    ""dam_id"": 20,
+    ""dam_data"": ""dam_inflow"",
+    ""dam_data_name"": ""ปริมาณน้ำไหลลงอ่าง""
+  },
+  {
+    ""dam_id"": 20,
+    ""dam_data"": ""dam_released"",
+    ""dam_data_name"": ""ปริมาณน้ำกักเก็บ""
+  }
+]"|"กราฟที่แสดงในหน้าจอเขื่อนของนักวิเคราะห์ระบบ"
+"(system)"|t|"bof.DataIntegration.ci.Type"|"[
+  {
+    ""text"": ""string"",
+    ""value"": ""string""
+  },
+  {
+    ""text"": ""int"",
+    ""value"": ""int""
+  },
+  {
+    ""text"": ""float"",
+    ""value"": ""float""
+  },
+  {
+    ""text"": ""datetime"",
+    ""value"": ""datetime""
+  }
+]"|"Dropdown List ของชนิดของฟิลดิ์ข้อมูล"
+"(system)"|t|"bof.DBA.Partition.TableList"|"{
+  ""air"": {
+    ""table_name"": ""air"",
+    ""datetime_field_name"": ""air_datetime"",
+    ""partition_unique_field"": [
+      ""air_station_id"",
+      ""air_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""canal_waterlevel"": {
+    ""table_name"": ""canal_waterlevel"",
+    ""datetime_field_name"": ""canal_waterlevel_datetime"",
+    ""partition_unique_field"": [
+      ""canal_station_id"",
+      ""canal_waterlevel_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""dam_daily"": {
+    ""table_name"": ""dam_daily"",
+    ""datetime_field_name"": ""dam_date"",
+    ""partition_unique_field"": [
+      ""dam_id"",
+      ""dam_date"",
+      ""deleted_at""
+    ]
+  },
+  ""dam_hourly"": {
+    ""table_name"": ""dam_hourly"",
+    ""datetime_field_name"": ""dam_datetime"",
+    ""partition_unique_field"": [
+      ""dam_id"",
+      ""dam_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""floodforcast"": {
+    ""table_name"": ""floodforcast"",
+    ""datetime_field_name"": ""floodforcast_datetime"",
+    ""partition_unique_field"": [
+      ""floodforcast_station_id"",
+      ""floodforcast_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""ford_waterlevel"": {
+    ""table_name"": ""ford_waterlevel"",
+    ""datetime_field_name"": ""ford_waterlevel_datetime"",
+    ""partition_unique_field"": [
+      ""ford_station_id"",
+      ""ford_waterlevel_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""humid"": {
+    ""table_name"": ""humid"",
+    ""datetime_field_name"": ""humid_datetime"",
+    ""partition_unique_field"": [
+      ""tele_station_id"",
+      ""humid_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""media"": {
+    ""table_name"": ""media"",
+    ""datetime_field_name"": ""media_datetime"",
+    ""partition_unique_field"": [
+      ""id"",
+      ""media_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""medium_dam"": {
+    ""table_name"": ""medium_dam"",
+    ""datetime_field_name"": ""mediumdam_date"",
+    ""partition_unique_field"": [
+      ""mediumdam_id"",
+      ""mediumdam_date"",
+      ""deleted_at""
+    ]
+  },
+  ""pressure"": {
+    ""table_name"": ""pressure"",
+    ""datetime_field_name"": ""pressure_datetime"",
+    ""partition_unique_field"": [
+      ""tele_station_id"",
+      ""pressure_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""rainfall"": {
+    ""table_name"": ""rainfall"",
+    ""datetime_field_name"": ""rainfall_datetime"",
+    ""partition_unique_field"": [
+      ""tele_station_id"",
+      ""rainfall_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""rainfall_1h"": {
+    ""table_name"": ""rainfall_1h"",
+    ""datetime_field_name"": ""rainfall_datetime"",
+    ""partition_unique_field"": [
+      ""tele_station_id"",
+      ""rainfall_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""rainfall_24h"": {
+    ""table_name"": ""rainfall_24h"",
+    ""datetime_field_name"": ""rainfall_datetime"",
+    ""partition_unique_field"": [
+      ""tele_station_id"",
+      ""rainfall_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""rainfall_daily"": {
+    ""table_name"": ""rainfall_daily"",
+    ""datetime_field_name"": ""rainfall_datetime"",
+    ""partition_unique_field"": [
+      ""tele_station_id"",
+      ""rainfall_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""rainforecast"": {
+    ""table_name"": ""rainforecast"",
+    ""datetime_field_name"": ""rainforecast_datetime"",
+    ""partition_unique_field"": [
+      ""geocode_id"",
+      ""rainforecast_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""solar"": {
+    ""table_name"": ""solar"",
+    ""datetime_field_name"": ""solar_datetime"",
+    ""partition_unique_field"": [
+      ""tele_station_id"",
+      ""solar_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""storm"": {
+    ""table_name"": ""storm"",
+    ""datetime_field_name"": ""storm_datetime"",
+    ""partition_unique_field"": [
+      ""storm_name"",
+      ""storm_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""swan"": {
+    ""table_name"": ""swan"",
+    ""datetime_field_name"": ""swan_datetime"",
+    ""partition_unique_field"": [
+      ""swan_station_id"",
+      ""swan_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""tele_waterlevel"": {
+    ""table_name"": ""tele_waterlevel"",
+    ""datetime_field_name"": ""waterlevel_datetime"",
+    ""partition_unique_field"": [
+      ""tele_station_id"",
+      ""waterlevel_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""temperature"": {
+    ""table_name"": ""temperature"",
+    ""datetime_field_name"": ""temp_datetime"",
+    ""partition_unique_field"": [
+      ""tele_station_id"",
+      ""temp_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""temperature_daily"": {
+    ""table_name"": ""temperature_daily"",
+    ""datetime_field_name"": ""temperature_date"",
+    ""partition_unique_field"": [
+      ""tele_station_id"",
+      ""temperature_date"",
+      ""deleted_at""
+    ]
+  },
+  ""waterquality"": {
+    ""table_name"": ""waterquality"",
+    ""datetime_field_name"": ""waterquality_datetime"",
+    ""partition_unique_field"": [
+      ""waterquality_id"",
+      ""waterquality_datetime"",
+      ""deleted_at""
+    ]
+  },
+  ""weather_forcast"": {
+    ""table_name"": ""weather_forcast"",
+    ""datetime_field_name"": ""weather_date"",
+    ""partition_unique_field"": [
+      ""geocode_id"",
+      ""weather_date"",
+      ""deleted_at""
+    ]
+  },
+  ""wind"": {
+    ""table_name"": ""wind"",
+    ""datetime_field_name"": ""wind_datetime"",
+    ""partition_unique_field"": [
+      ""tele_station_id"",
+      ""wind_datetime"",
+      ""deleted_at""
+    ]
+  }
+}"|"Dropdown List ของชื่อตาราง"
+"(system)"|f|"server.StoragePath"|"/data/thaiwater/thaiwaterdata/test1/serverstore"|"Path ที่ใช้ในการเก็บข้อมูล (apidoc)"
+"(system)"|f|"server.service.uac.SessionLogSmallUserCountThreshold"|"4"|"จำนวน  maximum user count ของ การตั้งค่าหน้าแสดงประวัติ UAC"
+"(system)"|f|"server.service.dataimport.DefaultDownloadTimeoutSeconds"|"30"|"Default Timeout ในหน่วยวินาทีของการดาวน์โหลดข้อมูล"
+"(system)"|f|"server.service.uac.SessionLogSmallUserCountTimeMaxDays"|"7"|"จำนวนวันสูงสุดที่ user ตามจำนวนที่ตั้งค่าไว้ใน SessionLogSmallUserCountThreshold สามารถดูข้อมูลได้ของ การตั้งค่าหน้าแสดงประวัติ UAC"
+"(system)"|t|"dataservice.MaxFileInZip"|"20"|"จำนวนไฟล์ ต่อ 1 zip"
+"(system)"|f|"bof.EventMgt.EventLogCategory.Color_4"|"FF4747"|"Setting for EventLogCategory ID '4'"
+"(system)"|f|"server.ServerURL"|"http://api2.thaiwater.net:9200"|"API Server URL"
+"(system)"|f|"server.service.dataimport.DefaultDownloadRetryCount"|"3"|"Default ของจำนวนครั้งในการดาวน์โหลดข้อมูลซ้ำ"
+"(system)"|f|"server.service.uac.SessionLogLargeUserCountTimeMaxDays"|"1"|"จำนวนวันสูงสุดที่ผู้ใช้จำนวนมากกว่าที่กำหนดไว้ใน server.service.uac.SessionLogSmallUserCountThreshold ที่สามารถดูประวัติได้ ของ การตั้งค่าหน้าแสดงประวัติ UAC"
+"(system)"|f|"server.service.auth.BadAttemptIPBan"|"2"|"จำนวนครั้งของการ Login ผิดเพื่อทำการ Ban IP"
+"(system)"|t|"bof.DataIntegration.dl.DownloadType"|"[
+  {
+    ""text"": ""text"",
+    ""value"": ""text"",
+    ""enable_all"": ""text""
+  },
+  {
+    ""text"": ""xml"",
+    ""value"": ""xml"",
+    ""enable_all"": ""xml""
+  },
+  {
+    ""text"": ""json"",
+    ""value"": ""json"",
+    ""enable_all"": ""json""
+  },
+  {
+    ""text"": ""excel"",
+    ""value"": ""excel"",
+    ""enable_all"": ""excel""
+  },
+  {
+    ""text"": ""media"",
+    ""value"": ""media"",
+    ""enable"": ""media"",
+    ""enable_all"": ""media""
+  }
+]"|"Dataimport Download Type (Not Use)"
+"(system)"|f|"bof.EventMgt.EventLogCategory.Color_74"|""|"Color Setting for EventLogCategory ID '74'"
+"(system)"|t|"bof.DataIntegration.ci.ImportScript"|"[
+  {
+    ""text"": ""im-std"",
+    ""value"": ""im-std""
+  }
+]"|"Dropdown List ของกระบวนการอิมพอร์ต "
+"(system)"|f|"setting.Default.DatetimeFormat"|"2006-01-02 15:04"|"Default Setting for system datetime format"
+"(system)"|t|"bof.DataIntegration.ci.AddMissing"|"[
+  {
+    ""text"": ""true"",
+    ""value"": ""true""
+  },
+  {
+    ""text"": ""false"",
+    ""value"": ""false""
+  }
+]"|"Dropdown List ของการเปิดปิดฟังก์ชันการเพิ่มข้อมูลสถานี"
+"(system)"|f|"server.model.session.ClearSessionCron"|"*/10 * * * *"|"การตั้งค่าของการลบ Crond"
+"(system)"|t|"bof.DataIntegration.ci.ConvertScript"|"[
+  {
+    ""text"": ""cv-std"",
+    ""value"": ""cv-std""
+  },
+  {
+    ""text"": ""cv-md-tide"",
+    ""value"": ""cv-md-tide""
+  },
+  {
+    ""text"": ""cv-nil"",
+    ""value"": ""cv-nil""
+  }
+]"|"Dropdown List ของกระบวนการคอนเวิร์ท "
+"(system)"|f|"server.service.auth.LoginPrivateKey"|"-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEAqWTy7PbI+JrjA74TVFljh++GGmOx3KLEQqjt8PUTPcVcevA+
++LW56e4GL/d0bv8XTlkm9o1bNvm1fqawcLan1aJcw8tQ+5lOD7Y9XHht0cfBCPQr
+nqNJ8IIzE/ZvOnls8zVirAkuqZONmy4N/6evHmgXDmUUoqRdHoj85kZTSUvhMkhf
+iUrxQjorrwDUzLcNvU3BNhkZCovfUKyW0/e9RbI1xwIjVyF8gTt+HDU+YaL4QdmG
+l9Xdyv7s4ZQPooZHHspvslg/0hSbVTYDT2mpmX4nZA/UUDNc78lPAOerfOnYJq6O
+gslHW8Qwyjhr9+2Fa2d01/+1fI5JwWo3gyZ7hQIDAQABAoIBAEv1pKl2ELDKY7ot
+5eURIHy4f94djohtxKxPrEM84p/0fH/0c4h7lR69SbEAugl8Aitz9vDgemKwnx5o
+CP7CKYi3Afoalfn8yPBqvCFXL4e+l2U4eMbuWh2rhNQS0dXa1WxKKDEU/QO10u4f
+PM/DldeAvbYKxbIZGliy/RUVvAtFbEZuaFMulm5lIajlypsEMx3xJh/kUXpNtlXQ
+5bI93nUiNc4DbM/lnFKTtNdVoI3fcijvR3pfga2U+rmGH/3Qd3KRaJlTwoo8ttnq
+pfuLSit/RQrjYhawZGsUwoexKp1++J/QjPIvWrk1TvxBCgc+STp52VewX5CYaOCw
+xOvKZRECgYEA3wwiPLXWVB0U7wAhDknv/9hoF+Y6IEY7SG2Vnc4SWwgZDRe9FmIX
+axS/KQDSTzFURJyeqOodKgljv034cso3M/d6ABM5gacOUM66JJPfMutzsK5A49+i
+qr0NVO9WAwIRvAKJ25+YBty30VtruyZV4p5VHZLHACDb4/yL5CzClwMCgYEAwmua
+1wavl0hgb9EPnuu9Efyxf8TJZCslnvmbEjkNEK3cPkBQsuQVfrpuigsplPJawe2f
+obKJ8N0KSxpF6u5lZiA7vvAYQ1M01Vs6rXGgFj3mXEeOyFnTQZYiZ5RyPlJFkmDD
+Dw+vjdhsXeLUlJetuRg9D7jRyQllK4jsEy87ONcCgYAr49dY2u8x3gcggIYAqcvw
+LEVPbp5Be5Bu0CGAy+wQvacwTFuI7ARvrcVv7Bl2O965IZiW5HqYqwBVxKH+9Iuo
+TipTmXTXbmgCvqsiR3bELlC1k5RxQrBfqJPXAsGKFf4nYNh/vwfLUeNZ7wNj8Ec2
+MLHO//Los46RbkCYxbYEwQKBgQCA+9CbLWVa8XqBVGqPnYgvIb1ErfKKURHBeYmG
+unDPivjeF98x/52/GMJzNNqeZXcOx64rIX7gXFUS5FhUd1qwOVxJ3ZHLQK2BiufP
+3908RE7LE/JHO0irb4Zdv59Xd0+OwEFIgbiPW3DxjKZJ+qMXdFw2TQBo5qHHEyzD
+wYcBuwKBgQDCzW87kcCAJ1HHNxuhk/cyCyyqI6sK4UV2587BCOSh4ibvP9ZtiLVq
+JWmA0OHdeIL9UZSpF1kfwKpoJZDwni6s/MyGCA79cIKWpTkbBGC+GpLq4F5uGDWe
+ltRXMhsufbYHW0K/FNdEwFzZrZEqZKGcvbvoo1fWkR8n1AF4lPBOKA==
+-----END RSA PRIVATE KEY-----"|""
+"(system)"|t|"event_log_category_color"|"[{""event_log_category_id"":1,""color"":""#FF0000""},{""event_log_category_id"":2,""color"":""""},{""event_log_category_id"":3,""color"":""#FFFF00""},{""event_log_category_id"":4,""color"":""395AFF""},{""event_log_category_id"":5,""color"":""#00FF00""},{""event_log_category_id"":6,""color"":""""}]"|""
+"(system)"|t|"Frontend.public.rainfall_data_type"|"[
+  {
+    ""id"": ""1"",
+    ""value"": ""1"",
+    ""text"": {
+      ""th"": ""ปริมาณฝน 24 ชั่วโมงย้อนหลัง"",
+      ""en"": ""rain fall 24 hr latest""
+    }
+  },
+  {
+    ""id"": ""2"",
+    ""value"": ""2"",
+    ""text"": {
+      ""th"": ""ปริมาณฝนรายวัน"",
+      ""en"": ""rain fall daily""
+    }
+  }
+]"|"ชนิดข้อมูลของฝน"
+"(system)"|f|"bof.EventMgt.EventCode.SubtypeCategory"|"[{""id"":""application"",""name"":""application""},{""id"":""data"",""name"":""data""},{""id"":""network"",""name"":""network""}]"|"Subtype Category for EventCode"
+"(system)"|f|"bof.Dashboard.ShowMaxLastLogin"|"9"|"จำนวน record ที่แสดงในส่วน Last login"
+"(system)"|t|"bof.DataIntegration.ci.InputFormatDatetime"|"[
+  {
+    ""text"": ""%Y-%m-%d %H:%M:%S"",
+    ""value"": ""%Y-%m-%d %H:%M:%S""
+  },
+  {
+    ""text"": ""%d-%m-%Y %H:%M:%S"",
+    ""value"": ""%d-%m-%Y %H:%M:%S""
+  },
+  {
+    ""text"": ""%Y-%m-%d %H:%M"",
+    ""value"": ""%Y-%m-%d %H:%M""
+  },
+  {
+    ""text"": ""%d-%m-%Y %H:%M"",
+    ""value"": ""%d-%m-%Y %H:%M""
+  }
+]"|"Dropdown List ของรูปแบบของวันเวลา "
+"(system)"|f|"setting.Default.DateRange"|"30"|"Default Setting of Date Range"
+"(system)"|f|"bof.EventMgt.EventLogCategory.Color_3"|"6B2CFF"|"Setting for EventLogCategory ID '3'"
+"(system)"|f|"bof.EventMgt.EventLogCategory.Color_5"|"C6A3FF"|"Setting for EventLogCategory ID '5'"
+"(system)"|f|"bof.EventMgt.EventLogCategory.Color_32"|"46FFC5"|"Color Setting for EventLogCategory ID '32'"
+"(system)"|f|"server.service.auth.BadAttemptClearTimeSeconds"|"60"|"เวลาในหน่วยวินาที สำหรับการ Ban IP"
+"(system)"|t|"server.model.dataimport.GenerateDataImportDailyReportEventCron"|"22 3 * * *"|"การตั้งค่าเวลาการส่งอีเมล์เหตุการณ์รายวัน"
+"(system)"|t|"dataservice.TempZipFile"|"tempZipFile/"|"ที่เก็บ zip ตอนสร้าง ก่อนจะย้ายไปเครื่อง laravel"
+"(system)"|f|"bof.EventMgt.EventLogCategory.Color_6"|"CFD6FF"|"Setting for EventLogCategory ID '6'"
+"(system)"|t|"data_type"|"[{""name"":""ฝน"", ""data_type"":""rainfall"", ""station_table"":""m_tele_station""}, {""name"":""เขื่อนรายชั่วโมง"", ""data_type"":""dam_hourly"", ""station_table"":""m_dam""}, {""name"":""เขื่อนรายวัน"", ""data_type"":""dam_daily"", ""station_table"":""m_dam""}, {""name"":""ระดับน้ำ"", ""data_type"":""tele_waterlevel"", ""station_table"":""m_tele_station""}]"|""
+"(system)"|t|"Frontend.analyst.sea_waterlevel"|"[{
+		""name"": ""ตรวจวัดจริง"",
+		""color"": ""#FF0000"",
+		""colorname"": ""red""
+	}, {
+		""name"": ""ทำนาย"",
+		""color"": ""#FF000"",
+		""colorname"": ""blue""
+	}
+]
+"|""
+"(system)"|f|"bof.Dashboard.ShowDataimport"|"4"|"จำนวน record ที่แสดงในส่วน Activity log (latest)"
+"(system)"|f|"bof.Tool.Ignore.TableList"|"[
+  {
+    ""name"": ""ฝนย้อนหลัง 24 ชั่วโมง"",
+    ""data_type"": ""rainfall_24h"",
+    ""station_table"": ""m_tele_station"",
+    ""station_column_name"": ""tele_station_id""
+  },
+  {
+    ""name"": ""เขื่อนรายชั่วโมง"",
+    ""data_type"": ""dam_hourly"",
+    ""station_table"": ""m_dam"",
+    ""station_column_name"": ""dam_id""
+  },
+  {
+    ""name"": ""เขื่อนรายวัน"",
+    ""data_type"": ""dam_daily"",
+    ""station_table"": ""m_dam"",
+    ""station_column_name"": ""dam_id""
+  },
+  {
+    ""name"": ""ระดับน้ำ"",
+    ""data_type"": ""tele_waterlevel"",
+    ""station_table"": ""m_tele_station"",
+    ""station_column_name"": ""tele_station_id""
+  },
+  {
+    ""name"": ""คุณภาพน้ำ"",
+    ""data_type"": ""waterquality"",
+    ""station_table"": ""m_waterquality"",
+    ""station_column_name"": ""waterquality_id""
+  }
+]"|"Dropdoown List ของประเภทข้อมูลในหน้าจอ Ignore"
+"(system)"|t|"bof.DataIntegration.ci.TransformMethod"|"[
+  {
+    ""text"": """",
+    ""value"": """",
+    ""enable"": ""null""
+  },
+  {
+    ""text"": ""constant"",
+    ""value"": ""constant"",
+    ""enable"": ""constant""
+  },
+  {
+    ""text"": ""custom"",
+    ""value"": ""evaluate"",
+    ""enable"": ""evaluate""
+  },
+  {
+    ""text"": ""datetime"",
+    ""value"": ""datetime"",
+    ""enable"": ""datetime""
+  },
+  {
+    ""text"": ""mapping"",
+    ""value"": ""mapping"",
+    ""enable"": ""mapping"",
+    ""multi_ctrl"": {
+      ""id"": ""download_type"",
+      ""value"": ""json"",
+      ""enable"": ""mapping""
+    }
+  },
+  {
+    ""text"": ""qc"",
+    ""value"": ""qc""
+  }
+]"|"Dropdown List ของกระบวนการแปลง"
+"(system)"|f|"thaiwater30.service.event_management.smtpserver.smtp1"|"{""server"":""outgoing.mail.go.th:465"",""from_email"":""คลังข้อมูลน้ำฯ\u003cnoreply_thaiwater@haii.or.th\u003e"",""user"":""!!!@@@encrypt(user_name_here)@@@!!!"",""password"":""!!!@@@encrypt(password_here)@@@!!!"",""timeout_seconds"":3,""must_secure"":false}"|""
+"(system)"|t|"bof.DataIntegration.hs.Status"|"[
+  {
+    ""text"": ""No New Data"",
+    ""value"": ""-1""
+  },
+  {
+    ""text"": ""Download Failed"",
+    ""value"": ""0""
+  },
+  {
+    ""text"": ""Convert Failed"",
+    ""value"": ""1""
+  },
+  {
+    ""text"": ""Import Failed"",
+    ""value"": ""2""
+  },
+  {
+    ""text"": ""Successful"",
+    ""value"": ""3""
+  }
+]"|"Dropdown List ของสถานะ "
+"(system)"|t|"Frontend.public.dam_data_type"|"[
+  {
+    ""id"": ""1"",
+    ""value"": ""dam_storage"",
+    ""text"": {
+      ""th"": ""ปริมาตรกักเก็บ"",
+      ""en"": ""dam storage""
+    }
+  },
+  {
+    ""id"": ""2"",
+    ""value"": ""dam_inflow"",
+    ""text"": {
+      ""th"": ""ปริมาณน้ำไหลลง"",
+      ""en"": ""dam inflow""
+    }
+  },
+  {
+    ""id"": ""3"",
+    ""value"": ""dam_inflow_acc"",
+    ""text"": {
+      ""th"": ""ปริมาณน้ำไหลลงอ่างสะสม"",
+      ""en"": ""dam inflow""
+    }
+  },
+  {
+    ""id"": ""4"",
+    ""value"": ""dam_released"",
+    ""text"": {
+      ""th"": ""ปริมาณน้ำระบาย"",
+      ""en"": ""dam released""
+    }
+  },
+  {
+    ""id"": ""5"",
+    ""value"": ""dam_released_acc"",
+    ""text"": {
+      ""th"": ""ปริมาณน้ำระบายสะสม"",
+      ""en"": ""dam released""
+    }
+  }
+]"|"ชนิดข้อมูลของเขื่อน"
+"(system)"|t|"bof.DataIntegration.dl.DownloadDriverMigrate"|"[
+  {
+    ""text"": ""pqmigrate://"",
+    ""value"": ""pqmigrate://""
+  },
+  {
+    ""text"": ""pqlastmigrate://"",
+    ""value"": ""pqlastmigrate://""
+  },
+  {
+    ""text"": ""pqtransform://"",
+    ""value"": ""pqtransform://""
+  }
+]"|"Dropdown List ของชื่อ driver สำหรับคำนวณฝน"
+"(system)"|t|"Frontend.public.warning_setting"|"{""rain"":""#3c8dbc"",""drought"":""#db802b"",""warning"":""#3c8dbc"",""flood"":""#3c8dbc""}"|"เกณฑ์เตือนภัย"
+"(system)"|t|"thaiwater30.service.CreateYearlyPartitionCron"|"0 0 25,26,27,28,29,30,31 12 *"|"การตั้งค่าเวลาสำหรับสร้างพาทิชันอัตโนมัติ"
+"(system)"|t|"server.service.dataimport.ResizeThumbnail"|"{
+	""width"": 100,
+	""height"": 100
+}
+"|"ตั้งค่าขนาดไฟล์ thumbnail"
+"(system)"|t|"bof.order_detail.DownloadLitmitSizeMB"|"32"|"ขนาดในหน่วย MB สำหรับการจำกัดการดาวน์โหลด"
+"(system)"|f|"server.VerboseErrorReply"|"true"|"Show Message Error"
+"(system)"|t|"bof.DataIntegration.dl.DownloadDriver"|"[
+  {
+    ""text"": ""http://"",
+    ""value"": ""http://""
+  },
+  {
+    ""text"": ""https://"",
+    ""value"": ""https://""
+  },
+  {
+    ""text"": ""ftp://"",
+    ""value"": ""ftp://"",
+    ""enable"": ""ftp""
+  },
+  {
+    ""text"": ""sftp://"",
+    ""value"": ""sftp://"",
+    ""enable"": ""sftp""
+  },
+  {
+    ""text"": ""egatwsdl://"",
+    ""value"": ""egatwsdl://""
+  },
+  {
+    ""text"": ""imap://"",
+    ""value"": ""imap://""
+  },
+  {
+    ""text"": ""iwis://"",
+    ""value"": ""iwis://""
+  },
+  {
+    ""text"": ""haiipic://"",
+    ""value"": ""haiipic://""
+  },
+  {
+    ""text"": ""haiipic2://"",
+    ""value"": ""haiipic2://""
+  },
+  {
+    ""text"": ""cpy://"",
+    ""value"": ""cpy://""
+  },
+  {
+    ""text"": ""swan://"",
+    ""value"": ""swan://""
+  },
+  {
+    ""text"": ""swat://"",
+    ""value"": ""swat://""
+  },
+  {
+    ""text"": ""webext://"",
+    ""value"": ""webext://""
+  },
+  {
+    ""text"": ""webextdata://"",
+    ""value"": ""webextdata://""
+  },
+  {
+    ""text"": ""wrfroms://"",
+    ""value"": ""wrfroms://""
+  },
+  {
+    ""text"": ""swan-img://"",
+    ""value"": ""swanimg://""
+  }
+]"|"Dropdown List ของชื่อ driver "
+"(system)"|f|"bof.DataIntRpt.EventLog.DateRange"|"30"|"Date Range ของหน้าจอรายงานเหตุการณ์นำเข้าข้อมูล"
+"(system)"|f|"server.service.dataimport.RDLNodes.node0"|"{
+		""user"": ""cim"",
+		""host"": ""192.168.12.189"",
+		""key"": ""!!!@@@encrypt(your_password_here)@@@!!!"",
+		""pathprefix"": ""dataimport"",
+		""timeout_seconds"": 1
+	}"|"รายละเอียดของเครื่อง converter"
+"(system)"|f|"Frontend.analyst.Radar.RadarTypeOrder"|"[{
+	""radar_type"": ""cri240"",
+	""radar_name"": ""เรดาห์ที่เชียงราย รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""lmp240"",
+	""radar_name"": ""เรดาห์ที่ลำพูน รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""nan240"",
+	""radar_name"": ""เรดาห์ที่น่าน รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""nan120"",
+	""radar_name"": ""เรดาห์ที่น่าน รัศมี 120 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""phs240"",
+	""radar_name"": ""เรดาห์ที่พิษณุโลก รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""pnb240"",
+	""radar_name"": ""เรดาห์ที่เพชรบูรณ์ รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""kkn240"",
+	""radar_name"": ""เรดาห์ที่ขอนแก่น รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""skn240"",
+	""radar_name"": ""เรดาห์ที่สกลนคร รัศมี 240 กม."",
+	""radar_frequency"": 15
+},
+{
+	""radar_type"": ""srn240"",
+	""radar_name"": ""เรดาห์ที่สุรินทร์ รัศมี 240 กม."",
+	""radar_frequency"": 15
+},
+{
+	""radar_type"": ""ubn240"",
+	""radar_name"": ""เรดาห์ที่อุบลราชธานี รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""ubn120"",
+	""radar_name"": ""เรดาห์ที่อุบลราชธานี รัศมี 120 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""chn240"",
+	""radar_name"": ""เรดาห์ที่ชัยนาท รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""kkw240"",
+	""radar_name"": ""เรดาห์ที่นครนายก รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""svp240"",
+	""radar_name"": ""เรดาห์ที่สุวรรณภูมิ รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""svp120"",
+	""radar_name"": ""เรดาห์ที่สุวรรณภูมิ รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""ryg240"",
+	""radar_name"": ""เรดาห์ที่ระยอง รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""skm240"",
+	""radar_name"": ""เรดาห์ที่สมุทรสงคราม รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""skm120"",
+	""radar_name"": ""เรดาห์ที่สมุทรสงคราม รัศมี 120 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""hhn240"",
+	""radar_name"": ""เรดาห์ทีหัวหิน รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""cmp240"",
+	""radar_name"": ""เรดาห์ที่ชุมพร รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""srt240"",
+	""radar_name"": ""เรดาห์ที่สุราษฎร์ธานี รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""pkt240"",
+	""radar_name"": ""เรดาห์ที่ภูเก็ต รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""pkt120"",
+	""radar_name"": ""เรดาห์ที่ภูเก็ต รัศมี 120 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""krb240"",
+	""radar_name"": ""เรดาห์ที่กระบี่ รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""stp240"",
+	""radar_name"": ""เรดาห์ที่สงขลา รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""nrt240"",
+	""radar_name"": ""เรดาห์ที่นราธิวาส รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""oki240"",
+	""radar_name"": ""เรดาห์ที่อมก๋อย รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""pmi240"",
+	""radar_name"": ""เรดาห์ที่พิมาย รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""sat240"",
+	""radar_name"": ""เรดาห์ที่สัตหีบ รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""tkh240"",
+	""radar_name"": ""เรดาห์ที่ตาคลี รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""pn240"",
+	""radar_name"": ""เรดาห์ที่พนม รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""njk240"",
+	""radar_name"": ""เรดาห์ที่หนองจอก รัศมี 240 กม."",
+	""radar_frequency"": 60
+},
+{
+	""radar_type"": ""nk240"",
+	""radar_name"": ""เรดาห์ที่หนองแขม รัศมี 240 กม."",
+	""radar_frequency"": 60
+}]"|""
+"(system)"|f|"server.service.dataimport.UploadPathName"|"/data/thaiwater/thaiwaterdata/static"|"Temp For UploadFile"
+"(system)"|t|"server.model.uac.PermissionGroupColor_101"|"EC47FF"|""
+"(system)"|t|"bof.EventMgt.PermissionGroup.Color_13"|""|"Color Setting PermissionGroup ID 13"
+"(system)"|t|"bof.EventMgt.PermissionGroup.Color_1"|""|"Color Setting PermissionGroup ID 1"
+"(system)"|t|"bof.EventMgt.PermissionGroup.Color_10"|""|"Color Setting PermissionGroup ID 10"
+"(system)"|t|"Frontend.analyst.rain_data_type"|"[
+  {
+    ""text"": ""ฝน 24 ชั่วโมง"",
+    ""graph"": ""rain24_graph"",
+    ""table"": ""rain24""
+  },
+  {
+    ""text"": ""ฝนวันนี้"",
+    ""graph"": ""rain_today_graph"",
+    ""table"": ""rain_today""
+  },
+  {
+    ""text"": ""ฝนวานนี้"",
+    ""graph"": ""rain_daily_graph"",
+    ""table"": ""rain_daily""
+  },
+  {
+    ""text"": ""ฝนรายเดือน"",
+    ""graph"": ""rain_monthly_graph"",
+    ""table"": ""rain_monthly""
+  },
+  {
+    ""text"": ""ฝนรายปี"",
+    ""graph"": ""rain_yearly_graph"",
+    ""table"": ""rain_yearly""
+  }
+]"|"ชนิดข้อมูลของฝน ในระบบ นักวิเคราะห์"
+"(system)"|t|"Frontend.public.dam_scale_color"|"{
+  ""scale"": [
+    {
+      ""operator"": "">"",
+      ""term"": ""100"",
+      ""color"": ""#C70000"",
+      ""colorname"": ""min"",
+      ""text"": "">100""
+    },
+    {
+      ""operator"": "">"",
+      ""term"": ""80"",
+      ""color"": ""#FF0000"",
+      ""colorname"": ""red"",
+      ""text"": ""81-100""
+    },
+    {
+      ""operator"": "">"",
+      ""term"": ""50"",
+      ""color"": ""#003CFA"",
+      ""colorname"": ""blue"",
+      ""text"": ""51-80""
+    },
+    {
+      ""operator"": "">"",
+      ""term"": ""30"",
+      ""color"": ""#00B050"",
+      ""colorname"": ""green"",
+      ""text"": ""31-50""
+    },
+    {
+      ""operator"": ""<="",
+      ""term"": ""30"",
+      ""color"": ""#FFC000"",
+      ""colorname"": ""yellow"",
+      ""text"": ""<=30""
+    }
+  ],
+  ""low"": {
+    ""color"": ""#FFC000"",
+    ""trans"": ""dam_low_text"",
+    ""text"": ""<font color='#FFC000'>น้ำน้อยวิกฤต(%ใช้การฯ)</font>""
+  },
+  ""high"": {
+    ""color"": ""#FF0000"",
+    ""trans"": ""dam_high_text"",
+    ""text"": ""<font color='#FF0000'>น้ำมาก(%รนก.)</font>""
+  }
+}"|"สเกลสีของเขื่อน"
+"(system)"|t|"server.model.uac.PermissionGroupColor_0"|""|""
+"(system)"|t|"Frontend.public.storm_setting"|"[
+  {
+    ""operator"": "">"",
+    ""term"": ""135"",
+    ""color"": ""#CC00CC"",
+    ""knots_text"": "">135"",
+    ""mph_text"": "">155"",
+    ""kmh_text"": "">250"",
+    ""category"": ""Cat 5"",
+    ""strength"": ""Typhoon Cat 5"",
+    ""scale_text"": ""รุนแรงมาก""
+  },
+  {
+    ""operator"": "">="",
+    ""term"": ""114"",
+    ""color"": ""#FF0000"",
+    ""knots_text"": ""114-135"",
+    ""mph_text"": ""131-155"",
+    ""kmh_text"": ""211-250"",
+    ""category"": ""Cat 4"",
+    ""strength"": ""Typhoon Cat 4""
+  },
+  {
+    ""operator"": "">="",
+    ""term"": ""96"",
+    ""color"": ""#FF6600"",
+    ""knots_text"": ""96-113"",
+    ""mph_text"": ""111-130"",
+    ""kmh_text"": ""178-210"",
+    ""category"": ""Cat 3"",
+    ""strength"": ""Typhoon Cat 3""
+  },
+  {
+    ""operator"": "">="",
+    ""term"": ""83"",
+    ""color"": ""#FFCC00"",
+    ""knots_text"": ""83-95"",
+    ""mph_text"": ""96-110"",
+    ""kmh_text"": ""154-177"",
+    ""category"": ""Cat 2"",
+    ""strength"": ""Typhoon Cat 2""
+  },
+  {
+    ""operator"": "">="",
+    ""term"": ""64"",
+    ""color"": ""#FFFF00"",
+    ""knots_text"": ""64-82"",
+    ""mph_text"": ""74-95"",
+    ""kmh_text"": ""119-153"",
+    ""category"": ""Cat 1"",
+    ""strength"": ""Typhoon Cat 1""
+  },
+  {
+    ""operator"": "">="",
+    ""term"": ""34"",
+    ""color"": ""#00FF00"",
+    ""knots_text"": ""34-63"",
+    ""mph_text"": ""39-73"",
+    ""kmh_text"": ""63-118"",
+    ""category"": ""TS"",
+    ""strength"": ""Tropical Storm""
+  },
+  {
+    ""operator"": ""<"",
+    ""term"": ""34"",
+    ""color"": ""#00CCFF"",
+    ""knots_text"": ""<34"",
+    ""mph_text"": ""<39"",
+    ""kmh_text"": ""<63"",
+    ""category"": ""TD"",
+    ""strength"": ""Tropical Depression"",
+    ""scale_text"": ""รุนแรงน้อย""
+  }
+]"|"เกณฑ์ของพายุ"
+"(system)"|f|"bof.EventMgt.EventLogCategory.Color_39"|"DCFFAD"|"Color Setting for EventLogCategory ID '39'"
+"(system)"|f|"bof.EventMgt.EventLogCategory.Color_62"|"66FFED"|"Color Setting for EventLogCategory ID '62'"
+"(system)"|t|"Frontend.public.waterquality_data_type"|"[
+  {
+    ""id"": ""1"",
+    ""value"": ""salinity"",
+    ""text"": ""ความเค็ม(g/L)"",
+    ""name"": {
+      ""th"": ""ความเค็ม(g/L)"",
+      ""en"": ""salinity(g/L)""
+    }
+  },
+  {
+    ""id"": ""2"",
+    ""value"": ""ph"",
+    ""text"": ""กรด-ด่าง(pH)"",
+    ""name"": {
+      ""th"": ""กรด-ด่าง(pH)"",
+      ""en"": ""pH""
+    }
+  },
+  {
+    ""id"": ""3"",
+    ""value"": ""turbid"",
+    ""text"": ""ความขุ่น(ntu)"",
+    ""name"": {
+      ""th"": ""ความขุ่น(ntu)"",
+      ""en"": ""turbid(ntu)""
+    }
+  },
+  {
+    ""id"": ""4"",
+    ""value"": ""conductivity"",
+    ""text"": ""ความนำไฟฟ้า(µS/cm)"",
+    ""name"": {
+      ""th"": ""ความนำไฟฟ้า(µS/cm)"",
+      ""en"": ""ec(µS/cm)""
+    }
+  },
+  {
+    ""id"": ""5"",
+    ""value"": ""tds"",
+    ""text"": ""สารละลาย(mg/L)"",
+    ""name"": {
+      ""th"": ""สารละลาย(mg/L)"",
+      ""en"": ""tds(mg/L)""
+    }
+  },
+  {
+    ""id"": ""6"",
+    ""value"": ""chlorophyll"",
+    ""text"": ""คลอโรฟิลล์(qg/L)"",
+    ""name"": {
+      ""th"": ""คลอโรฟิลล์(qg/L)"",
+      ""en"": ""chlorophyll(qg/L)""
+    }
+  },
+  {
+    ""id"": ""7"",
+    ""value"": ""do"",
+    ""text"": ""ออกซิเจนในน้ำ(mg/L)"",
+    ""name"": {
+      ""th"": ""ออกซิเจนในน้ำ(mg/L)"",
+      ""en"": ""DO(mg/L)""
+    }
+  },
+  {
+    ""id"": ""8"",
+    ""value"": ""temp"",
+    ""text"": ""อุณหภูมิ(c)"",
+    ""name"": {
+      ""th"": ""อุณหภูมิ(c)"",
+      ""en"": ""temp(c)""
+    }
+  }
+]"|"ชนิดข้อมูลของ คุณภาพน้ำ"
+"(system)"|t|"server.model.uac.PermissionGroupColor_220"|"2DFFEC"|""
+"(system)"|t|"bof.EventMgt.EventLogSinkTarget.Lang"|"[
+  {
+    ""text"": ""th"",
+    ""value"": ""th""
+  }
+]"|""
+"(system)"|f|"bof.EventMgt.EventLogCategory.Color_59"|""|"Color Setting for EventLogCategory ID '59'"
+"(system)"|t|"bof.EventMgt.PermissionGroup.Color_222"|""|"Color Setting PermissionGroup ID 222"
+"(system)"|t|"bof.EventMgt.PermissionGroup.Color_50"|""|"Color Setting PermissionGroup ID 50"
+"(system)"|t|"bof.Tool.DisplaySetting.SettingList"|"[
+  {
+    ""code"": ""Frontend.public.dam_scale_color"",
+    ""name"": ""การตั้งค่าเขื่อน""
+  },
+  {
+    ""code"": ""Frontend.public.rain_setting"",
+    ""name"": ""การตั้งค่าฝน""
+  },
+  {
+    ""code"": ""Frontend.public.waterlevel_setting"",
+    ""name"": ""การตั้งค่าระดับน้ำ""
+  },
+  {
+    ""code"": ""Frontend.public.waterquality_setting"",
+    ""name"": ""การตั้งค่าคุณภาพน้ำ""
+  },
+  {
+    ""code"": ""Frontend.public.wave_setting"",
+    ""name"": ""การตั้งค่าคลื่น""
+  },
+  {
+    ""code"": ""Frontend.public.pre_rain_setting"",
+    ""name"": ""การตั้งค่าคาดการณ์ฝน""
+  },
+  {
+    ""code"": ""Frontend.public.storm_setting"",
+    ""name"": ""การตั้งค่าพายุ""
+  },
+  {
+    ""code"": ""Frontend.public.warning_setting"",
+    ""name"": ""การตั้งค่าประกาศภัย""
+  },
+  {
+    ""code"": ""Frontend.Analyst.Dam.OnLoadDamGraph"",
+    ""name"": ""การตั้งค่าแสดงกราฟเขื่อน (หน้าจอผู้สำหรับวิเคราะห์)""
+  }
+]"|"ลิสต์รายการตั้งค่าของหน้าจอ backoffice/tool/display_setting"
+"(system)"|t|"Frontend.public.wave_setting"|"{
+  ""color"": ""#ff0000"",
+  ""colorname"": ""red"",
+  ""trans"": ""predict_wave_text""
+}"|"สเกลสีคาดการณ์คลื่น"
+"server1"|f|"server.ListenAddrs"|"api2-lb1.thaiwater.net:9201"|"Listen Address - Server:port ของเครื่อง api"
+"server2"|f|"server.ListenAddrs"|"172.24.128.1:9200"|""
+"server2"|f|"server.StoragePath"|"E:/TW30DATA"|"Debug server path at local for programmer"
+"server3"|f|"server.ListenAddrs"|"api2-lb2.thaiwater.net:9202"|"Listen Address - Server:port ของเครื่อง api"

@@ -1,0 +1,40 @@
+EXENAME=thaiwater30
+TARGETDIR=${HOME}/haii-api-server
+SRVSCRIPT=sh ${TARGETDIR}/haii-api-server
+GCFLAGS=-gcflags "-N -l"
+
+SRVSCRIPT2=/home/api2/haii-api-server/haii-api-server
+
+GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD 2> /dev/null)
+ifeq (,$(GIT_BRANCH))
+GIT_BRANCH="*"
+endif
+
+GIT_TAG=$(shell git describe --tags 2> /dev/null)
+ifneq (,$(GIT_TAG))
+V_DOT="."
+endif
+
+LDFLAGS=-ldflags "-X main.BuildVersion=$(GIT_BRANCH)$(V_DOT)$(GIT_TAG)_build_$(shell date +%FT%T%z)"
+
+all:
+	cd ../util && go install -v ${GCFLAGS} ${LDFLAGS} ./... 	
+	cd ../server && go install -v ${GCFLAGS} ${LDFLAGS} ./...
+	go install -v ${GCFLAGS} ${LDFLAGS} ./...
+	
+pull:
+	git pull
+	cd ../server && git pull
+	cd ../util   && git pull		
+
+clean:
+	cd ../util && go clean -i -x ./...
+	cd ../server && go clean -i -x ./...
+	go clean -i -x ./...
+
+install: all
+	${SRVSCRIPT} install
+	if [ -f "${SRVSCRIPT2}" ]; then ${SRVSCRIPT2} install; fi
+
+install-docs:
+	${SRVSCRIPT} install-docs

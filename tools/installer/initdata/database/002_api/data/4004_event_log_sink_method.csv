@@ -1,0 +1,5 @@
+"event_log_sink_method_type_id"|"description"|"sink_params"
+1|"SMTP send 1 group"|"{""system_setting_name"":""thaiwater30.service.event_management.smtpserver.smtp1""}"
+3|"SMTP send 2 user"|"{""system_setting_name"":""thaiwater30.service.event_management.smtpserver.smtp1""}"
+1|"SMTP send Data"|"{""server"":""outgoing.mail.go.th:465"",""from_email"":""APIServer<noreply_thaiwater@haii.or.th>"",""user"":""noreply_thaiwater@haii.or.th"",""password"":""!!!@@@encrypt(your_password_here)@@@!!!"",""timeout_seconds"":3}"
+2|"SMS-EXAMPLE"|"{""system_setting_name"":""thaiwater30.service.event_management.smtpserver.smtp1""}"

@@ -1,0 +1,49 @@
+-- Table: public.weather_forecast
+
+-- DROP TABLE public.weather_forecast;
+
+CREATE TABLE public.weather_forecast
+(
+  id integer NOT NULL DEFAULT nextval('weather_forcast_id_seq'::regclass), -- รหัสพยากรณ์สภาพอากาศรายภาค
+  agency_id bigint NOT NULL, -- รหัสหน่วยงาน agency number
+  geocode_id bigint, -- ลำดับข้อมูลขอบเขตการปกครองของประเทศไทย Geocode's serial number
+  weather_date date NOT NULL, -- วันที่พยากรณ์สภาพอากาศ
+  overall_forcast json, -- ภาพรวมการพยากรณ์สภาพอากาศ
+  region_forcast json, -- พยากรณ์สภาพอากาศรายภาค
+  created_by bigint, -- ชื่อผู้ใช้งานที่สร้างข้อมูล created user
+  created_at timestamp with time zone NOT NULL DEFAULT now(), -- วันที่สร้างข้อมูล created date
+  updated_by bigint, -- ชื่อผู้ใช้งานที่ปรับปรุงข้อมูล updated user
+  updated_at timestamp with time zone NOT NULL DEFAULT now(), -- วันที่ปรับปรุงข้อมูลล่าสุด updated date
+  deleted_by bigint, -- ชื่อผู้ใช้งานที่ลบข้อมูล deleted user
+  deleted_at timestamp with time zone NOT NULL DEFAULT '1970-01-01 07:00:00+07'::timestamp with time zone, -- วันที่ลบข้อมูล deleted date
+  dataimport_log_id bigint,
+  CONSTRAINT pk_weather_forcast PRIMARY KEY (id),
+  CONSTRAINT fk_weather__reference_agency FOREIGN KEY (agency_id)
+      REFERENCES public.agency (id) MATCH SIMPLE
+      ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT fk_weather__reference_lt_geoco FOREIGN KEY (geocode_id)
+      REFERENCES public.lt_geocode (id) MATCH SIMPLE
+      ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT uk_weather_forcast UNIQUE (id, weather_date, deleted_at),
+  CONSTRAINT pt_weather_forecast_weather_date CHECK (false) NO INHERIT
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.weather_forecast
+  OWNER TO thaiwater30;
+COMMENT ON TABLE public.weather_forecast
+  IS 'พยากรณ์สภาพอากาศรายภาค';
+COMMENT ON COLUMN public.weather_forecast.id IS 'รหัสพยากรณ์สภาพอากาศรายภาค';
+COMMENT ON COLUMN public.weather_forecast.agency_id IS 'รหัสหน่วยงาน agency number';
+COMMENT ON COLUMN public.weather_forecast.geocode_id IS 'ลำดับข้อมูลขอบเขตการปกครองของประเทศไทย Geocode''s serial number';
+COMMENT ON COLUMN public.weather_forecast.weather_date IS 'วันที่พยากรณ์สภาพอากาศ';
+COMMENT ON COLUMN public.weather_forecast.overall_forcast IS 'ภาพรวมการพยากรณ์สภาพอากาศ';
+COMMENT ON COLUMN public.weather_forecast.region_forcast IS 'พยากรณ์สภาพอากาศรายภาค';
+COMMENT ON COLUMN public.weather_forecast.created_by IS 'ชื่อผู้ใช้งานที่สร้างข้อมูล created user';
+COMMENT ON COLUMN public.weather_forecast.created_at IS 'วันที่สร้างข้อมูล created date';
+COMMENT ON COLUMN public.weather_forecast.updated_by IS 'ชื่อผู้ใช้งานที่ปรับปรุงข้อมูล updated user';
+COMMENT ON COLUMN public.weather_forecast.updated_at IS 'วันที่ปรับปรุงข้อมูลล่าสุด updated date';
+COMMENT ON COLUMN public.weather_forecast.deleted_by IS 'ชื่อผู้ใช้งานที่ลบข้อมูล deleted user';
+COMMENT ON COLUMN public.weather_forecast.deleted_at IS 'วันที่ลบข้อมูล deleted date';
+

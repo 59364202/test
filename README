@@ -1,0 +1,221 @@
+* 2020-03-06 ปิด CI/CD เนื่องจาก กรณี api มีปัญหา restart service ช้ามากจนเกิด timeout หลังจากนั้น git runner จะไม่สามารถรัน job อื่น ๆ ได้อีก
+
+API-Server Installation from source code
+
+0. Prerequisite program and data
+	0.1) Install git (>=2.0),
+		>> https://tecadmin.net/install-git-2-0-on-centos-rhel-fedora/
+   
+	0.2) Install go (1.7.x) to ~/go
+		0.2.1) Download git for Linux amd64 from https://golang.org/dl/ to ~/go
+			$ cd ~
+			$ wget https://storage.googleapis.com/golang/go1.7.4.linux-amd64.tar.gz
+			$ tar xvfz go1.7.4.linux-amd64.tar.gz
+			
+		0.2.2) Set go related environment variables in ~/.bash_profile by adding 
+			the following lines:
+   
+			PATH=$HOME/bin:$PATH:$HOME/go/bin
+			GOROOT=$HOME/go
+			GOPATH=$HOME/go_local
+			export PATH GOPATH GOROOT
+		
+		0.2.3) logout and re login to activate the changes in .bash_profile
+   
+	0.3) Database connection information. The required information are:
+		1. Database host/port
+		2. Database name
+		3. Database user/password
+		Note: database user must be the owner of the database     
+		
+	0.4) path to server storage on NFS storage server. See 
+			https://www.centos.org/docs/5/html/5.1/Deployment_Guide/s2-nfs-config-autofs.html
+		For more information about NFS and autofs.	
+		For example: /data/thaiwater/thaiwaterdata/serverstore
+		Note: user must be able to write to the given NFS storage
+		
+	0.5) URL to access to the API server cluster
+		For example: http://api2.thaiwater30.net:9200
+		
+	0.6) 256 bits primary encryption key for the cluster in hex string format
+		Note: You can use openssl to generate a random key with the following command:
+        $ /usr/bin/openssl rand -hex 32		
+		
+	0.7) IP address/port for a API server to listen to
+		For example: http://192.168.12.191:9200
+		Note: 0.5) and 0.6) can be the same for the cluster with one server and there is no plan to
+		add more servers to the cluster.		
+		
+	0.8) Unique server name in the cluster
+		For example: server1
+		
+	0.9) Dataimport node name and user/passwor and path to dataimport data on NFS storage server   
+        For example: server: 192.168.11.189
+					 user: thaiwater30
+					 password: abcd
+					 path: /home/thaiwater/thaiwaterdata/dataimport
+		Note: see dataimport node installation document for information about how to install and
+		config dataimport node.	
+		   
+1. Install api server from source code
+	1.1) Create a folder to store source code 
+		
+		$ mkdir -p ~/go_local/src/haii.or.th/api
+		$ cd ~/go_local/src/haii.or.th/api
+		
+	1.2) Use git clone to initialize api/server,api/util and api/thaiwater30
+		
+		$ git clone git@git.haii.or.th:cim_cws/api-server.git server
+		$ git clone git@git.haii.or.th:cim_cws/api-util.git util
+		$ git clone git@git.haii.or.th:cim_cws/api-thaiwater30.git thaiwater30
+		
+	1.3) Set the code brance of api/server to thaiwater30 , api/util to thaiwater30 
+		and thaiwater30 to master branch
+		
+		$ cd server
+		$ git branch thaiwater30
+		$ cd ../util
+		$ git branch thaiwater30
+			
+	1.3) Setup symbolic	for Makefile
+		
+		$ cd thaiwater30
+		$ ln -s Makefile.linux Makefile
+		
+	1.3) Build source code
+		
+		$ make all
+		
+		The executables will be saved in ~/go_local/bin folder	  
+		
+2. Intialize database for server cluster using the sql command files, 
+   create a schema and run each file from minimum number prefix to maximum number prefix using psql 
+   (except public schema which already existed)
+	2.1) api schema
+		    Files path:
+				schema:	~/go_local/src/haii.or.th/api/server/tools/installer/initdata/database/0001_api/schema
+				data: 	~/go_local/src/haii.or.th/api/server/tools/installer/initdata/database/0001_api/data
+			
+			$ psql
+				# CREATE SCHEMA api 
+				# \i ~/go_local/src/haii.or.th/api/server/tools/installer/initdata/database/0001_api/schema/0001_trigger.sql
+				...
+				# \i ~/go_local/src/haii.or.th/api/server/tools/installer/initdata/database/0001_api/schema/6002_user_resetpassword_log.sql
+				# \i ~/go_local/src/haii.or.th/api/server/tools/installer/initdata/database/0001_api/data/001_lt_agent_type.sql
+				...
+				# \i ~/go_local/src/haii.or.th/api/server/tools/installer/initdata/database/0001_api/data/010_agent.sql
+		Note: You can use psql ENVIRONMENT variables (https://www.postgresql.org/docs/9.5/static/libpq-envars.html) and the
+			following shell script to run all sql files in the folder instead of run each file name with \in
+				
+				for f in *.sql;
+				do
+					psql -f "$f"
+				done
+			
+	2.2) public schema (note public schema already existed , no need to run CREATE SCHEMA public command)
+			Files path:
+				schema:	~/go_local/src/haii.or.th/api/thaiwater30/installer/initdata/database/0001_public/schema
+				data: 	~/go_local/src/haii.or.th/api/thaiwater30/installer/initdata/database/0001_public/data
+				
+	2.3) dataservice schema 
+			schema:	~/go_local/src/haii.or.th/api/thaiwater30/installer/initdata/database/0002_dataservice/schema
+			data: 	~/go_local/src/haii.or.th/api/thaiwater30/installer/initdata/database/0002_dataservice/data
+			
+3. Create server startup script 
+	3.1) Create a script folder
+		$ mkdir -p ~/haii-api-server
+		
+	3.2) Set folder permission to prevent another user to see saved database password and primary encryption key	
+		$ chmod og-rwx ~/haii-api-server
+		
+	3.3) Create a folder to store log files
+		$ cd ~/haii-api-server
+		$ mkdir logs
+		
+	3.3) Create haii-api-servce.conf in script folder with following content. Replace database_username, 
+		database_password_in_urlencode, host, port and databasename with data acqured from step 0.3 ,
+		key from 0.6 and server_name from 0.8 :
+		
+		export TW30_DB=postgres://database_username:database_password_in_urlencode@host:port/databasename?sslmode=disable
+		export TW30_SERVER_AGENT=server_name_from_0_8
+		export TW30_KEY=key_from_0_6
+		SERVER_NAME=thaiwater30		
+		
+	3.4) Make a symbolic link from the start up script in source code 
+			~/go_local/src/haii.or.th/api/server/tools/script/haii-api-server
+		to the script folder
+		$ cd ~/haii-api-server
+		$ ln -s ../go_local/src/haii.or.th/api/server/tools/script/haii-api-server
+		
+	3.5) Add user cron job 
+			@reboot ~/haii-api-server/haii-api-server start
+		to start api server when server starts
+		
+		$ crontab -e
+			@reboot ~/haii-api-server/haii-api-server start
+				
+	3.6) Add user cron job 
+			0 1 * * * ~/go_local/bin/archivelog -logpath=/home/cim/haii-api-server/logs
+		to compress old log files	
+		
+		$ crontab -e
+			0 1 * * * ~/go_local/bin/archivelog -logpath=/home/cim/haii-api-server/logs
+
+4. Add cluster specified data
+	4.1) Service and groups
+		Use ~/go_local/bin/apidbinit and the CSV files in 
+			~/go_local/src/haii.or.th/api/thaiwater30/installer/initdata/service/service.csv and 
+			~/go_local/src/haii.or.th/api/thaiwater30/installer/initdata/service/group.csv 
+		to set up services and group:
+	
+			$ ~/go_local/bin/apidbinit -config ~/haii-api-server/haii-api-servce.conf addservice  ~/go_local/src/haii.or.th/api/thaiwater30/installer/initdata/service/service.csv
+			$ ~/go_local/bin/apidbinit -config ~/haii-api-server/haii-api-servce.conf addgroup  ~/go_local/src/haii.or.th/api/thaiwater30/installer/initdata/service/group.csv
+		
+	4.2) Web super user and group
+		Use apidbinit to add Web super user and group. The default group and super user name is "wheel" and "root".
+		Don't forget to replace web_root_password with the real password.
+		
+		The user "root" is a user that has the permission to acceess to all web menu specified in "group.csv" with category "srv".
+		  
+			$ ~/go_local/bin/apidbinit -config ~/haii-api-server/haii-api-servce.conf  addroot wheel root web_root_password
+		
+	4.3) Config dataimport 
+		4.3.1) Add remote converter node.
+			a) Set upload file path 
+				The server support manual dataimport via file upload. We need to set the path to store those files
+				in "server.service.dataimport.UploadPathName" setting of api.system_setting table.
+				
+					$ psql
+					#	INSERT INTO api.system_setting SET  
+			
+		
+		... to be written ...
+		... wait for download and dataset configuration in CSV format
+		
+	4.4) Add required system_setting 	
+		... to be written .. ... wait for data from programmers about require configs that can not be set from web page ...
+		
+5. Start server
+	7.1) install server executable to script folder and generate swagger document
+		$ cd ~/go_local/src/haii.or.th/api/thaiwater30
+		$ make pull install install-docs
+	  
+	7.2) start server
+		$ ~/haii-api-server	start
+		
+	7.3) check server status	
+		$ ~/haii-api-server	status
+		
+	7.4) stop server
+		$ ~/haii-api-server	stop
+		
+6. Install system cronjob to start API server when the server reboot and 
+	compress the old log file everyday at 01:00
+		$ crontab -e
+		  @reboot /home/user_name/haii-api-server/haii-api-server start
+		  0 1 * * * /home/user_name/go_local/bin/archivelog -logpath=/home/user_name/haii-api-server/logs
+		  (ESC)
+		  :wq
+		  (ESC)
+		  :wq		
+		

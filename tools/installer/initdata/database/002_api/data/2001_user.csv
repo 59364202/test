@@ -1,0 +1,45 @@
+"user_type_id:lookup(api.lt_user_type,id,name)"|account|full_name|password:bcrypt()|is_active|account_expired_at|password_lifespan_days|contact_email|contact_phone|national_id_number|rank|department_id|office_name|registration_document
+agent|import-haii-teleservice|HAII TeleService Data Importer||t|||||||||
+local|admin|คำแก้ว ดีต่อใจ|abcd|t|||valid_email_here||||||
+agent|dataimport-bma|BMA||t|||||||||
+agent|dataimport-dmr|DMR||t|||||||||
+agent|dataimport-dwr|DWR||t|||||||||
+agent|dataimport-egat|EGAT||t|||||||||
+agent|dataimport-pcd|PCD||t|||||||||
+agent|dataimport-tmd|TMD||t|||||||||
+agent|dataimport-gistda|GISTDA||t|||||||||
+agent|dataimport-rid|RID||t|||||||||
+agent|dataimport-md|MD||t|||||||||
+agent|dataimport-mwa|MWA||t|||||||||
+agent|haii-thaiwater30-www|HAII Thaiwater30 Front-end||t|||||||||
+agent|dataimport-dnp|DNP||t|||||||||
+agent|dataimport-haii|HAII||t|||||||||
+agent|dataimport-doh|DOH||t|||||||||
+agent|dataimport-bb|BB||t|||||||||
+agent|dataimport-drr|DRR||t|||||||||
+agent|dataimport-hd|HD||t|||||||||
+agent|dataimport-ldd|LDD||t|||||||||
+agent|dataimport-nesdb|NESDB||t|||||||||
+agent|dataimport-rtn|RTN||t|||||||||
+agent|dataimport-dgr|DGR||t|||||||||
+agent|dataimport-newagent|||t|||||||||
+agent|dataimport-ucl|||t|||||||||
+agent|dataimport-migrate|Migrate||t|||||||||
+agent|dataimport-provision|||t|||||||||
+ldap|pawanrat.cim@haii.or.th|Pawanrat Aksornsingchai(cim system)||t|||||||||
+agent|dataimport-disaster|||t|||||||||
+agent|dataimport-ieat|||t|||||||||
+agent|dataimport-pwa|||t|||||||||
+agent|dataimport-dna|||t|||||||||
+agent|dataimport-uns|||t|||||||||
+agent|dataimport-kou|||t|||||||||
+agent|dataimport-nexsat|||t|||||||||
+agent|dataimport-dt|||t|||||||||
+agent|dataimport-gsmaps|||t|||||||||
+agent|dataimport-trmm|||t|||||||||
+agent|dataimport-usda|||t|||||||||
+agent|dataimport-owi|||t|||||||||
+agent|dataimport-aviso|||t|||||||||
+agent|dataimport-usnrl|||t|||||||||
+agent|dataimport-trf|||t|||||||||
+agent|dataimport-krisdika|||t|||||||||
