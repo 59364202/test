@@ -16,12 +16,10 @@ type ResultAccessLog struct {
 	ReplyReason     string `json:"reply_reason"`      // example:`OK` ข้อความตอบกลับ
 	ClientIP        string `json:"client_ip"`         // example:`192.168.1.56` ip address client
 }
-
 type AgentName struct {
 	ID        interface{} `json:"id"`         // example:`40` ลำดับการเข้าถึง service
 	AgentName interface{} `json:"agent_name"` // example:`2017-06-07 17:51:00.067474+07` เวลาในการเรียก service
 }
-
 type MedthodService struct {
 	ID         int64  `json:"id"`          // example:`40` ลำดับการเข้าถึง service
 	MethodName string `json:"method_name"` // example:`2017-06-07 17:51:00.067474+07` เวลาในการเรียก service

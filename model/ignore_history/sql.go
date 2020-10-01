@@ -26,8 +26,6 @@ var sqlInsertHistory = ` INSERT INTO ignore_history (ignore_datetime, data_categ
 													, data_datetime, remark
 													, created_by, updated_by, created_at, updated_at, data_value) `
 
-var sqlDeleteHistory = ` DELETE FROM ignore_history`
-
 // var sqlSelectIgnoreData = ` SELECT ih.id
 // 								, ih.ignore_datetime
 // 								, ih.data_category

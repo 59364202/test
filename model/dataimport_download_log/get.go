@@ -3,13 +3,13 @@ package dataimport_download_log
 import (
 	"database/sql"
 	"encoding/json"
-	"fmt"
 
 	model_setting "haii.or.th/api/server/model/setting"
 	model_agency "haii.or.th/api/thaiwater30/model/agency"
 	model_metadata "haii.or.th/api/thaiwater30/model/metadata"
 	"haii.or.th/api/util/errors"
 	"haii.or.th/api/util/pqx"
+
 	//	"log"
 	"strconv"
 	"strings"
@@ -200,7 +200,6 @@ func getPercentDownloadInfo(year string, month string, start_date string, end_da
 
 	//Query
 	//	log.Printf(sqlCmdQuery)
-	fmt.Println(sqlCmdQuery)
 	_result, err = db.Query(sqlCmdQuery)
 	if err != nil {
 		return nil, pqx.GetRESTError(err)
@@ -237,6 +236,7 @@ func getPercentDownloadInfo(year string, month string, start_date string, end_da
 		objPercentDownload.Agency.Id = _agency_id.Int64
 		objPercentDownload.Agency.Agency_shortname = json.RawMessage(_agency_shortname.String)
 		objPercentDownload.Agency.Agency_name = json.RawMessage(_agency_name.String)
+		objPercentDownload.Agency.Year = year
 
 		data = append(data, objPercentDownload)
 	}
@@ -245,36 +245,64 @@ func getPercentDownloadInfo(year string, month string, start_date string, end_da
 	return data, nil
 }
 
+type Overall_multi_year struct {
+	Data_yaer             string        `json:"year"`
+	Data_connectionformat string        `json:"connectionformat"`
+	Data_overall          []interface{} `json:"data_overall"`
+}
+
+func GetOverAllMultipleYear(year, month, connectionformat string) (interface{}, error) {
+
+	// val := []string{"2020", "2019", "2018"}
+	var c interface{}
+	var data_overll = &Overall_multi_year{}
+
+	var a []*Struct_DownloadLog_Summary_Agency
+	var b error
+
+	a, b = getPercentDownloadInfo(year, month, "", "", connectionformat)
+
+	// fmt.Println("__NASA RESULT__", a)
+
+	data_overll.Data_yaer = year
+	data_overll.Data_connectionformat = connectionformat
+	data_overll.Data_overall = append(data_overll.Data_overall, a)
+	c = data_overll
+
+	return c, b
+
+}
+
 //Description: Get Download Size (Group by Each Date in a Month)
 //Input Parameter: year*, month*, agency_id*
-func GetDownloadSizeByAgency(param *Struct_DownloadLog_Inputparam) ([]*Struct_DownloadLog, error) {
+func GetDownloadSizeByAgency(AgencyID, Month, Year string) ([]*Struct_DownloadLog, error) {
 
 	//Check Input Parameters
-	if param.Year == "" {
+	if Year == "" {
 		return nil, errors.Repack(errors.New("'year' is not null."))
 	} else {
 		arrYear := []string{}
-		arrYear = strings.Split(param.Year, ",")
+		arrYear = strings.Split(Year, ",")
 		if len(arrYear) > 1 {
 			return nil, errors.Repack(errors.New("'year' is not multiple."))
 		}
 	}
 
-	if param.Month == "" {
+	if Month == "" {
 		return nil, errors.Repack(errors.New("'month' is not null."))
 	} else {
 		arrMonth := []string{}
-		arrMonth = strings.Split(param.Month, ",")
+		arrMonth = strings.Split(Month, ",")
 		if len(arrMonth) > 1 {
 			return nil, errors.Repack(errors.New("'month' is not multiple."))
 		}
 	}
 
-	if param.AgencyID == "" {
+	if AgencyID == "" {
 		return nil, errors.Repack(errors.New("'agency_id' is not null."))
 	} else {
 		arrAgencyID := []string{}
-		arrAgencyID = strings.Split(param.AgencyID, ",")
+		arrAgencyID = strings.Split(AgencyID, ",")
 		if len(arrAgencyID) > 1 {
 			return nil, errors.Repack(errors.New("'agency_id' is not multiple."))
 		}
@@ -306,8 +334,8 @@ func GetDownloadSizeByAgency(param *Struct_DownloadLog_Inputparam) ([]*Struct_Do
 	)
 
 	//Query
-	//	log.Printf(sqlSelectMonthlyDownloadSizeByAgency, param.Month, param.Year, param.AgencyID, param.Year+"-"+param.Month+"-01")
-	_result, err = db.Query(sqlSelectMonthlyDownloadSizeByAgency, param.Month, param.Year, param.AgencyID, param.Year+"-"+param.Month+"-01")
+	//	log.Printf(sqlSelectMonthlyDownloadSizeByAgency, param.Month, Year, param.AgencyID, Year+"-"+param.Month+"-01")
+	_result, err = db.Query(sqlSelectMonthlyDownloadSizeByAgency, Month, Year, AgencyID, Year+"-"+Month+"-01")
 	if err != nil {
 		return nil, pqx.GetRESTError(err)
 	}
@@ -334,7 +362,258 @@ func GetDownloadSizeByAgency(param *Struct_DownloadLog_Inputparam) ([]*Struct_Do
 	}
 
 	//Return Data
-	return data, nil
+	return data, err
+}
+
+// pram array
+// converd [1,2,3] -> string 1,2,3
+func GetStrInArr(arr []string) string {
+	str := ""
+	for i, value := range arr {
+		if i == len(arr)-1 {
+			str += value
+		} else {
+			str += value + ","
+		}
+	}
+	return str
+}
+
+func GetMultipleDownlaodAllAgency(AgencyID string, Year []string) ([]*Struct_DownloadLog, error) {
+
+	YearText := GetStrInArr(Year)
+
+	//Open Database
+	db, err := pqx.Open()
+	if err != nil {
+		return nil, errors.Repack(err)
+	}
+
+	sqltext := `SELECT  tall.date_time as datatime , 
+						(CASE 
+								WHEN tall.download_size_mb IS NULL THEN 0 
+								ELSE tall.download_size_mb 
+						END) AS download_size_mb , 
+						(CASE 
+								WHEN tall.download_files_count IS NULL THEN 0 
+								ELSE tall.download_files_count 
+						END) AS download_files_count , 
+						(CASE 
+								WHEN tall.import_success_row IS NULL THEN 0 
+								ELSE tall.import_success_row 
+						END) AS import_success_row 
+				FROM
+						(( SELECT unnest(ARRAY[` + YearText + `]) as date_time ) dts
+						left join 
+						(SELECT   extract(year FROM dll.download_begin_at) AS download_date ,
+								SUM(dll.download_bytes_count)/ 1048576::NUMERIC AS download_size_mb -- / 1073741824::numeric AS download_size_gb 
+								, 
+								SUM(dll.download_files_count) AS download_files_count , 
+								SUM(dsl.import_success_row)   AS import_success_row 
+								FROM      api.dataimport_download_log dll 
+								left join api.dataimport_dataset_log dsl 
+								ON        dll.id = dsl.dataimport_download_log_id 
+								left join metadata mt 
+								ON        mt.dataimport_download_id = dll.dataimport_download_id 
+								AND       mt.dataimport_dataset_id = dsl.dataimport_dataset_id 
+								left join agency agt 
+								ON        agt.id = mt.agency_id 
+						WHERE     dll.download_path IS NOT NULL 
+								AND       extract(month FROM dll.download_begin_at) BETWEEN 1 AND 12 
+								AND       extract(year FROM dll.download_begin_at) IN (` + YearText + `)
+											-- AND mt.metadata_status = 'เชื่อมโยง' 
+								AND       mt.metadatastatus_id = 1 
+								AND       mt.agency_id = ` + AgencyID + ` 
+								GROUP BY  extract(year FROM dll.download_begin_at)
+								ORDER BY  extract(year FROM dll.download_begin_at)) tdl ON dts.date_time = tdl.download_date ) tall
+								GROUP BY tall.date_time , tall.download_size_mb,tall.download_files_count,tall.import_success_row
+								ORDER BY tall.date_time `
+
+	//Variables
+	var (
+		data            []*Struct_DownloadLog
+		objDownloadSize *Struct_DownloadLog
+
+		_download_date    sql.NullString
+		_download_size    sql.NullFloat64
+		_number_of_file   sql.NullInt64
+		_number_of_record sql.NullInt64
+
+		_result *sql.Rows
+	)
+
+	_result, err = db.Query(sqltext)
+
+	if err != nil {
+		return nil, pqx.GetRESTError(err)
+	}
+	defer _result.Close()
+
+	data = make([]*Struct_DownloadLog, 0)
+
+	// Loop data result
+	for _result.Next() {
+
+		//Scan to execute query with variables
+		err := _result.Scan(&_download_date, &_download_size, &_number_of_file, &_number_of_record)
+		if err != nil {
+			return nil, err
+		}
+
+		objDownloadSize = &Struct_DownloadLog{}
+		objDownloadSize.DownloadDate = _download_date.String
+		objDownloadSize.NumberOfDownloadSize = _download_size.Float64
+		objDownloadSize.NumberOfFileDownload = _number_of_file.Int64
+		objDownloadSize.NumberOfDataRecord = _number_of_record.Int64
+
+		data = append(data, objDownloadSize)
+	}
+
+	//Return Data
+	return data, err
+}
+
+func GetDownlaodAllAgencyAndMonthAndYear(AgencyID, Month, Year []string) ([]*Struct_DownloadLog, error) {
+
+	//GetStrInArr [1,2,3] -> 1,2,3
+	AgencyIdText := GetStrInArr(AgencyID)
+	MonthText := GetStrInArr(Month)
+	YearText := GetStrInArr(Year)
+
+	//Open Database
+	db, err := pqx.Open()
+	if err != nil {
+		return nil, errors.Repack(err)
+	}
+
+	sqltext2 := `SELECT   N'sum_all' AS sum_all ,
+					SUM(dll.download_bytes_count)/ 1048576::NUMERIC AS download_size_mb -- / 1073741824::numeric AS download_size_gb 
+					, 
+					SUM(dll.download_files_count) AS download_files_count , 
+					SUM(dsl.import_success_row)   AS import_success_row 
+					FROM      api.dataimport_download_log dll 
+					left join api.dataimport_dataset_log dsl 
+					ON        dll.id = dsl.dataimport_download_log_id 
+					left join metadata mt 
+					ON        mt.dataimport_download_id = dll.dataimport_download_id 
+					AND       mt.dataimport_dataset_id = dsl.dataimport_dataset_id 
+					left join agency agt 
+					ON        agt.id = mt.agency_id 
+				WHERE     dll.download_path IS NOT NULL 
+					AND       extract(month FROM dll.download_begin_at) IN (` + MonthText + `)
+					AND       extract(year FROM dll.download_begin_at) IN (` + YearText + `)
+							-- AND mt.metadata_status = 'เชื่อมโยง' 
+					AND       mt.metadatastatus_id = 1 
+					AND       mt.agency_id IN (` + AgencyIdText + `) 
+					GROUP BY  extract(year FROM dll.download_begin_at)
+					ORDER BY  extract(year FROM dll.download_begin_at) `
+
+	//Variables
+	var (
+		data            []*Struct_DownloadLog
+		objDownloadSize *Struct_DownloadLog
+
+		_download_date    sql.NullString
+		_download_size    sql.NullFloat64
+		_number_of_file   sql.NullInt64
+		_number_of_record sql.NullInt64
+
+		_result *sql.Rows
+	)
+
+	_result, err = db.Query(sqltext2)
+
+	if err != nil {
+		return nil, pqx.GetRESTError(err)
+	}
+	defer _result.Close()
+
+	data = make([]*Struct_DownloadLog, 0)
+
+	// Loop data result
+	for _result.Next() {
+
+		//Scan to execute query with variables
+		err := _result.Scan(&_download_date, &_download_size, &_number_of_file, &_number_of_record)
+		if err != nil {
+			return nil, err
+		}
+
+		objDownloadSize = &Struct_DownloadLog{}
+		objDownloadSize.DownloadDate = _download_date.String
+		objDownloadSize.NumberOfDownloadSize = _download_size.Float64
+		objDownloadSize.NumberOfFileDownload = _number_of_file.Int64
+		objDownloadSize.NumberOfDataRecord = _number_of_record.Int64
+
+		data = append(data, objDownloadSize)
+	}
+
+	//Return Data
+	return data, err
+}
+
+func GetMultipleByAgency(AgencyID, Month, Year []string) ([]*Struct_Multiple_Agency, error) {
+	var data []*Struct_Multiple_Agency
+	var err error
+
+	AgencyIdText := GetStrInArr(AgencyID)
+
+	//Open Database
+	db, err := pqx.Open()
+	if err != nil {
+		return nil, errors.Repack(err)
+	}
+
+	sqlAgency := `SELECT  id , agency_name , agency_shortname FROM agency WHERE ID in (` + AgencyIdText + `)`
+
+	var (
+		_rs   []*Struct_DownloadLog
+		_data *Struct_Multiple_Agency
+
+		_agency_id        sql.NullInt64
+		_agency_name      sql.NullString
+		_agency_shortname sql.NullString
+
+		_result *sql.Rows
+	)
+
+	_result, err = db.Query(sqlAgency)
+
+	if err != nil {
+		return nil, pqx.GetRESTError(err)
+	}
+	defer _result.Close()
+
+	data = make([]*Struct_Multiple_Agency, 0)
+
+	num := 0
+	// Loop data result
+	for _result.Next() {
+		num = num + 1
+		//Scan to execute query with variables
+		err := _result.Scan(&_agency_id, &_agency_name, &_agency_shortname)
+		if err != nil {
+			return nil, err
+		}
+
+		if !_agency_shortname.Valid || _agency_shortname.String == "" {
+			_agency_shortname.String = "{}"
+		}
+		if !_agency_name.Valid || _agency_name.String == "" {
+			_agency_name.String = "{}"
+		}
+
+		_data = &Struct_Multiple_Agency{}
+		_data.Agency_ID = _agency_id.Int64
+		_data.Agency_Name = json.RawMessage(_agency_name.String)
+		_data.Agency_ShortName = json.RawMessage(_agency_shortname.String)
+		_rs, _ = GetMultipleDownlaodAllAgency(AgencyID[num-1], Year)
+		_data.Multi_Data_Agency = append(_data.Multi_Data_Agency, _rs)
+
+		data = append(data, _data)
+	}
+
+	return data, err
 }
 
 //Description: Get PercentDownloadDetail (Group by Metadata)

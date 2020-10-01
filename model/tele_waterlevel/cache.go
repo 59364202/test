@@ -9,7 +9,6 @@ package tele_waterlevel
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 	"time"
@@ -30,8 +29,7 @@ const cacheTableName = "cache.latest_waterlevel"
 var sqlCacheWhere = "--WHERE"
 var sqlCache string = `
 WITH m_t AS (
-	SELECT
-	ig.remark,
+    SELECT
         m.id,
         m.tele_station_name,
         m.tele_station_lat,
@@ -126,16 +124,6 @@ func GetWaterLevelThailandDataCache(p *Waterlevel_InputParam) ([]*Struct_Waterle
 	q := sqlCache
 	qWhere := ""
 	itf := []interface{}{}
-	fmt.Println(p.Station_id)
-	if p.Station_id != "" {
-		if len(itf) == 0 {
-			qWhere += " WHERE "
-		} else {
-			qWhere += " AND "
-		}
-		itf = append(itf, p.Station_id)
-		qWhere += " tele_station_id = $" + strconv.Itoa(len(itf))
-	}
 	if p.Agency_id != "" {
 		if len(itf) == 0 {
 			qWhere += " WHERE "
@@ -181,9 +169,8 @@ func GetWaterLevelThailandDataCache(p *Waterlevel_InputParam) ([]*Struct_Waterle
 		}
 		itf = append(itf, p.Start_date)
 		qWhere += " datetime_current >= $" + strconv.Itoa(len(itf))
-		itf = append(itf, p.End_date)
-		qWhere += " AND datetime_current <= $" + strconv.Itoa(len(itf)) //+ "23:59"
-		fmt.Println(qWhere)
+		itf = append(itf, p.End_date+" 23:59")
+		qWhere += " AND datetime_current <= $" + strconv.Itoa(len(itf))
 	}
 
 	//Check Filter province_id
@@ -266,7 +253,6 @@ func GetWaterLevelThailandDataCache(p *Waterlevel_InputParam) ([]*Struct_Waterle
 	for row.Next() {
 		var (
 			_id                  int64
-			_remark              sql.NullString
 			_waterlevel_datetime time.Time
 			_waterlevel_msl      sql.NullFloat64
 			_pre_waterlevel_msl  sql.NullFloat64
@@ -303,7 +289,7 @@ func GetWaterLevelThailandDataCache(p *Waterlevel_InputParam) ([]*Struct_Waterle
 			_flow_rate sql.NullFloat64
 			_discharge sql.NullFloat64
 		)
-		err = row.Scan(&_id, &_waterlevel_datetime, &_waterlevel_msl, &_pre_waterlevel_msl, &_storage_percent, &_table, &_remark, &_station_id, &_station_name, &_station_lat,
+		err = row.Scan(&_id, &_waterlevel_datetime, &_waterlevel_msl, &_pre_waterlevel_msl, &_storage_percent, &_table, &_station_id, &_station_name, &_station_lat,
 			&_station_long, &_station_oldcode, &_ground_level, &_offset, &_min_bank, &_left_bank, &_right_bank, &_sort_order, &_subbasin_id, &_agency_id, &_agency_name, &_agency_shortname, &_gecode_id, &_tumbon_code, &_tumbon_name,
 			&_amphoe_code, &_amphoe_name, &_province_code, &_province_name, &_area_code, &_area_name, &_basin_id, &_basin_name,
 			&_flow_rate, &_discharge,
@@ -311,7 +297,6 @@ func GetWaterLevelThailandDataCache(p *Waterlevel_InputParam) ([]*Struct_Waterle
 
 		teleStation := &model_tele_station.Struct_TeleStation{
 			Id:                   _station_id,
-			Remark:               _remark,
 			Tele_station_name:    _station_name.JSON(),
 			Tele_station_oldcode: _station_oldcode.String,
 			Tele_station_type:    _table,
@@ -323,7 +308,6 @@ func GetWaterLevelThailandDataCache(p *Waterlevel_InputParam) ([]*Struct_Waterle
 			Agency_id:            _agency_id,
 			Geocode_id:           _gecode_id,
 		}
-		log.Println(teleStation.Remark)
 		teleStation.Tele_station_lat, _ = _station_lat.Value()
 		teleStation.Tele_station_long, _ = _station_long.Value()
 
@@ -363,7 +347,6 @@ func GetWaterLevelThailandDataCache(p *Waterlevel_InputParam) ([]*Struct_Waterle
 
 		waterlevel := &Struct_Waterlevel{
 			Id:                  _id,
-			Remark:              _remark.String,
 			Waterlevel_datetime: _waterlevel_datetime.Format(strDatetimeFormat),
 			Waterlevel_msl:      ValidData(_waterlevel_msl.Valid, fmt.Sprintf("%.2f", _waterlevel_msl.Float64)),
 			Pre_Waterlevel_msl:  ValidData(_pre_waterlevel_msl.Valid, fmt.Sprintf("%.2f", _pre_waterlevel_msl.Float64)),

@@ -42,7 +42,9 @@ func GetOrderHeaderByUserId(user_id int64) ([]*Struct_OH, error) {
 		_status    string
 	)
 
-	row, err := db.Query(SQL_SelectOrderHeaderByUserId, user_id)
+	// where_p1 := " WHERE user_id = $1"
+
+	row, err := db.Query(SQL_SelectOrderHeaderByUserId)
 	if err != nil {
 		return nil, pqx.GetRESTError(err)
 	}

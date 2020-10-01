@@ -21,6 +21,7 @@ type Struct_Agency struct {
 	Ministry_name   json.RawMessage `json:"ministry_name,omitempty"`   // example:`{"th":"กระทรวงวิทยาศาสตร์และเทคโนโลยี","en":"Ministry of Science and Technology"}` ชื่อกระทรวง
 	Logo            string          `json:"logo,omitempty"`            // example:`iVBORw0KGgoAAAANSU...` โลโก้หน่วยงาน
 	Aspects         json.RawMessage `json:"aspects,omitempty"`         // example:`{apects:[5,6],leader:null}` ข้อมูลด้านน้ำและภูมิอากาศ
+	Year            string          `json:"year"`
 }
 
 // โครงสร้างเล็กๆ ที่มีแค่ id, agency_name

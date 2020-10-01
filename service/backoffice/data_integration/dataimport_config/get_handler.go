@@ -2,9 +2,7 @@ package dataimport_config
 
 import (
 	model_dataimport_config "haii.or.th/api/thaiwater30/model/dataimport_config"
-
 	"haii.or.th/api/thaiwater30/util/result"
-	"haii.or.th/api/util/errors"
 	"haii.or.th/api/util/service"
 	//	"haii.or.th/api/server/model/dataimport"
 )
@@ -95,7 +93,7 @@ func (srv *HttpService) getDataimportDatasetConfig(ctx service.RequestContext) e
 		}
 		ctx.ReplyJSON(result.Result1(rs))
 	} else {
-		rs, err := model_dataimport_config.GetDataImportDatasetList("", download_type)
+		rs, err := model_dataimport_config.GetDataImportDatasetList("",download_type)
 		if err != nil {
 			return err
 		}
@@ -200,39 +198,6 @@ func (srv *HttpService) getServerCronList(ctx service.RequestContext) error {
 	rs := model_dataimport_config.GetServerCronList()
 
 	ctx.ReplyJSON(result.Result1(rs))
-
-	return nil
-}
-
-func (srv *HttpService) getConfigVariable(ctx service.RequestContext) error {
-
-	rs, err := model_dataimport_config.GetConfigVariable()
-	if err != nil {
-		return err
-	}
-	ctx.ReplyJSON(result.Result1(rs))
-
-	return nil
-}
-
-type ImportListResult struct {
-	Result string      `json:"result"`
-	Data   interface{} `json:"data"`
-}
-
-func (srv *HttpService) getListVariable(ctx service.RequestContext) error {
-
-	rs, err := model_dataimport_config.GetListCatVariable()
-	result := &ImportListResult{}
-	result.Data = rs
-	if err != nil {
-		result.Result = "NO"
-		result.Data = errors.Repack(err)
-		ctx.ReplyJSON(result)
-	} else {
-		result.Result = "OK"
-		ctx.ReplyJSON(result)
-	}
 
 	return nil
 }

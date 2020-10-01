@@ -359,3 +359,41 @@ func GetAgentName() (*result.Result, error) {
 
 }
 
+func GetMethodService() (interface{}, error) {
+
+	// connect database
+	db, err := pqx.Open()
+	if err != nil {
+		return nil, errors.NewEvent(eventcode.EventNetworkCriticalUnableConDB, err)
+	}
+
+	// sql for get Service name from api.service
+	q := sqlGetServiceMethod
+	p := []interface{}{}
+	// process query access table
+	rows, err := db.Query(q, p...)
+	// check error
+	if err != nil {
+		return nil, pqx.GetRESTError(err)
+	}
+	defer rows.Close()
+
+	data := make([]*MedthodService, 0)
+	for rows.Next() {
+		d := &MedthodService{}
+		var (
+			id         sql.NullInt64
+			methodName sql.NullString
+		)
+		rows.Scan(&id, &methodName)
+
+		d.ID = id.Int64
+		d.MethodName = methodName.String
+
+		data = append(data, d)
+	}
+
+	// log.Println("333333333")
+	return data, nil
+
+}

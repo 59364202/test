@@ -1,7 +1,10 @@
 package dataimport_download_log
 
 import (
+	"encoding/json"
+
 	model_agency "haii.or.th/api/thaiwater30/model/agency"
+
 	model_metadata "haii.or.th/api/thaiwater30/model/metadata"
 )
 
@@ -23,6 +26,21 @@ type Struct_DownloadLog struct {
 	Field_NumberOfDataRecord
 	Field_NumberOfDownloadSize
 	Field_NumberOfFileDownload
+}
+
+type Struct_DownloadLog_Sum_all struct {
+	Sum_All string `json:"sum_all"`
+	Field_DownloadDate
+	Field_NumberOfDataRecord
+	Field_NumberOfDownloadSize
+	Field_NumberOfFileDownload
+}
+
+type Struct_Multiple_Agency struct {
+	Agency_ID         int64           `json:"agency_id"`
+	Agency_Name       json.RawMessage `json:"agency_name"`
+	Agency_ShortName  json.RawMessage `json:"agency_shortname"`
+	Multi_Data_Agency []interface{}   `json:"data_in_agency"`
 }
 
 type Struct_DownloadLog_Summary struct {
@@ -62,4 +80,14 @@ type Struct_DownloadLog_Inputparam struct {
 	StartDate        string `json:"start_date"`        // '2016-12-31'
 	EndDate          string `json:"end_date"`          // '2016-12-31'
 	ConnectionFormat string `json:"connection_format"` // example:online ประเภทการเชื่อมต่อ online, offline
+}
+
+//Input Data => Used by BOF-DataIntegrationReport-Overall Screen
+type Struct_DownloadLog_Inputparam_2 struct {
+	AgencyID         string   `json:"agency_id"`         // example:57 รหัสหน่วยงาน
+	Month            string   `json:"month"`             // required:false example:1 เดือน
+	Year_arr         []string `json:"year_arr"`          // example:2006 ปี
+	StartDate        string   `json:"start_date"`        // '2016-12-31'
+	EndDate          string   `json:"end_date"`          // '2016-12-31'
+	ConnectionFormat string   `json:"connection_format"` // example:online ประเภทการเชื่อมต่อ online, offline
 }

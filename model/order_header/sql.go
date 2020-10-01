@@ -12,8 +12,8 @@ var SQL_InsertOrderHeader = "INSERT INTO dataservice.order_header (user_id, orde
 // ------------------------------ select ------------------------------
 var SQL_SelectOrderHeaderByUserId = "SELECT oh.id , oh.order_datetime , oh.order_quality , os.id ,os.order_status " +
 	" FROM dataservice.order_header oh " +
-	" INNER JOIN dataservice.order_status os ON oh.order_status_id = os.id" +
-	" WHERE user_id = $1"
+	" INNER JOIN dataservice.order_status os ON oh.order_status_id = os.id"
+	// +" WHERE user_id = $1"
 
 var SQL_SelectOrderById = "SELECT order_status_id, order_quality, order_purpose , order_forexternal " +
 	" FROM dataservice.order_header " +

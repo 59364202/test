@@ -5,8 +5,7 @@ import (
 )
 
 type Struct_TeleStation struct {
-	Id                   int64           `json:"id"` // example:`3516` รหัสสถานี
-	Remark               interface{}     `json:"remark"`
+	Id                   int64           `json:"id"`                             // example:`3516` รหัสสถานี
 	Subbasin_id          int64           `json:"subbasin_id,omitempty"`          // example:`255` รหัสลุ่มน้ำสาขา
 	Tele_station_name    json.RawMessage `json:"tele_station_name,omitempty"`    // example:`{"th": "อ.ตรอน (N.60)"}` ชื่อสถานี
 	Tele_station_lat     interface{}     `json:"tele_station_lat,omitempty"`     // example:`17.41439` ละติจูด

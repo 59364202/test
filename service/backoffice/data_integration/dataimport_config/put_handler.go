@@ -6,7 +6,6 @@ import (
 	"haii.or.th/api/thaiwater30/service/backoffice/data_integration/rdl"
 	"haii.or.th/api/thaiwater30/util/result"
 	"haii.or.th/api/util/datatype"
-	"haii.or.th/api/util/errors"
 	"haii.or.th/api/util/rest"
 	"haii.or.th/api/util/service"
 )
@@ -105,9 +104,9 @@ func (srv *HttpService) updateDataimportDatasetConfig(ctx service.RequestContext
 // @Response		404			-		the request service name was not found
 
 type MetadataDescriptionSwagger struct {
-	MetadataID        int64    `json:"metadata_id"`        // รหัส metadata เช่น 1
-	DownloadID        int64    `json:"download_id"`        // รหัส download เช่น 20
-	DatasetID         int64    `json:"dataset_id"`         // รหัส dataset เช่น 24
+	MetadataID int64 `json:"metadata_id"` // รหัส metadata เช่น 1
+	DownloadID int64 `json:"download_id"` // รหัส download เช่น 20
+	DatasetID  int64 `json:"dataset_id"`  // รหัส dataset เช่น 24
 	AdditionalDataset []string `json:"additional_dataset"` // รหัส dataset ที่เกี่ยวข้อง (ถ้ามี)
 }
 
@@ -236,34 +235,5 @@ func (srv *HttpService) runCron(ctx service.RequestContext) error {
 	}
 
 	ctx.ReplyJSON(result.Result1(&RunCronResult{id}))
-	return nil
-}
-
-type PutConfigVariableParams struct {
-	VariableID   int64  `json:"variable_id"`
-	Category     int64  `json:"category"`
-	Name         string `json:"name"`
-	VariableName string `json:"variable_name"`
-	Value        string `json:"value"`
-	//	DataGroupCode   string `json:"group_code"`
-}
-
-func (srv *HttpService) updateConfigVariable(ctx service.RequestContext) error {
-	//Map parameters
-	p := &PutConfigVariableParams{}
-	if err := ctx.GetRequestParams(p); err != nil {
-		return errors.Repack(err)
-	}
-	ctx.LogRequestParams(p)
-	// p.UserId = ctx.GetUserID()
-	//Put Agency
-	//	rs, err := model.PutAgency(ctx.GetUserID(), ctx.GetServiceParams("id"), p.AgencyName, p.AgencyShortName, p.DepartmentId)
-	rs, err := model_dataimport_config.UpdateConfigVariable(p.Category, p.Name, p.VariableName, p.Value, ctx.GetUserID(), p.VariableID)
-	if err != nil {
-		ctx.ReplyJSON(result.Result0(err.Error()))
-	} else {
-		ctx.ReplyJSON(result.Result1(rs))
-	}
-
 	return nil
 }

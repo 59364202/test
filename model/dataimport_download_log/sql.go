@@ -1,6 +1,6 @@
 package dataimport_download_log
 
-import ()
+
 
 var sqlSelectOverAllDownloadCount_Online = ` SELECT mt.agency_id
 											, mt.id AS metadata_id
@@ -85,6 +85,53 @@ WHERE (mt.deleted_by IS NULL AND (mt.deleted_at IS NULL OR mt.deleted_at = '1970
 AND mt.metadatastatus_id = 1
 AND mt.connection_format = 'Offline' 
 `
+
+var sqlSumDownloadSizeByYear = `SELECT	extract(year FROM tall.date_time) AS date_time , 
+SUM(tall.download_size_mb) AS download_size_mb , 
+SUM(tall.download_files_count) AS download_files_count , 
+SUM(tall.import_success_row) AS import_success_row
+FROM
+( SELECT    dts.date_series AS date_time , 
+(CASE 
+		  WHEN tdl.download_size_mb IS NULL THEN 0 
+		  ELSE tdl.download_size_mb 
+END) AS download_size_mb , 
+ (CASE 
+		  WHEN tdl.download_files_count IS NULL THEN 0 
+		  ELSE tdl.download_files_count 
+END) AS download_files_count , 
+ (CASE 
+		  WHEN tdl.import_success_row IS NULL THEN 0 
+		  ELSE tdl.import_success_row 
+END) AS import_success_row 
+FROM      ( 
+	   SELECT Generate_series($3::DATE, ($3::DATE + '12 MONTH'::interval - '1 DAY'::interval)::DATE, '1 day')::DATE AS date_series) dts
+left join 
+( 
+		  SELECT    dll.download_begin_at::                 DATE    AS download_date ,
+					SUM(dll.download_bytes_count)/ 1048576::NUMERIC AS download_size_mb
+					-- / 1073741824::numeric AS download_size_gb 
+					, 
+					SUM(dll.download_files_count) AS download_files_count , 
+					SUM(dsl.import_success_row)   AS import_success_row 
+		  FROM      api.dataimport_download_log dll 
+		  left join api.dataimport_dataset_log dsl 
+		  ON        dll.id = dsl.dataimport_download_log_id 
+		  left join metadata mt 
+		  ON        mt.dataimport_download_id = dll.dataimport_download_id 
+		  AND       mt.dataimport_dataset_id = dsl.dataimport_dataset_id 
+		  left join agency agt 
+		  ON        agt.id = mt.agency_id 
+		  WHERE     dll.download_path IS NOT NULL 
+		  AND       extract(month FROM dll.download_begin_at) BETWEEN 1 AND 12 
+		  AND       extract(year FROM dll.download_begin_at) = $2
+					-- AND mt.metadata_status = 'เชื่อมโยง' 
+		  AND       mt.metadatastatus_id = 1 
+		  AND       mt.agency_id = $1 
+		  GROUP BY  dll.download_begin_at::DATE ) tdl 
+ON        dts.date_series = tdl.download_date 
+ORDER BY  dts.date_series ) tall
+GROUP BY extract(year FROM tall.date_time)`
 
 var sqlSelectMonthlyDownloadSizeByAgency = ` SELECT dts.date_series
 												   , (CASE WHEN tdl.download_size_mb IS NULL THEN 0 ELSE tdl.download_size_mb END) AS download_size_mb

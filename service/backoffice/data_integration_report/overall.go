@@ -1,6 +1,8 @@
 package data_integration_report
 
 import (
+	"fmt"
+
 	model "haii.or.th/api/thaiwater30/model/dataimport_download_log"
 	result "haii.or.th/api/thaiwater30/util/result"
 	"haii.or.th/api/util/errors"
@@ -67,6 +69,53 @@ func (srv *HttpService) getOverAllPercentDownload(ctx service.RequestContext) er
 	} else {
 		//Return Data
 		ctx.ReplyJSON(result.Result1(rs))
+	}
+
+	return nil
+}
+
+// @DocumentName	v1.webservice
+// @Service			thaiwater30/backoffice/data_integration_report/overall
+// @Summary 		ภาพรวมของคลังฯ
+// @Method			GET
+// @Parameter		- query model.Struct_DownloadLog_Inputparam{month,year,connection_format}
+// @Produces		json
+// @Response		200	Struct_getOverAllPercentDownload successful operation
+func (srv *HttpService) getOverAllMultiYear(ctx service.RequestContext) error {
+
+	//Map parameters
+	param := &model.Struct_DownloadLog_Inputparam_2{}
+	if err := ctx.GetRequestParams(param); err != nil {
+		return errors.Repack(err)
+	}
+	ctx.LogRequestParams(param)
+
+	tt := make([]interface{}, 0)
+
+	var rs1 interface{}
+	var rs2 interface{}
+	var err error
+	var year string
+
+	fmt.Println("-- month --",param.Month)
+
+	for _, str := range param.Year_arr {
+		param.ConnectionFormat = "online"
+		year = str
+		rs1, err = model.GetOverAllMultipleYear(year,param.Month,param.ConnectionFormat)
+		tt = append(tt, rs1)
+		param.ConnectionFormat = "offline"
+		year = str
+		rs2, err = model.GetOverAllMultipleYear(year,param.Month,param.ConnectionFormat)
+		tt = append(tt, rs2)
+	}
+
+	if err != nil {
+		//return errors.Repack(err)
+		ctx.ReplyError(err)
+	} else {
+		//Return Data
+		ctx.ReplyJSON(result.Result1(tt))
 	}
 
 	return nil

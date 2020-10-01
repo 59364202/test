@@ -198,6 +198,7 @@ func scanOrderDetail(row *sql.Rows, bx URLBuilder) ([]*Struct_OrderDetail, error
 
 		data = append(data, orderDetail)
 	}
+
 	return data, nil
 }
 
