@@ -101,7 +101,7 @@ var SQL_SelectOrderDetailGroupByAgency = ` SELECT od.order_header_id , a.id ,a.a
 	 ORDER BY od.order_header_id , m.id `
 
 var SQL_SelectOrderDetailSummary = "SELECT od.id, od.order_header_id, m.metadataservice_name, u.full_name, ls.servicemethod_name, " +
-	" oh.order_datetime, od.detail_source_result_date, od.detail_source_result, u.id , ag.agency_name " +
+	" oh.order_datetime, od.detail_source_result_date, od.detail_source_result, u.id , ag.agency_name , od.expired_at " +
 	" FROM  dataservice.order_detail od " +
 	" INNER JOIN metadata m ON od.metadata_id = m.id " +
 	" INNER JOIN dataservice.order_header oh ON od.order_header_id = oh.id " +

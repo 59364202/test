@@ -489,7 +489,7 @@ func GetOrderDetailSummary(p *Param) ([]*Struct_OrderDetail, error) {
 	}
 	for row.Next() {
 		err = row.Scan(&_id, &_order_header_id, &_metadataservice_name, &_user_full_name, &_servicemethod_name, &_order_datetime,
-			&_detail_source_result_date, &_detail_source_result, &_user_id, &_user_agency_name)
+			&_detail_source_result_date, &_detail_source_result, &_user_id, &_user_agency_name, &_order_expire_data)
 		if err != nil {
 			return nil, err
 		}

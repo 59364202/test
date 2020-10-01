@@ -37,13 +37,10 @@ func (srv *HttpService) handleGetData(ctx service.RequestContext) error {
 		return srv.monitorApiService(ctx)
 	case "monitor_api_service_onload":
 		return srv.monitorApiServiceOnload(ctx)
-<<<<<<< HEAD
 	case "agent":
 		return srv.agentName(ctx)
-=======
 	case "logo":
 		return srv.getAgencyLogo(ctx)
->>>>>>> chang
 	default:
 		return rest.NewError(404, "Unknown service id", nil)
 	}
@@ -73,7 +70,6 @@ func (srv *HttpService) handlePutData(ctx service.RequestContext) error {
 		return srv.editKeyAccess(ctx)
 	case "gen_key":
 		return srv.genKey(ctx)
-
 	case "del_key":
 		return srv.delKey(ctx)
 	default:
