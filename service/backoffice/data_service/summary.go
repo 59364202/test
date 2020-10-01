@@ -85,3 +85,26 @@ func (srv *HttpService) getSummary(ctx service.RequestContext) error {
 
 	return nil
 }
+
+// @DocumentName	v1.webservice
+// @Service			thaiwater30/backoffice/data_service/summary
+// @Summary			อัพเดตวันหมดอายุ
+// @Method			PUT
+// @Parameter		id	query	int required:true example:`68` รหัส order_detail id
+// @Parameter		expire_date	query	string	required:true	example:`1970-01-12 07:00:00+07` วันหมดอายุ
+// @Response		200	Param_OrderExpireDate_Put successful operation
+func (srv *HttpService) putExppiredate(ctx service.RequestContext) error {
+	p := &model_order_detail.Param_OrderExpireDate_Put{}
+	if err := ctx.GetRequestParams(p); err != nil {
+		return err
+	}
+	ctx.LogRequestParams(p)
+
+	err := model_order_detail.UpdateExpireDate(p)
+	if err != nil {
+		ctx.ReplyJSON(result.Result0(err.Error()))
+	} else {
+		ctx.ReplyJSON(result.Result1("OK"))
+	}
+	return nil
+}

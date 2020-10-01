@@ -168,6 +168,8 @@ func (srv *HttpService) handlePutData(ctx service.RequestContext) error {
 		return srv.putDataunit(ctx)
 	case "metadata_show":
 		return srv.putMetadataShow(ctx)
+	case "upload_img":
+		return srv.putLogoAgency(ctx)
 	default:
 		return rest.NewError(404, "Unknown service id", nil)
 	}

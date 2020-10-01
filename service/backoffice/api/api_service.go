@@ -190,3 +190,22 @@ func (srv *HttpService) patchMonitorApiService(ctx service.RequestContext) error
 
 	return nil
 }
+
+// @DocumentName	v1.webservice
+// @Service			thaiwater30/backoffice/metadata/agency_onload
+// @Summary			รับค่าโลโก้ของหน่วยงานทั้งหมด
+// @Method			GET
+// @Produces		json
+// @Response		200	successful operation
+func (srv *HttpService) getAgencyLogo(ctx service.RequestContext) error {
+	rs, err := model_agency.GetAgencyLogo()
+	if err != nil {
+		ctx.ReplyJSON(result.Result0(err.Error()))
+	} else {
+		ctx.ReplyJSON(result.Result1(rs))
+	}
+
+	//Get Agency
+
+	return nil
+}

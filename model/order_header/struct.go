@@ -70,3 +70,8 @@ type Param struct {
 	Date            string `json:"date"`            // example:`2006-01-02` วันที่
 	User_Id         string `json:"user_id"`         // example:`68` รหัสผู้ขอใช้บริการ
 }
+
+type Struct_Order_Purpose struct {
+	Id            int64  `json:"id"`            // example:`47` รหัส order header
+	Order_Purpose string `json:"order_purpose"` // example:`เพื่อทดสอบ` วัตถุประสงค์การนำข้อมูลไปใช้งาน
+}

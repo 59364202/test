@@ -518,6 +518,7 @@ func GetOrderDetailSummary(p *Param) ([]*Struct_OrderDetail, error) {
 		orderDetail.Detail_Source_Result = _detail_source_result.String
 		orderDetail.Detail_Source_Result_Date = _detail_source_result_date.String
 		orderDetail.Order_Header_Order_Datetime = _order_datetime.Format("2006-01-02")
+		orderDetail.Order_Expire_Datetime = _order_expire_data.String
 		orderDetail.Service = &model_lt_servicemethod.Struct_LtServicemethod{Name: json.RawMessage(_servicemethod_name.String)}
 		orderDetail.Metadata = &model_metadata.Struct_Metadata{}
 		orderDetail.Metadata.Metadataservice_Name = json.RawMessage(_metadataservice_name.String)

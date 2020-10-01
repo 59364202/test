@@ -6,8 +6,6 @@
 // Package order_header is a model for dataservice.order_header table. This table store order_header.
 package order_header
 
-import ()
-
 // ------------------------------ insert ------------------------------
 var SQL_InsertOrderHeader = "INSERT INTO dataservice.order_header (user_id, order_status_id, order_datetime, order_quality, order_purpose, order_forexternal) VALUES ($1, $5, NOW(), $2, $3, $4) RETURNING id;"
 
@@ -41,6 +39,11 @@ var SQL_SelectOrderHeader = "SELECT oh.id, oh.order_datetime, u.id, u.full_name,
 	" INNER JOIN api.user u ON oh.user_id = u.id " +
 	" LEFT JOIN agency a ON u.agency_id = a.id "
 var SQL_SelectOrderHeader_OrderById = " ORDER BY oh.id DESC "
+
+var SQL_SelectOrderHeaderForOrderPurposePopular = `SELECT oh.order_purpose,COUNT(*) as NUM 
+	FROM dataservice.order_header oh 
+	GROUP BY oh.order_purpose 
+	ORDER BY NUM DESC LIMIT 10 `
 
 // ------------------------------ update ------------------------------
 var SQL_UpdateOrderHeaderStatusToCancelByOrderHeaderId = "UPDATE dataservice.order_header SET order_status_id = 3 , updated_at = NOW() , updated_by = $2 WHERE id = $1"

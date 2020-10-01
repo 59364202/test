@@ -6,9 +6,7 @@
 // Package agency is a model for public.agency table. This table store agency.
 package agency
 
-import ()
-
-var SQL_SelectAgency = ` SELECT a.id, a.agency_name, a.agency_shortname, d.id, d.department_name, m.id, m.ministry_name 
+var SQL_SelectAgency = ` SELECT a.id, a.agency_name, a.agency_shortname, d.id, d.department_name, m.id, m.ministry_name, a.logo, a.aspects 
 	FROM agency a
 	INNER JOIN lt_department d ON a.department_id = d.id AND d.deleted_at = '1970-01-01 07:00:00+07'
 	INNER JOIN lt_ministry m ON d.ministry_id = m.id AND m.deleted_at = '1970-01-01 07:00:00+07' 
@@ -80,14 +78,17 @@ var SQL_CheckChild = ` SELECT agency_id FROM metadata WHERE agency_id = $1
 	  UNION
 	  SELECT agency_id FROM lt_hydroinfo_agency WHERE agency_id = $1
 	  AND deleted_at = to_timestamp(0)
-	  AND 	deleted_by is not null`
+    AND 	deleted_by is not null`
+
+var SQL_AgencyLogo = `SELECT id, logo FROM agency 
+    WHERE deleted_at = '1970-01-01 07:00:00+07' AND logo IS NOT NULL`
 
 /* =================================================================== INSERT ====================================================================== */
-var SQL_InsertAgency = `INSERT INTO agency (agency_name, agency_shortname, department_id, created_by, updated_by, created_at, updated_at) 
+var SQL_InsertAgency = `INSERT INTO agency (agency_name, agency_shortname, department_id, created_by, updated_by, created_at, updated_at, logo) 
 	VALUES ($1, $2, $3, $4, $4, NOW(), NOW()) RETURNING id `
 
 /* =================================================================== UPDATE ====================================================================== */
-var SQL_UpdateAgency = ` UPDATE agency SET agency_name = $2, agency_shortname = $3, department_id = $4, updated_by = $5, updated_at = NOW() WHERE id = $1 `
+var SQL_UpdateAgency = ` UPDATE agency SET agency_name = $2, agency_shortname = $3, department_id = $4, updated_by = $5, logo = $6, updated_at = NOW() WHERE id = $1 `
 var SQL_UpdateAgencyToDelete = ` UPDATE agency SET deleted_by = $2, deleted_at = NOW(), updated_by = $2, updated_at = NOW() WHERE id = $1 `
 
 /* =================================================================== DELETE ====================================================================== */

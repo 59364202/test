@@ -32,6 +32,8 @@ func (srv *HttpService) handleGetData(ctx service.RequestContext) error {
 		return srv.getCheckVerifyShopping(ctx)
 	case "history":
 		return srv.getShoppingHistory(ctx)
+	case "popular_order_purpose":
+		return srv.getDatapurpose(ctx)
 	default:
 		return rest.NewError(404, "Unknown service id", nil)
 	}

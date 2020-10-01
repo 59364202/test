@@ -7,8 +7,13 @@
 package agency
 
 import (
+	"bufio"
 	"database/sql"
+	"encoding/base64"
 	"encoding/json"
+	"io/ioutil"
+	"os"
+	"path/filepath"
 
 	"haii.or.th/api/util/pqx"
 	//	"log"
@@ -47,6 +52,8 @@ func getAgency(id, department_id, ministry_id int64, sqlCmdWhere string) ([]*Str
 		_deparmtnet_name  sql.NullString
 		_ministry_id      sql.NullInt64
 		_ministry_name    sql.NullString
+		_logo             sql.NullString
+		_aspects          sql.NullString
 	)
 
 	var sqlOrderBy string = " ORDER BY agency_name->>'th' "
@@ -89,6 +96,17 @@ func getAgency(id, department_id, ministry_id int64, sqlCmdWhere string) ([]*Str
 		if _deparmtnet_name.String == "" {
 			_deparmtnet_name.String = "{}"
 		}
+		if _aspects.String == "" {
+			_aspects.String = "{}"
+		}
+		if _logo.String != "" {
+			fn, _ := os.Open(filepath.Join(file.UploadPath, _logo.String))
+			content, _ := ioutil.ReadAll(bufio.NewReader(fn))
+			_logo.String = base64.StdEncoding.EncodeToString(content)
+		} else {
+			//defualt logo
+			_logo.String = "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEABAMAAACuXLVVAAAAMFBMVEXDw8P///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8xHK4AAAACXBIWXMAAAsTAAALEwEAmpwYAAACKklEQVR42u2bUXKEMAxD8Q2s+1+2nelfZ1rCxuYlIF3AbyWTDYk5DsuyLMuyLMuyLMuyLMuyLMuydpZ+lGx5iCH0SwnX/xblPkGgP5Rw/bsIJJZA/4rp/zsJzuq3h6BT0fWbCUYAEq7faUEIJhAMMGpAG4FggHEDmh4ECbbgCkCyCfRYIBjgmgENGVwEEJxAPcBVA8ozuAwgOIEFABJOgAcQnMACAAknYIDSJtCeAPkcgDCA4C7EAWQAwV1IA4QdMMC2ALIDdsAOeCEygHdErwd4zrbcr2Z+Pd/1iOZJp2SxJUDpeb0B8PuC2BCg+OJww2u7YgD85vSAW4C/PefnBw44AX6G5FoGLZNM+CBT0AAHnMAC43wBG7DASGfABowSHI2CDRiyoHm4PNAARkJo/8Qh4PonBLd8ZBJgA5x2Afz7F+jBBZYBfiXm/4v47QC/I+shwN8L9no1fN5sOX5IRZ8T0tcF+HE9fW2HX15/PEAh2IAqCyTWgpgBSLh+hQWTAIl2QIUFMQuQsAGzFsQ8QMIGTFpQAZBwfR5AaAvOWSCxFkQVQO4KILEZRB1AwgbwAIIT+MwCHECCM6gFSDaBTwAkOAMaIKoBcjcACc6ABoh6gNwLQIIzoAGiAyB3ApDgDF4PED0AuQ+ABGfweoDoAkgDwC0w3ASvB4g+gDQA3AKDTWCAToBke3DMgXi0AwZI+CEY6kIDGIAGiF6ANIABDAAvAwMLgR14HcAXzNBOp6npkCsAAAAASUVORK5CYII="
+		}
 
 		agency = &Struct_Agency{}
 		agency.Id = _id
@@ -98,8 +116,54 @@ func getAgency(id, department_id, ministry_id int64, sqlCmdWhere string) ([]*Str
 		agency.Department_name = json.RawMessage(_deparmtnet_name.String)
 		agency.Ministry_id = _ministry_id.Int64
 		agency.Ministry_name = json.RawMessage(_ministry_name.String)
+		agency.Aspects = json.RawMessage(_aspects.String)
+		agency.Logo = _logo.String
 
 		data = append(data, agency)
+	}
+
+	return data, nil
+}
+
+// โลโก้ของหน่วยงาน
+//	Parameters:
+// 	Return:
+//		[]Logo_Agency
+func GetAgencyLogo() ([]*Logo_Agency, error) {
+	db, err := pqx.Open()
+	if err != nil {
+		return nil, err
+	}
+
+	strSql := SQL_AgencyLogo
+	var (
+		row  *sql.Rows
+		data []*Logo_Agency
+
+		_id   int64
+		_logo sql.NullString
+	)
+	row, err = db.Query(strSql)
+	if err != nil {
+		return nil, pqx.GetRESTError(err)
+	}
+	for row.Next() {
+		err = row.Scan(&_id, &_logo)
+		if err != nil {
+			return nil, err
+		}
+
+		if _logo.String != "" {
+			fn, _ := os.Open(filepath.Join(file.UploadPath, _logo.String))
+			content, _ := ioutil.ReadAll(bufio.NewReader(fn))
+			_logo.String = base64.StdEncoding.EncodeToString(content)
+		}
+
+		agency_logo := &Logo_Agency{}
+		agency_logo.Id = _id
+		agency_logo.Logo = _logo.String
+
+		data = append(data, agency_logo)
 	}
 
 	return data, nil
