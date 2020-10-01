@@ -455,6 +455,7 @@ func GetOrderDetailSummary(p *Param) ([]*Struct_OrderDetail, error) {
 		_detail_source_result      sql.NullString
 		_user_id                   int64
 		_user_agency_name          sql.NullString
+		_order_expire_data         sql.NullString
 	)
 
 	strSQL = SQL_SelectOrderDetailSummary

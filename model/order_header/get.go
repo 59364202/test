@@ -161,8 +161,8 @@ func GetOrderHeaderByParamManagement(param *Param) ([]*Struct_OrderHeader, error
 //	Parameters:
 //		None
 //	Return:
-//		Struc_Order_Purpose
-func GetPopularOrderPurpose() ([]*Struc_Order_Purpose, error) {
+//		Struct_Order_Purpose
+func GetPopularOrderPurpose() ([]*Struct_Order_Purpose, error) {
 	db, err := pqx.Open()
 	if err != nil {
 		return nil, err
@@ -171,7 +171,7 @@ func GetPopularOrderPurpose() ([]*Struc_Order_Purpose, error) {
 	var (
 		strSQL string = SQL_SelectOrderHeaderForOrderPurposePopular
 		row    *sql.Rows
-		data   []*Struc_Order_Purpose
+		data   []*Struct_Order_Purpose
 
 		_order_purpose           string //วัตุประสงค์
 		_order_purpose_frequency int64  //จำนวนวัตถุประสงค์ที่ซ้ำ
@@ -185,7 +185,7 @@ func GetPopularOrderPurpose() ([]*Struc_Order_Purpose, error) {
 			return nil, err
 		}
 
-		OderPurpose := &Struc_Order_Purpose{}
+		OderPurpose := &Struct_Order_Purpose{}
 		OderPurpose.Order_Purpose = _order_purpose
 		OderPurpose.Id = _order_purpose_frequency //ไม่ใช่ id ของ order_purpose แต่เป็นจำนวนของ order_purpose ที่ซ้ำกัน
 		data = append(data, OderPurpose)
