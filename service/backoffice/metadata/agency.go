@@ -2,13 +2,17 @@ package metadata
 
 import (
 	"encoding/json"
+	"path/filepath"
 	"strconv"
 
+	"haii.or.th/api/thaiwater30/util/file"
 	"haii.or.th/api/thaiwater30/util/result"
 	"haii.or.th/api/util/errors"
 	"haii.or.th/api/util/service"
 
+	model "haii.or.th/api/server/model"
 	model_agency "haii.or.th/api/thaiwater30/model/agency"
+
 	//	model "haii.or.th/api/thaiwater30/model/manipulate/agency"
 	model_department "haii.or.th/api/thaiwater30/model/lt_department"
 	model_ministry "haii.or.th/api/thaiwater30/model/lt_ministry"
@@ -239,5 +243,49 @@ func (srv *HttpService) deleteAgency(ctx service.RequestContext) error {
 		ctx.ReplyJSON(result.Result1(rs))
 	}
 
+	return nil
+}
+
+type ResultAgencyLogo struct {
+	AgencyID string `json:"agency_id"` // example:`9` รหัสหน่วยงาน
+	Filepath string `json:"file_path"` // example:`/logo/2` ตำแหน่งที่เก็บไฟล์
+	FileData string `json:"file_data"` // example:`iVBORw0KGgoAAAANSU...` โลโก้หน่วยงาน
+}
+
+// @DocumentName	v1.webservice
+// @Service			thaiwater30/backoffice/metadata/upload_img
+// @Summary			อัพโหลด logo
+// @Method			PUT
+// @Parameter		files	File	string example:`<object>`	ไฟล์ภาพ
+// @Produces		form
+// @Response		200	ResultAgencyLogo successful operation
+func (srv *HttpService) putLogoAgency(ctx service.RequestContext) error {
+	p := &ResultAgencyLogo{}
+	if err := ctx.GetRequestParams(p); err != nil {
+		return errors.Repack(err)
+	}
+	ctx.LogRequestParams(p)
+	upimg, err := ctx.GetUploadFile("files")
+	if err != nil {
+		return err
+	}
+	upimgdatafile, err := upimg.GetFile()
+	if err != nil {
+		return err
+	}
+	var file_path = filepath.Join("temp/", p.AgencyID)
+	var filename = "logo.png"
+
+	err = file.SaveFile(upimgdatafile, file_path, filename)
+	if err != nil {
+		return err
+	}
+	p.Filepath = filepath.Join(file_path, filename)
+	p.FileData, err = model.GetCipher().EncryptText(filepath.Join(file.UploadPath, file_path, filename))
+	if err != nil {
+		ctx.ReplyJSON(result.Result0(err.Error()))
+	} else {
+		ctx.ReplyJSON(result.Result1(p))
+	}
 	return nil
 }

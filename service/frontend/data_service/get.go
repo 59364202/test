@@ -251,3 +251,21 @@ func (srv *HttpService) getShoppingHistory(ctx service.RequestContext) error {
 
 	return nil
 }
+
+// @DocumentName	v1.webservice
+// @Service			thaiwater30/data_service/data_purpose
+// @Summary			วัตถุประสงค์
+// @Parameter
+// @Method			GET
+// @Produces		json
+// @Response		200 Struc_Order_Purpose successful operation
+func (srv *HttpService) getDatapurpose(ctx service.RequestContext) error {
+	rs, err := model_order_header.GetPopularOrderPurpose()
+	if err != nil {
+		ctx.ReplyJSON(result.Result0(err.Error()))
+	} else {
+		ctx.ReplyJSON(result.Result1(rs))
+	}
+
+	return nil
+}

@@ -16,7 +16,7 @@ var SQL_selectMetadata = `SELECT m.id, m.metadataservice_name, m.metadata_descri
 	a.id, a.agency_name, 
 	import_table -> 'tables' as jsontable, 
 	CASE WHEN dd.import_table ->> 'tables' IS NULL THEN NULL 
-	ELSE json_object_keys(dd.import_table -> 'tables') 
+	ELSE (SELECT json_object_keys(dd.import_table -> 'tables'))
 	END as table 
 	FROM metadata m 
 	INNER JOIN lt_dataformat ldf ON m.dataformat_id = ldf.id

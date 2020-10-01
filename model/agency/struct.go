@@ -19,6 +19,8 @@ type Struct_Agency struct {
 	Department_name json.RawMessage `json:"department_name,omitempty"` // example:`{"th":"สถาบันสารสนเทศทรัพยากรน้ำและการเกษตร (องค์การมหาชน)"}` ชื่อกรม
 	Ministry_id     int64           `json:"ministry_id,omitempty"`     // example:`17` ลำดับข้อมูลกระทรวง
 	Ministry_name   json.RawMessage `json:"ministry_name,omitempty"`   // example:`{"th":"กระทรวงวิทยาศาสตร์และเทคโนโลยี","en":"Ministry of Science and Technology"}` ชื่อกระทรวง
+	Logo            string          `json:"logo,omitempty"`            // example:`iVBORw0KGgoAAAANSU...` โลโก้หน่วยงาน
+	Aspects         json.RawMessage `json:"aspects,omitempty"`         // example:`{apects:[5,6],leader:null}` ข้อมูลด้านน้ำและภูมิอากาศ
 }
 
 // โครงสร้างเล็กๆ ที่มีแค่ id, agency_name
@@ -44,6 +46,7 @@ type Param_PostAgency struct {
 	AgencyShortName json.RawMessage `json:"agency_shortname"` // example:`{"en": "HAII"}` ชื่อย่อหน่วยงาน
 	DepartmentId    string          `json:"department_id"`    // example:`156` รหัสกรม
 	MinistryId      string          `json:"ministry_id"`      // example:`17` รหัสกระทรวง
+	Logo            string          `json:"logo"`             //example:`iVBORw0KGgoAAAANSU...` โลโก้หน่วยงาน
 }
 
 // โครงสร้างหลักที่ใช้รับค่าจาก user ที่ใช้สำหรับ insert, update, delete
@@ -51,4 +54,9 @@ type Param_Agency struct {
 	Param_PostAgency
 	Id     string `json:"id"` // example:`9` รหัสหน่วยงาน
 	UserId int64  `json:"-"`  // รหัสผู้ใช้
+}
+
+type Logo_Agency struct {
+	Id   int64  `json:"id"`   //example:`9` รหัสหน่วยงาน
+	Logo string `json:"logo"` //example:`iVBORw0KGgoAAAANSU...` โลโก้หน่วยงาน
 }

@@ -44,7 +44,7 @@ func UpdateAgency(param *Param_Agency) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	_, err = db.Exec(SQL_UpdateAgency, intAgencyId, jsonAgencyName, jsonAgencyShortName, intDepartmentId, param.UserId)
+	_, err = db.Exec(SQL_UpdateAgency, intAgencyId, jsonAgencyName, jsonAgencyShortName, intDepartmentId, param.UserId, param.Logo)
 	if err != nil {
 		return "", err
 	}

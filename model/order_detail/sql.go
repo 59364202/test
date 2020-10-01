@@ -7,9 +7,10 @@
 package order_detail
 
 import (
+	"fmt"
 	"strconv"
 	"time"
-	"fmt"
+
 	model_metadata "haii.or.th/api/thaiwater30/model/metadata"
 	//	"time"
 )
@@ -328,12 +329,12 @@ func SQL_GenSQLSelectDataservice_All(p *Strct_Data) (string, []interface{}) {
 		basin         = p.Basin.String
 		hasQC         = p.HasQC
 		selectField   = p.SelectFields
-		metadata_id	= p.Metadata_id
+		metadata_id   = p.Metadata_id
 		// additionalDataset = p.AdditionalDataset
 	)
-	
+
 	m_id := model_metadata.GetColumnMasterId(table_name)
-	
+
 	st := model_metadata.GetTable(table_name)
 
 	if st.MasterTable == "" { // ไม่มี master table ไม่ต้อง join
@@ -459,7 +460,7 @@ func SQL_GenSQLSelectDataservice_All(p *Strct_Data) (string, []interface{}) {
 	if st.WhereHAII != "" {
 		q += " AND " + st.WhereHAII + " "
 	}
-	// เพิ่มเงื่อนไข  query station ที่เเป็น hydro 1-8 
+	// เพิ่มเงื่อนไข  query station ที่เเป็น hydro 1-8
 	if (metadata_id == 550 || metadata_id == 228) && st.WhereHydro != "" {
 		q += " AND " + st.WhereHydro + " "
 	}
@@ -474,9 +475,9 @@ func SQL_GenSQLSelectDataservice_All(p *Strct_Data) (string, []interface{}) {
 		q += " ORDER BY tt.id "
 	}
 	q = "SELECT " + selectField + " FROM " + table_name + " tt " + q
-	
+
 	fmt.Println(q)
-	
+
 	return q, itf
 }
 
@@ -531,6 +532,7 @@ var SQL_UpdateOrderLetterPath = SQL_UpdateOrderDetail +
 	" SET detail_letterpath = $3 , updated_by = $4 , detail_status_id = 2 " +
 	SQL_UpdateOrderDetail_From
 
+var SQL_UpdateOrderExpireDate = "UPDATE dataservice.order_detail SET expired_at = $1 WHERE id = $2 "
 var SQL_UpdateOrderSourceResult = " UPDATE dataservice.order_detail SET detail_source_result_date = NOW() , detail_source_result = $2, updated_by = $3, detail_status_id = $4 WHERE id = $1 RETURNING order_header_id; "
 var SQL_UpdateOrderHeaderStatusAfterSourceResult = ``
 var SQL_UpdateOrderHeaderStatus = "UPDATE dataservice.order_header SET order_status_id = $3 , updated_at = NOW() , updated_by = $1 WHERE id = $2"

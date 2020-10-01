@@ -59,6 +59,7 @@ type Struct_OrderDetail struct {
 	Order_Header_Id             int64                                               `json:"order_header_id"`             // example:`45` รหัส order header
 	Order_Header_Order_Datetime string                                              `json:"order_header_order_datetime"` // example:`2006-01-02` วันที่ขอข้อมูล
 	Order_Purpose               string                                              `json:"order_purpose"`               // example:`ทำแอพคาดการณ์ฝน` วัตถุประสงค์ของการขอข้อมูล
+	Order_Expire_Datetime       string                                              `json:"order_expire_date"`           // example:`2006-01-0ุ` วันที่หมดอายุ
 
 	Province    []*model_lt_geocode.Struct_Geocode             `json:"province"`    // จังหวัด
 	Service     *model_lt_servicemethod.Struct_LtServicemethod `json:"service"`     // เซอวิส
@@ -117,6 +118,10 @@ type Param_OrderApprove struct {
 type Pram_OrderApprove_Put struct {
 	Id                   int64  `json:"id"`                   // รหัสรายการ order detail id
 	Detail_Source_Result string `json:'detail_source_result'` // ผลอนุมัติ AP อนุมัติ ,DA ไม่อนุมัติ
+}
+type Param_OrderExpireDate_Put struct {
+	Id                 int64  `json:"id"`          // example:`55` รหัส order detail
+	Detail_Expire_Date string `json:"expire_date"` // example:`1970-01-12 07:00:00+07` วันหมดอายุ
 }
 type Param struct {
 	Date_Start      string `json:"datestart"` // example:`2006-01-02` วันที่เริ่มต้น

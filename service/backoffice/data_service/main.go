@@ -61,6 +61,8 @@ func (srv *HttpService) handlerPutData(ctx service.RequestContext) error {
 		return srv.putUploadResult(ctx)
 	case "approve":
 		return srv.putApprove(ctx)
+	case "update_expire_date":
+		return srv.putExppiredate(ctx)
 	default:
 		return rest.NewError(404, "Unknown service id", nil)
 	}

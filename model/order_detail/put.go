@@ -7,6 +7,8 @@
 package order_detail
 
 import (
+	"fmt"
+
 	"haii.or.th/api/util/pqx"
 )
 
@@ -109,5 +111,20 @@ func UpdateSourceResult(p []*Pram_OrderApprove_Put, user_id int64) error {
 	}
 	tx.Commit()
 
+	return nil
+}
+
+//	update วันหมดอายุตาม order_detail id
+func UpdateExpireDate(p *Param_OrderExpireDate_Put) error {
+	db, err := pqx.Open()
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(SQL_UpdateOrderExpireDate, p.Detail_Expire_Date, p.Id)
+	fmt.Println("SQL_UpdateOrderExpireDate : ", p.Detail_Expire_Date, p.Id)
+	if err != nil {
+		return err
+	}
 	return nil
 }

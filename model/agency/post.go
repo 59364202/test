@@ -42,7 +42,7 @@ func InsertAgency(param *Param_Agency) (*Struct_Agency, error) {
 		return nil, err
 	}
 
-	err = db.QueryRow(SQL_InsertAgency, jsonAgencyName, jsonAgencyShortName, intDepartmentId, param.UserId).Scan(&_id)
+	err = db.QueryRow(SQL_InsertAgency, jsonAgencyName, jsonAgencyShortName, intDepartmentId, param.UserId, param.Logo).Scan(&_id)
 	if err != nil {
 		return nil, err
 	}

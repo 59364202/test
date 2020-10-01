@@ -9,9 +9,10 @@ package order_header
 import (
 	"database/sql"
 	"encoding/json"
-	"haii.or.th/api/util/pqx"
 	"strconv"
 	"time"
+
+	"haii.or.th/api/util/pqx"
 
 	model_order_status "haii.or.th/api/thaiwater30/model/order_status"
 )
@@ -154,6 +155,43 @@ func GetOrderForExternal(param *Param) ([]*Struct_OrderHeader, error) {
 //		Struct_OrderHeader
 func GetOrderHeaderByParamManagement(param *Param) ([]*Struct_OrderHeader, error) {
 	return getOrderHeader(param.Date_Start, param.Date_End, param.Agency_Id, param.Statud_Id)
+}
+
+//  ดึงข้อมูล order_purpose ที่ใช้งานบ่อยที่สุด 10 อันดับจากตาราง order_header
+//	Parameters:
+//		None
+//	Return:
+//		Struct_Order_Purpose
+func GetPopularOrderPurpose() ([]*Struct_Order_Purpose, error) {
+	db, err := pqx.Open()
+	if err != nil {
+		return nil, err
+	}
+
+	var (
+		strSQL string = SQL_SelectOrderHeaderForOrderPurposePopular
+		row    *sql.Rows
+		data   []*Struct_Order_Purpose
+
+		_order_purpose           string //วัตุประสงค์
+		_order_purpose_frequency int64  //จำนวนวัตถุประสงค์ที่ซ้ำ
+	)
+
+	row, err = db.Query(strSQL)
+
+	for row.Next() {
+		err = row.Scan(&_order_purpose, &_order_purpose_frequency)
+		if err != nil {
+			return nil, err
+		}
+
+		OderPurpose := &Struct_Order_Purpose{}
+		OderPurpose.Order_Purpose = _order_purpose
+		OderPurpose.Id = _order_purpose_frequency //ไม่ใช่ id ของ order_purpose แต่เป็นจำนวนของ order_purpose ที่ซ้ำกัน
+		data = append(data, OderPurpose)
+	}
+
+	return data, nil
 }
 
 //	get order header ตาม datestart, dateend, agency_id, status_id
