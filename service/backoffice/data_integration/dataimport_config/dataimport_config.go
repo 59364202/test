@@ -46,6 +46,10 @@ func (srv *HttpService) handleGetData(ctx service.RequestContext) error {
 		return srv.getDownloadCronList(ctx)
 	case "api_cron_list":
 		return srv.getServerCronList(ctx)
+	case "config_variable":
+		return srv.getConfigVariable(ctx)
+	case "list_category_variable":
+		return srv.getListVariable(ctx)
 	default:
 		return rest.NewError(404, "Unknown service id", nil)
 	}
@@ -66,6 +70,8 @@ func (srv *HttpService) handlePostData(ctx service.RequestContext) error {
 		return srv.copyDataimportDatasetConfig(ctx)
 	case "ps":
 		return rdl.HandlePostData(ctx)
+	case "config_variable":
+		return srv.postConfigCategory(ctx)
 	default:
 		return rest.NewError(404, "Unknown service id", nil)
 	}
@@ -91,6 +97,8 @@ func (srv *HttpService) handlePutData(ctx service.RequestContext) error {
 		return srv.updateServerCronList(ctx)
 	case "api_cron_run":
 		return srv.runCron(ctx)
+	case "config_variable":
+		return srv.postConfigCategory(ctx)
 	default:
 		return rest.NewError(404, "Unknown service id", nil)
 	}
@@ -108,6 +116,8 @@ func (srv *HttpService) handleDeleteData(ctx service.RequestContext) error {
 		return srv.deleteDataimportDatasetConfig(ctx)
 	case "ps":
 		return rdl.HandleDeleteData(ctx)
+	case "config_variable":
+		return srv.deleteAgency(ctx)
 	default:
 		return rest.NewError(404, "Unknown service id", nil)
 	}

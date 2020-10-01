@@ -616,3 +616,41 @@ func CopyDataimportDatasetConfig(datasetID int64) (int64, error) {
 	// return dataset id
 	return dataset_id, nil
 }
+
+func PostConfigVariableCategory(category int64, user, name, value string, uid int64) (*Struct_category, error) {
+	q := " INSERT INTO api.config_variable (category ,config_name, variable_name ,value , created_by , created_at) VALUES ( $1,$2,$3,$4,$5,$6) "
+
+	db, err := pqx.Open()
+	if err != nil {
+		return nil, errors.Repack(err)
+	}
+
+	tx, err := db.Begin()
+	if err != nil {
+		return nil, errors.Repack(err)
+	}
+	defer tx.Rollback()
+
+	stmt, err := tx.Prepare(q)
+	if err != nil {
+		return nil, err
+	}
+	// err = stmt.QueryRow(q, category, user, name, value).Scan(&category, &user, &name, &value)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	ctime := time.Now()
+	user_id := uid
+
+	_, err = stmt.Exec(category, user, name, value, user_id, ctime)
+	if err != nil {
+		return nil, errors.Repack(err)
+	}
+
+	tx.Commit()
+	if err != nil {
+		return nil, errors.Repack(err)
+	}
+
+	return nil, nil
+}

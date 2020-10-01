@@ -80,3 +80,13 @@ func (srv *HttpService) serviceName(ctx service.RequestContext) error {
 	ctx.ReplyJSON(result)
 	return nil
 }
+
+func (srv *HttpService) agentName(ctx service.RequestContext) error {
+
+	result, err := model_accessLog.GetAgentName()
+	if err != nil {
+		return err
+	}
+	ctx.ReplyJSON(result)
+	return nil
+}

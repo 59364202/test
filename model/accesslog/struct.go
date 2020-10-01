@@ -18,3 +18,8 @@ type ResultAccessLog struct {
 	ReplyReason     string `json:"reply_reason"`      // example:`OK` ข้อความตอบกลับ
 	ClientIP        string `json:"client_ip"`         // example:`192.168.1.56` ip address client
 }
+
+type AgentName struct {
+	ID        interface{} `json:"id"`         
+	AgentName interface{} `json:"agent_name"` 
+}

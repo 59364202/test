@@ -5,6 +5,8 @@ var sqlGetHistory = `SELECT  a.id,a.access_time,u.account as agent_user,u2.accou
 
 var sqlGetServiceName = "SELECT s.id, s.name, sm.name, smo.name FROM api.service s LEFT JOIN api.lt_service_method sm ON s.service_method_id=sm.id LEFT JOIN api.service_module smo ON s.service_module_id=smo.id ORDER BY smo.name,s.name,sm.name"
 
+var sqlGetAgentName = "Select u.id , u.account from api.user u where user_type_id = 2 and deleted_at IS NULL Order by id asc"
+
 //var SQL_GetOrderDetailLog = `SELECT access_time, client_ip, access_duration, reply_code, reply_reason FROM api.access_log WHERE request_params->>'id' = $1 AND service_id = 107
 //ORDER BY access_time`
 

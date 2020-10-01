@@ -32,7 +32,7 @@ import (
 //					Service name.
 //  Return:
 //		Access log in date range.
-func GetHistory(dateStart, dateEnd string, ServiceName string) (*result.Result, error) {
+func GetHistory(dateStart, dateEnd string, ServiceName, User string) (*result.Result, error) {
 
 	// connect database
 	db, err := pqx.Open()
@@ -43,12 +43,24 @@ func GetHistory(dateStart, dateEnd string, ServiceName string) (*result.Result, 
 	// sql for get Access log table
 	q := sqlGetHistory
 	p := []interface{}{}
+	var c int
 	sqlService := ""
+	sqlUser := ""
 	// create condition between datetime and service name
-	if dateStart != "" && dateEnd != "" && ServiceName != "" {
+	if dateStart != "" && dateEnd != "" && ServiceName != "" && User != "" {
+		p = []interface{}{dateStart, dateEnd}
+		sqlService, p, c = selectMultiService(3, ServiceName, p)
+		sqlUser, p = selectMultiUser(c, User, p)
+		q = q + " WHERE a.created_at >= $1 AND a.created_at <= $2 AND " + sqlService + sqlUser
+	} else if dateStart != "" && dateEnd != "" && User != "" {
+		p = []interface{}{dateStart, dateEnd}
+		sqlUser, p = selectMultiUser(3, User, p)
+		q = q + " WHERE a.created_at >= $1 AND a.created_at <= $2" + sqlUser
+
+	} else if dateStart != "" && dateEnd != "" && ServiceName != "" {
 		// case select multi service name
 		p = []interface{}{dateStart, dateEnd}
-		sqlService, p = selectMultiService(3, ServiceName, p)
+		sqlService, p, c = selectMultiService(3, ServiceName, p)
 		q = q + " WHERE a.created_at >= $1 AND a.created_at <= $2 AND " + sqlService
 	} else if dateStart != "" && dateEnd != "" && ServiceName == "" {
 		// case no input service
@@ -65,18 +77,18 @@ func GetHistory(dateStart, dateEnd string, ServiceName string) (*result.Result, 
 	} else if dateStart == "" && dateEnd == "" && ServiceName != "" {
 		// case no input start and end date
 		p = []interface{}{}
-		sqlService, p = selectMultiService(1, ServiceName, p)
+		sqlService, p, c = selectMultiService(1, ServiceName, p)
 		q = q + " WHERE " + sqlService
 	} else if dateStart != "" && dateEnd == "" && ServiceName != "" {
 		// case no input end date
 		p = []interface{}{dateStart}
-		sqlService, p = selectMultiService(2, ServiceName, p)
+		sqlService, p, c = selectMultiService(2, ServiceName, p)
 		q = q + " WHERE a.created_at >= $1 AND " + sqlService
 
 	} else if dateStart == "" && dateEnd != "" && ServiceName != "" {
 		// case no start date
 		p = []interface{}{dateEnd}
-		sqlService, p = selectMultiService(2, ServiceName, p)
+		sqlService, p, c = selectMultiService(2, ServiceName, p)
 		q = q + " WHERE a.created_at <= $1 AND " + sqlService
 	}
 
@@ -142,8 +154,10 @@ func GetHistory(dateStart, dateEnd string, ServiceName string) (*result.Result, 
 //					Service name.
 //  Return:
 //		sql with condition for get data
-func selectMultiService(count int, service string, p []interface{}) (string, []interface{}) {
+func selectMultiService(count int, service string, p []interface{}) (string, []interface{}, int) {
 	arrService := strings.Split(service, ",")
+	// arrUser := strings.Split(user, ",")
+	var c int
 	q := "("
 
 	for i, v := range arrService {
@@ -154,6 +168,27 @@ func selectMultiService(count int, service string, p []interface{}) (string, []i
 			q = q + "s.id = $" + strconv.Itoa(count)
 		} else {
 			q = q + " OR s.id = $" + strconv.Itoa(count)
+		}
+		count = count + 1
+		c = count
+	}
+	q = q + ")"
+
+	return q, p, c
+}
+
+func selectMultiUser(count int, user string, p []interface{}) (string, []interface{}) {
+	arrUser := strings.Split(user, ",")
+	q := "AND ("
+
+	for i, v := range arrUser {
+		//		log.Println(v)
+		vInt, _ := strconv.Atoi(v)
+		p = append(p, vInt)
+		if i == 0 {
+			q = q + "u2.id = $" + strconv.Itoa(count)
+		} else {
+			q = q + " OR u2.id = $" + strconv.Itoa(count)
 		}
 		count = count + 1
 	}
@@ -283,4 +318,43 @@ func GetOrderDetailLog(orderDetailID int64, dateString, dateEnd string) ([]*Resu
 	}
 
 	return data, nil
+}
+
+func GetAgentName() (*result.Result, error) {
+
+	// connect database
+	db, err := pqx.Open()
+	if err != nil {
+		return nil, errors.NewEvent(eventcode.EventNetworkCriticalUnableConDB, err)
+	}
+
+	// sql for get Service name from api.service
+	q := sqlGetAgentName
+	p := []interface{}{}
+	// process query access table
+	rows, err := db.Query(q, p...)
+	// check error
+	if err != nil {
+		return nil, pqx.GetRESTError(err)
+	}
+	defer rows.Close()
+
+	data := make([]*AgentName, 0)
+	for rows.Next() {
+		d := &AgentName{}
+		var (
+			id        sql.NullInt64
+			agentName sql.NullString
+		)
+		rows.Scan(&id, &agentName)
+
+		d.ID = id.Int64
+		d.AgentName = agentName.String
+
+		data = append(data, d)
+	}
+
+	// log.Println("333333333")
+	return result.Result1(data), nil
+
 }

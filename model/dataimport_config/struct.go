@@ -498,3 +498,16 @@ type DownloadCronSetting struct {
 	Node           string `json:"node"`            // node
 	Agency         string `json:"agency"`          // Agency
 }
+
+type ConfigVariable struct {
+	ID           int64  `json:"id"`
+	Category     string `json:"category"`
+	ConfigName   string `json:"name"`
+	VariableName string `json:"variable_name"`
+	Value        string `json:"value"`
+}
+
+type ListVariable struct {
+	ID           int64  `json:"id"`
+	NameCategory string `json:"name_category"`
+}

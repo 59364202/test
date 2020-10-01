@@ -237,3 +237,32 @@ func (srv *HttpService) runCron(ctx service.RequestContext) error {
 	ctx.ReplyJSON(result.Result1(&RunCronResult{id}))
 	return nil
 }
+
+type PutConfigVariableParams struct {
+	VariableID   int64  `json:"variable_id"`
+	Category     int64  `json:"category"`
+	Name         string `json:"name"`
+	VariableName string `json:"variable_name"`
+	Value        string `json:"value"`
+	//	DataGroupCode   string `json:"group_code"`
+}
+
+func (srv *HttpService) updateConfigVariable(ctx service.RequestContext) error {
+	//Map parameters
+	p := &PutConfigVariableParams{}
+	if err := ctx.GetRequestParams(p); err != nil {
+		return errors.Repack(err)
+	}
+	ctx.LogRequestParams(p)
+	// p.UserId = ctx.GetUserID()
+	//Put Agency
+	//	rs, err := model.PutAgency(ctx.GetUserID(), ctx.GetServiceParams("id"), p.AgencyName, p.AgencyShortName, p.DepartmentId)
+	rs, err := model_dataimport_config.UpdateConfigVariable(p.Category, p.Name, p.VariableName, p.Value, ctx.GetUserID(), p.VariableID)
+	if err != nil {
+		ctx.ReplyJSON(result.Result0(err.Error()))
+	} else {
+		ctx.ReplyJSON(result.Result1(rs))
+	}
+
+	return nil
+}

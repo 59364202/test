@@ -66,3 +66,27 @@ func (srv *HttpService) deleteDataimportDatasetConfig(ctx service.RequestContext
 
 	return nil
 }
+
+
+func (srv *HttpService) deleteAgency(ctx service.RequestContext) error {
+	//Map parameters
+	p := &PutConfigVariableParams{}
+	if err := ctx.GetRequestParams(p); err != nil {
+		return errors.Repack(err)
+	}
+	ctx.LogRequestParams(p)
+	// if ctx.GetServiceParams("variable_id") != "" {
+	// 	p.VariableID = ctx.GetServiceParams("variable_id")
+	// }
+	// p.UserId = ctx.GetUserID()
+	//Delete Agency
+	//	rs, err := model.DeleteAgency(ctx.GetUserID(), ctx.GetServiceParams("id"))
+	rs, err := model_dataimport_config.DeleteConfigVariable(p.VariableID, ctx.GetUserID())
+	if err != nil {
+		ctx.ReplyJSON(result.Result0(err.Error()))
+	} else {
+		ctx.ReplyJSON(result.Result1(rs))
+	}
+
+	return nil
+}
