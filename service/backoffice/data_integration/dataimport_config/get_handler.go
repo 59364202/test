@@ -2,7 +2,9 @@ package dataimport_config
 
 import (
 	model_dataimport_config "haii.or.th/api/thaiwater30/model/dataimport_config"
+
 	"haii.or.th/api/thaiwater30/util/result"
+	"haii.or.th/api/util/errors"
 	"haii.or.th/api/util/service"
 	//	"haii.or.th/api/server/model/dataimport"
 )
@@ -93,7 +95,7 @@ func (srv *HttpService) getDataimportDatasetConfig(ctx service.RequestContext) e
 		}
 		ctx.ReplyJSON(result.Result1(rs))
 	} else {
-		rs, err := model_dataimport_config.GetDataImportDatasetList("",download_type)
+		rs, err := model_dataimport_config.GetDataImportDatasetList("", download_type)
 		if err != nil {
 			return err
 		}
@@ -234,4 +236,3 @@ func (srv *HttpService) getListVariable(ctx service.RequestContext) error {
 
 	return nil
 }
-

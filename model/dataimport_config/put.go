@@ -16,6 +16,7 @@ import (
 	"haii.or.th/api/util/eventcode"
 	"haii.or.th/api/util/log"
 	"haii.or.th/api/util/pqx"
+
 	//	"haii.or.th/api/util/shell"
 	"strconv"
 )
@@ -329,36 +330,45 @@ func UpdateApiCronList(name, crontab_setting string) error {
 	return nil
 }
 
-q := `UPDATE api.config_variable SET category = $1, config_name = $2, variable_name = $3 , value = $4,updated_by = $5, updated_at = NOW() WHERE id = $6`
-
-db, err := pqx.Open()
-if err != nil {
-	return nil, errors.Repack(err)
+type Struct_category2 struct {
+	VariableID   int64  `json:"variable_id"`
+	Category     int64  `json:"category"`
+	Name         string `json:"name"`
+	VariableName string `json:"variable_name"`
+	Value        string `json:"value"`
 }
 
-tx, err := db.Begin()
-if err != nil {
-	return nil, errors.Repack(err)
-}
-defer tx.Rollback()
+func UpdateConfigVariable(category int64, user, name, value string, uid, vid int64) (*Struct_category2, error) {
+	q := `UPDATE api.config_variable SET category = $1, config_name = $2, variable_name = $3 , value = $4,updated_by = $5, updated_at = NOW() WHERE id = $6`
 
-stmt, err := tx.Prepare(q)
-if err != nil {
-	return nil, err
-}
+	db, err := pqx.Open()
+	if err != nil {
+		return nil, errors.Repack(err)
+	}
 
-// ctime := time.Now()
-userid := uid
+	tx, err := db.Begin()
+	if err != nil {
+		return nil, errors.Repack(err)
+	}
+	defer tx.Rollback()
 
-_, err = stmt.Exec(category, user, name, value, userid, vid)
-if err != nil {
-	return nil, errors.Repack(err)
-}
+	stmt, err := tx.Prepare(q)
+	if err != nil {
+		return nil, err
+	}
 
-tx.Commit()
-if err != nil {
-	return nil, errors.Repack(err)
-}
+	// ctime := time.Now()
+	userid := uid
 
-return nil, nil
+	_, err = stmt.Exec(category, user, name, value, userid, vid)
+	if err != nil {
+		return nil, errors.Repack(err)
+	}
+
+	tx.Commit()
+	if err != nil {
+		return nil, errors.Repack(err)
+	}
+
+	return nil, nil
 }

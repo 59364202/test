@@ -98,7 +98,7 @@ func (srv *HttpService) handlePutData(ctx service.RequestContext) error {
 	case "api_cron_run":
 		return srv.runCron(ctx)
 	case "config_variable":
-		return srv.postConfigCategory(ctx)
+		return srv.updateConfigVariable(ctx)
 	default:
 		return rest.NewError(404, "Unknown service id", nil)
 	}

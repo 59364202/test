@@ -5,6 +5,7 @@ import (
 	"haii.or.th/api/thaiwater30/service/backoffice/data_integration/rdl"
 	"haii.or.th/api/thaiwater30/util/result"
 	"haii.or.th/api/util/datatype"
+	"haii.or.th/api/util/errors"
 	"haii.or.th/api/util/service"
 )
 
@@ -66,7 +67,6 @@ func (srv *HttpService) deleteDataimportDatasetConfig(ctx service.RequestContext
 
 	return nil
 }
-
 
 func (srv *HttpService) deleteAgency(ctx service.RequestContext) error {
 	//Map parameters

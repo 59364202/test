@@ -138,4 +138,6 @@ var (
 	getConfigVariable = "SELECT aa.id , cc.name_cat , aa.config_name, aa.variable_name, aa.value from api.config_variable aa left join api.config_variable_category cc on cc.id = aa.category Where deleted_at IS NULL"
 
 	getListVariable = "SELECT id , name_cat from api.config_variable_category"
+	// getListVariable = "SELECT id , name_cat from api.config_variable_category"
+
 )

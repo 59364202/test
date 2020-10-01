@@ -358,3 +358,4 @@ func GetAgentName() (*result.Result, error) {
 	return result.Result1(data), nil
 
 }
+

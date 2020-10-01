@@ -500,7 +500,7 @@ type DownloadCronSetting struct {
 }
 
 type ConfigVariable struct {
-	ID           int64  `json:"id"`
+	ID           int64  `json:"id"` // รหัส config
 	Category     string `json:"category"`
 	ConfigName   string `json:"name"`
 	VariableName string `json:"variable_name"`

@@ -11,6 +11,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"haii.or.th/api/server/model/dataimport"
 	map_struct "haii.or.th/api/thaiwater30/model/metadata"
@@ -615,6 +616,14 @@ func CopyDataimportDatasetConfig(datasetID int64) (int64, error) {
 	}
 	// return dataset id
 	return dataset_id, nil
+}
+
+type Struct_category struct {
+	VariableID   int64  `json:"variable_id"`
+	Category     int64  `json:"category"`
+	Name         string `json:"name"`
+	VariableName string `json:"variable_name"`
+	Value        string `json:"value"`
 }
 
 func PostConfigVariableCategory(category int64, user, name, value string, uid int64) (*Struct_category, error) {

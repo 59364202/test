@@ -1350,3 +1350,40 @@ func GetListCatVariable() (interface{}, error) {
 
 	return data, err
 }
+
+func GetListUserVariable() (interface{}, error) {
+
+	db, err := pqx.Open()
+	if err != nil {
+		return nil, errors.NewEvent(eventcode.EventNetworkCriticalUnableConDB, err)
+	}
+
+	q := getListVariable
+	p := []interface{}{}
+
+	// process data
+	rows, err := db.Query(q, p...)
+	if err != nil {
+		return nil, pqx.GetRESTError(err)
+	}
+	defer rows.Close()
+
+	data := make([]*ListVariable, 0)
+	for rows.Next() {
+		d := &ListVariable{}
+		var (
+			id            sql.NullInt64
+			name_category sql.NullString
+		)
+		err = rows.Scan(&id, &name_category)
+		if err != nil {
+			return 0, errors.Repack(err)
+		}
+
+		d.ID = id.Int64
+		d.NameCategory = name_category.String
+		data = append(data, d)
+	}
+
+	return data, err
+}

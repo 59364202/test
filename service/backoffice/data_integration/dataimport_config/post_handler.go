@@ -4,6 +4,7 @@ import (
 	model_dataimport_config "haii.or.th/api/thaiwater30/model/dataimport_config"
 	"haii.or.th/api/thaiwater30/util/result"
 	"haii.or.th/api/util/datatype"
+	"haii.or.th/api/util/errors"
 	"haii.or.th/api/util/service"
 
 	"haii.or.th/api/thaiwater30/service/backoffice/data_integration/rdl"
@@ -188,4 +189,3 @@ func (srv *HttpService) postConfigCategory(ctx service.RequestContext) error {
 	}
 	return nil
 }
-
