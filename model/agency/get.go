@@ -83,7 +83,7 @@ func getAgency(id, department_id, ministry_id int64, sqlCmdWhere string) ([]*Str
 	}
 
 	for row.Next() {
-		err = row.Scan(&_id, &_agency_name, &_agency_shortname, &_department_id, &_deparmtnet_name, &_ministry_id, &_ministry_name)
+		err = row.Scan(&_id, &_agency_name, &_agency_shortname, &_department_id, &_deparmtnet_name, &_ministry_id, &_ministry_name, &_logo, &_aspects)
 		if err != nil {
 			return nil, err
 		}
