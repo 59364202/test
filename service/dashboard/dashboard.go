@@ -27,6 +27,8 @@ func (srv *HttpService) handleGetData(ctx service.RequestContext) error {
 	switch service_id {
 	case "monitor":
 		return srv.getDashboard(ctx)
+	case "agency":
+		return srv.getAgency(ctx)
 	default:
 		return rest.NewError(404, "Unknown service id", nil)
 	}
@@ -48,6 +50,17 @@ func (srv *HttpService) handlePatchData(ctx service.RequestContext) error {
 func (srv *HttpService) getDashboard(ctx service.RequestContext) error {
 
 	result, err := model_dashboard.GetDashboard()
+	if err != nil {
+		return err
+	}
+	ctx.ReplyJSON(result)
+
+	return nil
+}
+
+func (srv *HttpService) getAgency(ctx service.RequestContext) error {
+
+	result, err := model_dashboard.GetAgency()
 	if err != nil {
 		return err
 	}

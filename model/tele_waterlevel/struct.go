@@ -19,8 +19,7 @@ import (
 )
 
 type Struct_Waterlevel struct {
-	Id                  int64       `json:"id,omitempty"` // example:`68033565` รหัสข้อมูล
-	Remark              interface{} `json:"remark"`
+	Id                  int64       `json:"id,omitempty"`            // example:`68033565` รหัสข้อมูล
 	Waterlevel_datetime string      `json:"waterlevel_datetime"`     // example:`2006-01-02 15:04` วันเวลาที่ตรวจสอบค่าระดับน้ำ
 	Waterlevel_m        interface{} `json:"waterlevel_m"`            // example:`0.5`ระดับน้ำ เมตร
 	Waterlevel_msl      interface{} `json:"waterlevel_msl"`          // example:`167.953642` ระดับน้ำ รทก

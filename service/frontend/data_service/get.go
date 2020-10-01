@@ -3,6 +3,8 @@ package data_service
 import (
 	//	model_lt_category "haii.or.th/api/thaiwater30/model/lt_category"
 	//	model_lt_ministry "haii.or.th/api/thaiwater30/model/lt_ministry"
+	"fmt"
+
 	model_metadata "haii.or.th/api/thaiwater30/model/metadata"
 	model_order_detail "haii.or.th/api/thaiwater30/model/order_detail"
 	model_order_header "haii.or.th/api/thaiwater30/model/order_header"
@@ -222,6 +224,8 @@ func (srv *HttpService) getShoppingHistory(ctx service.RequestContext) error {
 		return nil
 	}
 	ctx.LogRequestParams(p)
+
+	fmt.Println("-- getShoppingHistory --", p.Id)
 
 	if p.Id == 0 {
 		rs := &orderHistory{}

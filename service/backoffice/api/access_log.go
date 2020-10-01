@@ -11,7 +11,6 @@ type AccessLogParam struct {
 	DateStart string `json:"dateStart"` //เวลาเริ่มต้น เช่น 2006-01-02 15:04
 	DateEnd   string `json:"dateEnd"`   // เวลาเริ่มต้น เช่น 2006-01-02 15:04
 	Service   string `json:"service"`   // ชื่อ service id เช่น  105
-	User      string `json:"user"`
 }
 
 // @DocumentName	v1.webservice
@@ -25,8 +24,8 @@ type AccessLogParam struct {
 // @Response		404			-		the request service name was not found
 
 type AccessLogResultSwagger struct {
-	Result string `json:"result"` //example:`ok`
-	Data   []model_accessLog.ResultAccessLog
+	Result string `json:"result"`  //example:`ok`
+	Data []model_accessLog.ResultAccessLog 
 }
 
 func (srv *HttpService) accessLog(ctx service.RequestContext) error {
@@ -38,7 +37,7 @@ func (srv *HttpService) accessLog(ctx service.RequestContext) error {
 
 	ctx.LogRequestParams(p)
 
-	result, err := model_accessLog.GetHistory(p.DateStart, p.DateEnd, p.Service, p.User)
+	result, err := model_accessLog.GetHistory(p.DateStart, p.DateEnd, p.Service)
 	if err != nil {
 		return err
 	}
@@ -58,12 +57,12 @@ var _dummy *result.Result
 // @Response		404			-		the request service name was not found
 
 type ResultServiceNameSwagger struct {
-	Result string              `json:"result"` // example:`OK`
-	Data   *ServiceNameSwagger `json:"data"`
+	Result string `json:"result"` // example:`OK`
+	Data *ServiceNameSwagger `json:"data"`
 }
 
 type ServiceNameSwagger struct {
-	DateRange     string                            `json:"date_range"` // example:`30` กำหนดช่วงวันในการเลือก
+	DateRange     string                 `json:"date_range"` // example:`30` กำหนดช่วงวันในการเลือก
 	ServiceOption []*ServiceNameSelectOptionSwagger `json:"service_name"`
 }
 
@@ -75,16 +74,6 @@ type ServiceNameSelectOptionSwagger struct {
 func (srv *HttpService) serviceName(ctx service.RequestContext) error {
 
 	result, err := model_accessLog.GetServiceName()
-	if err != nil {
-		return err
-	}
-	ctx.ReplyJSON(result)
-	return nil
-}
-
-func (srv *HttpService) agentName(ctx service.RequestContext) error {
-
-	result, err := model_accessLog.GetAgentName()
 	if err != nil {
 		return err
 	}

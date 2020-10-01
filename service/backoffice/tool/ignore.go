@@ -6,10 +6,10 @@ import (
 	model_dam_hourly "haii.or.th/api/thaiwater30/model/dam_hourly"
 	model "haii.or.th/api/thaiwater30/model/ignore"
 	model_history "haii.or.th/api/thaiwater30/model/ignore_history"
-	model_rainfall "haii.or.th/api/thaiwater30/model/rainfall"
 	model_rainfall24hr "haii.or.th/api/thaiwater30/model/rainfall24hr"
 	model_waterlevel "haii.or.th/api/thaiwater30/model/tele_waterlevel"
 	model_waterquality "haii.or.th/api/thaiwater30/model/waterquality"
+	model_rainfall "haii.or.th/api/thaiwater30/model/rainfall"
 
 	"haii.or.th/api/thaiwater30/service/frontend/public"
 
@@ -45,7 +45,6 @@ func (srv *HttpService) getIgnoreTable(ctx service.RequestContext) error {
 	//Get List of DataTypeOption Data
 	ignoreStationList := model_setting.GetSystemSettingJson("bof.Tool.Ignore.TableList")
 	dataResult, err := model.GetLastestIgnoreStation(ignoreStationList)
-	//dataResult, err := model.GetStation(ignoreStationList)
 	if err != nil {
 		ctx.ReplyJSON(result.Result0(err))
 	} else {
@@ -109,11 +108,11 @@ func (srv *HttpService) getIgnoreRainfallDetail(ctx service.RequestContext) erro
 	if err != nil {
 		return errors.Repack(err)
 	}
-
-	paramRain := &model_rainfall.Rainfall_InputParam{
-		Station_id: param.Station_id, // รหัสสถานี
-		Start_date: param.Start_date, // วันที่เริ่มต้น
-		End_date:   param.End_date,   // วันที่สิ้นสุด
+	
+	paramRain := &model_rainfall.Rainfall_InputParam {
+		Station_id : param.Station_id, // รหัสสถานี
+		Start_date : param.Start_date, // วันที่เริ่มต้น
+		End_date   : param.End_date,   // วันที่สิ้นสุด
 	}
 	dataResult, err := model_rainfall.GetRainfallByStationAndDate(paramRain)
 
@@ -127,9 +126,8 @@ func (srv *HttpService) getIgnoreRainfallDetail(ctx service.RequestContext) erro
 }
 
 type Struct_IgnoreStation struct {
-	Data              *result.Result `json:"data"`
-	IgnoreData        *result.Result `json:"ignore_data"`
-	IgnoreDescription *result.Result `json:"ignore_description"`
+	Data       *result.Result `json:"data"`
+	IgnoreData *result.Result `json:"ignore_data"`
 }
 
 type Struct_getIgnoreStationLoad struct {
@@ -159,7 +157,6 @@ func (srv *HttpService) getIgnoreStationLoad(ctx service.RequestContext) error {
 
 	var objData interface{}
 	var objIgnoreData interface{}
-	var objIgnoreDescription interface{}
 	var err error
 
 	//Map parameters
@@ -172,9 +169,6 @@ func (srv *HttpService) getIgnoreStationLoad(ctx service.RequestContext) error {
 	switch param.TableName {
 	case "rainfall_24h":
 		paramRain := &model_rainfall24hr.Param_Rainfall24{}
-		paramRain.Start_Date = param.StartDate
-		paramRain.End_Date = param.EndDate
-		paramRain.Station_id = param.StationID
 		objData, err = model_rainfall24hr.GetRainfallThailandDataCache(paramRain)
 	case "dam_daily":
 		paramDamDaily := &model_dam_daily.Struct_DamDailyLastest_InputParam{}
@@ -184,9 +178,6 @@ func (srv *HttpService) getIgnoreStationLoad(ctx service.RequestContext) error {
 		objData, err = model_dam_hourly.GetDamHourlyLastest(paramDamHourly)
 	case "tele_waterlevel":
 		paramWaterlevel := &model_waterlevel.Waterlevel_InputParam{}
-		paramWaterlevel.Start_date = param.StartDate
-		paramWaterlevel.End_date = param.EndDate
-		paramWaterlevel.Station_id = param.StationID
 		objData, err = model_waterlevel.GetWaterLevelThailandDataCache(paramWaterlevel)
 	case "waterquality":
 		objData, err = model_waterquality.GetWaterQualityThailandDataCache(&model_waterquality.Param_WaterQualityCache{})
@@ -198,15 +189,6 @@ func (srv *HttpService) getIgnoreStationLoad(ctx service.RequestContext) error {
 		dataResult.Data = result.Result0(err)
 	} else {
 		dataResult.Data = result.Result1(objData)
-	}
-
-	//paramIgnoreDescription := &model.Struct_IgnoreDescription{}
-	objIgnoreDescription, err = model.GetLastestIgnoreDescription(param.TableName)
-
-	if err != nil {
-		dataResult.IgnoreDescription = result.Result0(err)
-	} else {
-		dataResult.IgnoreDescription = result.Result1(objIgnoreDescription)
 	}
 
 	paramIgnoreData := &model_history.Struct_IgnoreHistory_InputParam{}
@@ -251,37 +233,5 @@ func (srv *HttpService) patchIgnoreStation(ctx service.RequestContext) error {
 		ctx.ReplyJSON(result.Result1(resultData))
 	}
 
-	return nil
-}
-
-// @DocumentName	v1.webservice
-// @Service			thaiwater30/backoffice/tool/ignore
-// @Summary			รายการ description
-// @Method			GET
-// @Consumes		json
-// @Parameter		-	TableName
-// @Produces		json
-// @Response		200	Struct_patchIgnoreDescription successful operation
-
-type Struct_getStation struct {
-	Result string `json:"result"` // example:`OK`
-	Data   string `json:"data"`   // example:`Ignore Data Successful`
-}
-
-// @DocumentName	v1.webservice
-// @Service			thaiwater30/backoffice/tool/ignore_station
-// @Summary			รายการสถานีทั้งหมด
-// @Method			GET
-// @Parameter		-
-// @Produces		json
-// @Response		200	Struct_getStation successful operation
-func (srv *HttpService) getStation(ctx service.RequestContext) error {
-	//Get List of History
-	resultData, err := model_history.GetStation()
-	if err != nil {
-		return errors.Repack(err)
-	}
-
-	ctx.ReplyJSON(result.Result1(resultData))
 	return nil
 }

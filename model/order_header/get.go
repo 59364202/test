@@ -9,9 +9,11 @@ package order_header
 import (
 	"database/sql"
 	"encoding/json"
-	"haii.or.th/api/util/pqx"
+	"fmt"
 	"strconv"
 	"time"
+
+	"haii.or.th/api/util/pqx"
 
 	model_order_status "haii.or.th/api/thaiwater30/model/order_status"
 )
@@ -41,7 +43,11 @@ func GetOrderHeaderByUserId(user_id int64) ([]*Struct_OH, error) {
 		_status    string
 	)
 
-	row, err := db.Query(SQL_SelectOrderHeaderByUserId, user_id)
+	fmt.Println("-- hello --", user_id)
+
+	// where_p1 := " WHERE user_id = $1"
+
+	row, err := db.Query(SQL_SelectOrderHeaderByUserId)
 	if err != nil {
 		return nil, pqx.GetRESTError(err)
 	}

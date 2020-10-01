@@ -19,6 +19,7 @@ type Struct_Agency struct {
 	Department_name json.RawMessage `json:"department_name,omitempty"` // example:`{"th":"สถาบันสารสนเทศทรัพยากรน้ำและการเกษตร (องค์การมหาชน)"}` ชื่อกรม
 	Ministry_id     int64           `json:"ministry_id,omitempty"`     // example:`17` ลำดับข้อมูลกระทรวง
 	Ministry_name   json.RawMessage `json:"ministry_name,omitempty"`   // example:`{"th":"กระทรวงวิทยาศาสตร์และเทคโนโลยี","en":"Ministry of Science and Technology"}` ชื่อกระทรวง
+	Year			string 			`json:"year"`
 }
 
 // โครงสร้างเล็กๆ ที่มีแค่ id, agency_name

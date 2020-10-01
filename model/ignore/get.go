@@ -1,8 +1,6 @@
 package ignore
 
 import (
-	"log"
-
 	model_setting "haii.or.th/api/server/model/setting"
 	model_dam_daily "haii.or.th/api/thaiwater30/model/dam_daily"
 	model_dam_hourly "haii.or.th/api/thaiwater30/model/dam_hourly"
@@ -12,13 +10,12 @@ import (
 
 	"database/sql"
 	"encoding/json"
-	"strconv"
-	"strings"
-	"time"
-
 	"haii.or.th/api/util/errors"
 	"haii.or.th/api/util/pqx"
 	"haii.or.th/api/util/rest"
+	"strconv"
+	"strings"
+	"time"
 	//	"log"
 )
 
@@ -91,9 +88,7 @@ func getIgnoreStationInfo(db *pqx.DB, tableName string, stationID string, dataID
 	}*/
 
 	sqlCmdQuery = strings.Replace(sqlCmdQuery, "#{UserID}", strconv.FormatInt(userID, 10), -1)
-	log.Printf(sqlCmdQuery, arrParam...)
-	log.Println(userID)
-
+	//	log.Printf(sqlCmdQuery, arrParam...)
 	_result, err := db.Query(sqlCmdQuery, arrParam...)
 	if err != nil {
 		return nil, "", pqx.GetRESTError(err)
@@ -189,74 +184,6 @@ func GetLastestIgnoreStation(jsonStationList json.RawMessage) ([]map[string]stri
 		data = append(data, objData)
 	}
 
-	//Return data
-	return data, nil
-}
-
-//	get วันเวลาล่าสุดที่ ignore
-//	Parameters:
-//		tableName
-//			ชื่อของตาราง
-//	Return:
-//		Description ของตาราง
-func GetLastestIgnoreDescription(tableName string) ([]*Struct_IgnoreDescription, error) {
-	//Open database
-	db, err := pqx.Open()
-	if err != nil {
-		return nil, pqx.GetRESTError(err)
-	}
-
-	//Begin transaction
-	tx, err := db.Begin()
-	if err != nil {
-		return nil, pqx.GetRESTError(err)
-	}
-	defer tx.Rollback()
-
-	//Variables
-	var (
-		data []*Struct_IgnoreDescription
-		// objIgnoreStation map[string]string
-
-		// _data_category       sql.NullString
-		// _max_ignore_datetime time.Time
-		_description sql.NullString
-		_result      *sql.Rows
-	)
-
-	//Query
-	//	log.Printf("SELECT data_category, MAX(ignore_datetime) AS max_ignore_datetime FROM ignore_history GROUP BY data_category")
-	sqlCmdQuery := `
-	SELECT pgd.description
-	from pg_catalog.pg_statio_all_tables as st
-	inner join pg_catalog.pg_description pgd on (pgd.objoid=st.relid)
-	right outer join information_schema.columns c on (pgd.objsubid=c.ordinal_position and  c.table_schema=st.schemaname and c.table_name=st.relname)
-	where table_schema = 'public' and table_name = '#{TableName}'`
-
-	sqlCmdQuery = strings.Replace(sqlCmdQuery, "#{TableName}", tableName, -1)
-	log.Println(sqlCmdQuery)
-	_result, err = db.Query(sqlCmdQuery)
-	if err != nil {
-		//		log.Println(err)
-		return nil, pqx.GetRESTError(err)
-	}
-	defer _result.Close()
-
-	// Loop data result
-	for _result.Next() {
-		//Scan to execute query with variables
-		err := _result.Scan(&_description)
-		if err != nil {
-			return nil, pqx.GetRESTError(err)
-		}
-
-		des := &Struct_IgnoreDescription{}
-		des.Description = _description.String
-		// add dataimport
-		if len(des.Description) > 0 {
-			data = append(data, des)
-		}
-	}
 	//Return data
 	return data, nil
 }

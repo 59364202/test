@@ -36,8 +36,3 @@ type Struct_User struct {
 	ID       int64  // example:`68` รหัสผู้ใช้
 	FullName string // example:`Kantamat Polsawang` ชื่อผู้ใช้
 }
-
-type Struct_Station struct {
-	ID   int64           // example:`68` รหัสสถานี
-	Name json.RawMessage // example:`Kantamat Polsawang` ชื่อสถานี
-}

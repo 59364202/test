@@ -39,11 +39,15 @@ func (srv *HttpService) handleGetData(ctx service.RequestContext) error {
 	//=== Over All ===//
 	case "overall":
 		return srv.getOverAllPercentDownload(ctx)
+	case "overall_multiple":
+		return srv.getOverAllMultiYear(ctx)
 	case "compare_yearly":
 		return srv.getYearlyComparePercentDownload(ctx)
 	//=== Download Size ===//
 	case "download_size":
 		return srv.getMonthlyDownloadSize(ctx)
+	case "multi_download_size":
+		return srv.getMultipleAgecncyAndMonthAndYear(ctx)
 	//=== Download Percent ===//
 	case "download_percent_load":
 		return srv.onLoadPercentDownload(ctx)

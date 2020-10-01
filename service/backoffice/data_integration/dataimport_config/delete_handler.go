@@ -5,7 +5,6 @@ import (
 	"haii.or.th/api/thaiwater30/service/backoffice/data_integration/rdl"
 	"haii.or.th/api/thaiwater30/util/result"
 	"haii.or.th/api/util/datatype"
-	"haii.or.th/api/util/errors"
 	"haii.or.th/api/util/service"
 )
 
@@ -64,29 +63,6 @@ func (srv *HttpService) deleteDataimportDatasetConfig(ctx service.RequestContext
 		return err
 	}
 	ctx.ReplyJSON(result.Result1(nil))
-
-	return nil
-}
-
-func (srv *HttpService) deleteAgency(ctx service.RequestContext) error {
-	//Map parameters
-	p := &PutConfigVariableParams{}
-	if err := ctx.GetRequestParams(p); err != nil {
-		return errors.Repack(err)
-	}
-	ctx.LogRequestParams(p)
-	// if ctx.GetServiceParams("variable_id") != "" {
-	// 	p.VariableID = ctx.GetServiceParams("variable_id")
-	// }
-	// p.UserId = ctx.GetUserID()
-	//Delete Agency
-	//	rs, err := model.DeleteAgency(ctx.GetUserID(), ctx.GetServiceParams("id"))
-	rs, err := model_dataimport_config.DeleteConfigVariable(p.VariableID, ctx.GetUserID())
-	if err != nil {
-		ctx.ReplyJSON(result.Result0(err.Error()))
-	} else {
-		ctx.ReplyJSON(result.Result1(rs))
-	}
 
 	return nil
 }

@@ -13,7 +13,7 @@ type Struct_getHydroinfo struct {
 }
 
 // @DocumentName	v1.webservice
-//กลุ่มข้อมูลด้านน้ำและภูมิอากาศทั้งหมด @Service			thaiwater30/backoffice/metadata/hydroinfo
+// @Service			thaiwater30/backoffice/metadata/hydroinfo
 // @Summary			กลุ่มข้อมูลด้านน้ำและภูมิอากาศทั้งหมด
 // @Method			GET
 // @Produces		json

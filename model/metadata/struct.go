@@ -37,7 +37,6 @@ type Struct_Metadata struct {
 
 	Metadataagency_Name  json.RawMessage `json:"metadataagency_name,omitempty"`  // example:`{"th": "แผนที่แม่น้ำสำคัญในประเทศที่กรมเจ้าท่าดูแล "}` ชื่อบัญชีข้อมูลสำหรับให้หน่วยงานตรวจสอบ
 	Metadata_Description json.RawMessage `json:"metadata_description,omitempty"` // example:`{"th": "ภาพแผนที่แม่น้ำสำคัญในประเทศ" }` คำอธิบายเพิ่มเติม
-	Metadata_Status      json.RawMessage `json:"metadata_status"`                // example:`{"th": รอเชื่อมโยง}`
 
 	FormDate            string `json:"fromdate,omitempty"`            // example:`2006-01-02` ช่วงข้อมูลตั้งแต่
 	ToDate              string `json:"todate,omitempty"`              // example:`2006-01-02` ช่วงข้อมูลสิ้นสุด
@@ -187,12 +186,11 @@ type Struct_Metadata_Data_InputParam struct {
 }
 
 type Struct_Metadata_Table_InputParam struct {
-	MetadataID       string  `json:"metadata_id"`
-	SubcategoryID    []int64 `json:"subcategory_id"`
-	AgencyID         []int64 `json:"agency_id"`
-	Hydroinfo        []int64 `json:"hydroinfo_id"`
-	CategoryID       int64   `json:"category_id"`
-	MetadataStatusID []int64 `json:"metadatastatus_id"`
+	MetadataID    string  `json:"metadata_id"`
+	SubcategoryID []int64 `json:"subcategory_id"`
+	AgencyID      []int64 `json:"agency_id"`
+	Hydroinfo     []int64 `json:"hydroinfo_id"`
+	CategoryID    int64   `json:"category_id"`
 }
 
 //	map struct table ที่เตรียวไว้สำหรับ shopping
@@ -206,6 +204,7 @@ type Struct_Table struct {
 	WhereHAII      string // เงื่อนไขถ้าเป็น สสนก
 	Where          string // เพิ่มเงื่อนไข ให้ value <> 999999
 	WhereHydro     string // เพิ่มเงื่อนไข  eget hydro1-8
+	
 
 	IsMaster    bool // เป็นตาราง master ?
 	HasProvince bool // มี geocode_id ในตาราง?

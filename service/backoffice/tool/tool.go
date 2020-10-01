@@ -40,14 +40,12 @@ func (srv *HttpService) handleGetData(ctx service.RequestContext) error {
 	//=== Ignore Station ===//
 	case "ignore_table":
 		return srv.getIgnoreTable(ctx)
-	case "ignore_station":
-		return srv.getStation(ctx)
 	case "ignore_history":
 		return srv.getIgnoreHistory(ctx)
 	case "ignore":
 		return srv.getIgnoreStationLoad(ctx)
 	case "ignore_rainfall_detail":
-		return srv.getIgnoreRainfallDetail(ctx)
+		return srv.getIgnoreRainfallDetail(ctx)		
 	default:
 		return rest.NewError(404, "Unknown service id", nil)
 	}

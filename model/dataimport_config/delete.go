@@ -7,11 +7,10 @@
 package dataimport_config
 
 import (
-	"strconv"
-
 	"haii.or.th/api/util/errors"
 	"haii.or.th/api/util/eventcode"
 	"haii.or.th/api/util/pqx"
+	"strconv"
 )
 
 // dataimport  soft deleted dataimport download
@@ -137,40 +136,4 @@ func DeleteDataimportDataset(dataimport_dataset_id string, uid int64) error {
 		return pqx.GetRESTError(err)
 	}
 	return nil
-}
-
-func DeleteConfigVariable(uid, vid int64) (*Struct_category2, error) {
-	// q := `UPDATE api.config_variable SET category = $1, config_name = $2, variable_name = $3 , value = $4,updated_by = $5, updated_at = NOW() WHERE id = $6`
-	q := ` UPDATE api.config_variable SET deleted_by = $2, deleted_at = NOW(), updated_by = $2, updated_at = NOW() WHERE id = $1 `
-
-	db, err := pqx.Open()
-	if err != nil {
-		return nil, errors.Repack(err)
-	}
-
-	tx, err := db.Begin()
-	if err != nil {
-		return nil, errors.Repack(err)
-	}
-	defer tx.Rollback()
-
-	stmt, err := tx.Prepare(q)
-	if err != nil {
-		return nil, err
-	}
-
-	// ctime := time.Now()
-	userid := uid
-
-	_, err = stmt.Exec(userid, vid)
-	if err != nil {
-		return nil, errors.Repack(err)
-	}
-
-	tx.Commit()
-	if err != nil {
-		return nil, errors.Repack(err)
-	}
-
-	return nil, nil
 }

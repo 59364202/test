@@ -16,7 +16,6 @@ var SQL_selectMetadata = `SELECT m.id, m.metadataservice_name, m.metadata_descri
 	a.id, a.agency_name, 
 	import_table -> 'tables' as jsontable, 
 	CASE WHEN dd.import_table ->> 'tables' IS NULL THEN NULL 
-	ELSE json_object_keys(dd.import_table -> 'tables') 
 	END as table 
 	FROM metadata m 
 	INNER JOIN lt_dataformat ldf ON m.dataformat_id = ldf.id
@@ -375,36 +374,20 @@ var sqlGetMetadata = `	SELECT m.id
 
 //var sqlGetMetadataGroupby = " GROUP BY m.id "
 var sqlGetMetadataGroupby = ""
-
-// var sqlGetMetadataTable = `  SELECT m.id, m.metadataservice_name , m.metadataagency_name
-// 								  , agt.id AS agency_id, agt.agency_shortname, agt.agency_name
-// 								  , sc.id AS subcategory_id, sc.subcategory_name
-// 								  , c.id AS category_id, c.category_name
-// 								  , string_agg(mh.hydroinfo_id || '##' || CAST(h.hydroinfo_name AS TEXT), '|') AS hydroinfo
-// 							 FROM metadata m
-// 							 LEFT JOIN lt_subcategory sc ON m.subcategory_id = sc.id
-// 							 LEFT JOIN lt_category c ON sc.category_id = c.id
-// 							 LEFT JOIN agency agt ON m.agency_id = agt.id
-// 							 LEFT JOIN metadata_hydroinfo mh ON m.id = mh.metadata_id
-// 							 LEFT JOIN lt_hydroinfo h ON mh.hydroinfo_id = h.id
-// 							 WHERE m.deleted_at = to_timestamp(0) AND agt.deleted_at = to_timestamp(0) AND sc.deleted_at = to_timestamp(0) AND c.deleted_at = to_timestamp(0) AND (h.deleted_at IS NULL OR h.deleted_at = to_timestamp(0)) `
-
 var sqlGetMetadataTable = `  SELECT m.id, m.metadataservice_name , m.metadataagency_name
 								  , agt.id AS agency_id, agt.agency_shortname, agt.agency_name
 								  , sc.id AS subcategory_id, sc.subcategory_name
 								  , c.id AS category_id, c.category_name
 								  , string_agg(mh.hydroinfo_id || '##' || CAST(h.hydroinfo_name AS TEXT), '|') AS hydroinfo
-								  , ms.metadatastatus_name
 							 FROM metadata m
 							 LEFT JOIN lt_subcategory sc ON m.subcategory_id = sc.id
 							 LEFT JOIN lt_category c ON sc.category_id = c.id
 							 LEFT JOIN agency agt ON m.agency_id = agt.id
 							 LEFT JOIN metadata_hydroinfo mh ON m.id = mh.metadata_id
 							 LEFT JOIN lt_hydroinfo h ON mh.hydroinfo_id = h.id
-							 LEFT JOIN lt_metadata_status ms ON m.metadatastatus_id = ms.id
 							 WHERE m.deleted_at = to_timestamp(0) AND agt.deleted_at = to_timestamp(0) AND sc.deleted_at = to_timestamp(0) AND c.deleted_at = to_timestamp(0) AND (h.deleted_at IS NULL OR h.deleted_at = to_timestamp(0)) `
 
-var sqlGetMetadataTableGroupBy = ` GROUP BY m.id, agt.id, sc.id, c.id, ms.id `
+var sqlGetMetadataTableGroupBy = ` GROUP BY m.id, agt.id, sc.id, c.id `
 
 var sqlUpdateMetadata = ` UPDATE metadata
 						   SET subcategory_id = $2

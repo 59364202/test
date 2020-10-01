@@ -1,5 +1,7 @@
 package setting
 
+import ()
+
 //
 // bof.Tool.Ignore.TableList
 //
@@ -10,16 +12,10 @@ type Struct_Inore_TableList struct {
 	Station_column_name string `json:"station_column_name"` // example:`tele_station_id` ชื่อ ฟิลด์ที่เป็น foreign key ของ master
 }
 
-type Struct_Ignore_Station struct {
-	ID   string `json:"station_id"`
-	Name string `json:"station_name"`
-}
-
 //
 // bof.Tool.Ignore.TableList ที่ใส่ lastest_ignore_datetime
 //
 type Struct_Inore_TableList_LatestIgnoreDatetime struct {
 	Struct_Inore_TableList
-	Struct_Ignore_Station
 	Lastest_ignore_datetime string `json:"lastest_ignore_datetime"` // example:`2006-01-02 15:04` วันที่ ignore ครั้งล่าสุด
 }

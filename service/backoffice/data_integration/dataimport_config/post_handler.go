@@ -4,7 +4,6 @@ import (
 	model_dataimport_config "haii.or.th/api/thaiwater30/model/dataimport_config"
 	"haii.or.th/api/thaiwater30/util/result"
 	"haii.or.th/api/util/datatype"
-	"haii.or.th/api/util/errors"
 	"haii.or.th/api/util/service"
 
 	"haii.or.th/api/thaiwater30/service/backoffice/data_integration/rdl"
@@ -163,29 +162,5 @@ func (srv *HttpService) copyDataimportDownloadConfig(ctx service.RequestContext)
 	}
 	ctx.ReplyJSON(result.Result1(rs))
 
-	return nil
-}
-
-type AddConfigVariableParams struct {
-	VariableID   int64  `json:"variable_id"`
-	Category     int64  `json:"category"`
-	Name         string `json:"name"`
-	VariableName string `json:"variable_name"`
-	Value        string `json:"value"`
-	//	DataGroupCode   string `json:"group_code"`
-}
-
-func (srv *HttpService) postConfigCategory(ctx service.RequestContext) error {
-	p := &AddConfigVariableParams{}
-	if err := ctx.GetRequestParams(p); err != nil {
-		return errors.Repack(err)
-	}
-	ctx.LogRequestParams(p)
-	rs, err := model_dataimport_config.PostConfigVariableCategory(p.Category, p.Name, p.VariableName, p.Value, ctx.GetUserID())
-	if err != nil {
-		ctx.ReplyError(err)
-	} else {
-		ctx.ReplyJSON(result.Result1(rs))
-	}
 	return nil
 }

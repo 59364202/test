@@ -1,8 +1,6 @@
 package ignore_history
 
 import (
-	"fmt"
-
 	"haii.or.th/api/util/errors"
 	"haii.or.th/api/util/pqx"
 	"haii.or.th/api/util/rest"
@@ -38,9 +36,6 @@ func PostIgnoreHistoryWithSqlCmd(sqlCmd string, arrParam []interface{}) (int64, 
 	defer tx.Rollback()
 
 	//Insert ignore_history table
-	fmt.Println("1.", tx)
-	fmt.Println("2.", sqlCmd)
-	fmt.Println(arrParam...)
 	newID, err := insertHistoryWithSqlCmd(tx, sqlCmd, arrParam)
 	if err != nil {
 		return 0, err
@@ -66,13 +61,6 @@ func PostIgnoreHistoryWithSqlCmd(sqlCmd string, arrParam []interface{}) (int64, 
 func insertHistoryWithSqlCmd(tx *pqx.Tx, sqlCmd string, arrParam []interface{}) (int64, error) {
 	var _id int64
 
-	// delete statement
-	// _, err := tx.Prepare(sqlDeleteHistory + " WHERE id = 901 ")
-	// fmt.Println(err)
-	// if err != nil {
-	// 	return 0, pqx.GetRESTError(err)
-	// }
-
 	//Prepare Statement
 	//	log.Printf(sqlInsertHistory+sqlCmd+" RETURNING id  ", arrParam...)
 	statement, err := tx.Prepare(sqlInsertHistory + sqlCmd + " RETURNING id  ")
@@ -83,9 +71,6 @@ func insertHistoryWithSqlCmd(tx *pqx.Tx, sqlCmd string, arrParam []interface{}) 
 
 	//Execute insert statement with parameters and returning id
 	err = statement.QueryRow(arrParam...).Scan(&_id)
-	fmt.Println(_id)
-	fmt.Println(arrParam...)
-	fmt.Println(err)
 	if err != nil {
 		return 0, pqx.GetRESTError(err)
 	}

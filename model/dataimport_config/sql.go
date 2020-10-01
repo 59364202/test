@@ -134,10 +134,4 @@ var (
 	getDownloadCronList = "SELECT dl.id, download_name, crontab_setting, download_script, is_cronenabled, node, u.account, description FROM api.dataimport_download dl LEFT JOIN api.user u ON u.id = dl.agent_user_id WHERE dl.deleted_at IS NULL"
 
 	updateDownloadCron = "UPDATE api.dataimport_download SET updated_by=$1, updated_at=NOW(), crontab_setting = $3 WHERE id = $2"
-
-	getConfigVariable = "SELECT aa.id , cc.name_cat , aa.config_name, aa.variable_name, aa.value from api.config_variable aa left join api.config_variable_category cc on cc.id = aa.category Where deleted_at IS NULL"
-
-	getListVariable = "SELECT id , name_cat from api.config_variable_category"
-	// getListVariable = "SELECT id , name_cat from api.config_variable_category"
-
 )

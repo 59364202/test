@@ -9,7 +9,6 @@ package metadata
 import (
 	"database/sql"
 	"encoding/json"
-
 	//	logx "log"
 	"fmt"
 	"path/filepath"
@@ -98,7 +97,7 @@ func GetMetadataShoppingTable(p *Param_Metadata) ([]*Struct_Metadata, error) {
 	//		strSQL += "  " + strSQL_WHERE
 	//	}
 
-	fmt.Println(SQL_selectMetadata_Head + strSQL + SQL_selectMetadata_Orderby + SQL_selectMetadata_Foot)
+	fmt.Println("-- hello --",SQL_selectMetadata_Head + strSQL + SQL_selectMetadata_Orderby + SQL_selectMetadata_Foot)
 
 	row, err := db.Query(SQL_selectMetadata_Head + strSQL + SQL_selectMetadata_Orderby + SQL_selectMetadata_Foot)
 	if err != nil {
@@ -1447,8 +1446,7 @@ func GetMetadataTable(param *Struct_Metadata_Table_InputParam) ([]*Struct_Metada
 
 		_hydro sql.NullString
 
-		_result          *sql.Rows
-		_metadata_status sql.NullString
+		_result *sql.Rows
 	)
 
 	//-- Check Filter by parameters --//
@@ -1504,21 +1502,6 @@ func GetMetadataTable(param *Struct_Metadata_Table_InputParam) ([]*Struct_Metada
 		arrParam = append(arrParam, param.CategoryID)
 		sqlCmdWhere += " AND c.id = $" + strconv.Itoa(len(arrParam))
 	}
-	fmt.Println(param.MetadataStatusID)
-	//Check Filter metadata_id
-	if len(param.MetadataStatusID) > 0 {
-		if len(param.MetadataStatusID) == 1 {
-			arrParam = append(arrParam, param.MetadataStatusID[0])
-			sqlCmdWhere += " AND m.metadatastatus_id = $" + strconv.Itoa(len(arrParam))
-		} else {
-			arrSqlCmd := []string{}
-			for _, intId := range param.MetadataStatusID {
-				arrParam = append(arrParam, intId)
-				arrSqlCmd = append(arrSqlCmd, "$"+strconv.Itoa(len(arrParam)))
-			}
-			sqlCmdWhere += " AND m.metadatastatus_id IN (" + strings.Join(arrSqlCmd, ",") + ")"
-		}
-	}
 
 	//	log.Printf(sqlGetMetadataTable+sqlCmdWhere+sqlGetMetadataTableGroupBy+" ORDER BY m.metadataservice_name->>'th' ", arrParam...)
 	_result, err = db.Query(sqlGetMetadataTable+sqlCmdWhere+sqlGetMetadataTableGroupBy+" ORDER BY m.metadataservice_name->>'th' ", arrParam...)
@@ -1536,7 +1519,7 @@ func GetMetadataTable(param *Struct_Metadata_Table_InputParam) ([]*Struct_Metada
 			&_agency_id, &_agency_shortname, &_agency_name,
 			&_subcat_id, &_subcat_name,
 			&_cat_id, &_cat_name,
-			&_hydro, &_metadata_status)
+			&_hydro)
 		if err != nil {
 			return nil, pqx.GetRESTError(err)
 		}
@@ -1580,7 +1563,6 @@ func GetMetadataTable(param *Struct_Metadata_Table_InputParam) ([]*Struct_Metada
 		objMetadata.Subcategory.Category.Id = _cat_id.Int64
 		objMetadata.Subcategory.Category.Category_name = json.RawMessage(_cat_name.String)
 
-		objMetadata.Metadata_Status = json.RawMessage(_metadata_status.String)
 		if !_hydro.Valid {
 			objMetadata.Hydroinfo = nil
 		} else {

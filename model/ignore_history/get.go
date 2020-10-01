@@ -3,7 +3,6 @@ package ignore_history
 import (
 	"database/sql"
 	"encoding/json"
-
 	//	"log"
 	"strconv"
 	"strings"
@@ -198,41 +197,5 @@ func getIgnoreHistory(param *Struct_IgnoreHistory_InputParam, sqlCmdQuery string
 	}
 
 	//Return Data
-	return data, nil
-}
-
-//	get ข้อมูล station
-//	รหัสสถานี ชื่อสถานี
-//	Parameters:
-//		-
-// 	Return:
-//		[]Struct_Station
-func GetStation() ([]*Struct_Station, error) {
-	db, err := pqx.Open()
-	if err != nil {
-		return nil, err
-	}
-	var (
-		_id           int64
-		_station_name pqx.JSONRaw
-	)
-	// query
-	row, err := db.Query("SELECT id,tele_station_name FROM public.m_tele_station ORDER BY id ASC")
-	if err != nil {
-		return nil, pqx.GetRESTError(err)
-	}
-	data := make([]*Struct_Station, 0)
-	for row.Next() {
-		err = row.Scan(&_id, (*[]byte)(&_station_name))
-		if err != nil {
-			return nil, err
-		}
-
-		station := &Struct_Station{}
-		station.ID = _id
-		station.Name = _station_name.JSON()
-		data = append(data, station)
-	}
-
 	return data, nil
 }

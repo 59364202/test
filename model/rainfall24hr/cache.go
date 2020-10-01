@@ -7,8 +7,6 @@
 package rainfall24hr
 
 import (
-	"fmt"
-
 	"haii.or.th/api/util/errors"
 	"haii.or.th/api/util/log"
 	"haii.or.th/api/util/pqx"
@@ -188,29 +186,22 @@ func GetRainfallThailandDataCache(p *Param_Rainfall24) ([]*Struct_Rainfall24H, e
 	`
 
 	//-- Check Filter by parameters --//
-	if p.Station_id != "" {
-		itf = append(itf, p.Station_id)
-		q += " AND m.tele_station_id = $" + strconv.Itoa(len(itf))
+	if p.Start_Date != "" {
+		itf = append(itf, p.Start_Date)
+		q += " AND rainfall_datetime >= $" + strconv.Itoa(len(itf))
 	}
-	if p.Start_Date != "" || p.End_Date != "" {
-		if p.Start_Date != "" {
-			itf = append(itf, p.Start_Date)
-			q += " AND r.rainfall_datetime >= $" + strconv.Itoa(len(itf))
-		}
-		if p.End_Date != "" {
-			itf = append(itf, p.End_Date)
-			q += " AND r.rainfall_datetime <= $" + strconv.Itoa(len(itf))
-		}
-	} else {
-		now := time.Now()
-		if p.IsHourly { // ยัอนหลัง 3  ชม.
-			// q += " AND r.rainfall_datetime BETWEEN date_trunc('hour', Now() - interval '3 hour') AND date_trunc('hour', now()) "
-			q += " AND r.rainfall_datetime BETWEEN '" + now.Add(-3*time.Hour).Format("2006-01-02 15:00") + "' AND '" + now.Format("2006-01-02 15:00") + "' "
-		} else { // ย้อนหลัง 24 ชม.
-			//-- update 27/06/2018 - ย้อนหลัง  12 hr --//
-			// q += " AND r.rainfall_datetime >= NOW() - interval '12 hour' "
-			q += " AND r.rainfall_datetime >= '" + now.Add(-12*time.Hour).Format("2006-01-02 15:00") + "' "
-		}
+	if p.End_Date != "" {
+		itf = append(itf, p.End_Date)
+		q += " AND rainfall_datetime <= $" + strconv.Itoa(len(itf))
+	}
+	now := time.Now()
+	if p.IsHourly { // ยัอนหลัง 3  ชม.
+		// q += " AND r.rainfall_datetime BETWEEN date_trunc('hour', Now() - interval '3 hour') AND date_trunc('hour', now()) "
+		q += " AND r.rainfall_datetime BETWEEN '" + now.Add(-3*time.Hour).Format("2006-01-02 15:00") + "' AND '" + now.Format("2006-01-02 15:00") + "' "
+	} else { // ย้อนหลัง 24 ชม.
+		//-- update 27/06/2018 - ย้อนหลัง  12 hr --//
+		// q += " AND r.rainfall_datetime >= NOW() - interval '12 hour' "
+		q += " AND r.rainfall_datetime >= '" + now.Add(-12*time.Hour).Format("2006-01-02 15:00") + "' "
 	}
 
 	//Check Filter province_id
@@ -257,7 +248,7 @@ func GetRainfallThailandDataCache(p *Param_Rainfall24) ([]*Struct_Rainfall24H, e
 		strDatetimeFormat = "2006-01-02 15:04"
 	}
 
-	fmt.Println(q)
+	//	fmt.Println(q)
 	row, err := db.Query(q, itf...)
 	if err != nil {
 		return nil, err

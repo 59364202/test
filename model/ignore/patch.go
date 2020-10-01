@@ -1,8 +1,6 @@
 package ignore
 
 import (
-	"log"
-
 	model_history "haii.or.th/api/thaiwater30/model/ignore_history"
 
 	"haii.or.th/api/util/errors"
@@ -22,7 +20,7 @@ import (
 //	Return:
 //		Ignore Data Successful
 func PatchIgnoreStation(userId int64, param *Struct_IgnoreStation_InputParam) (string, error) {
-	log.Println(param)
+
 	//Check input params
 	if param.TableName == "" {
 		return "", rest.NewError(422, "'table_name' is not null.", errors.New("parameter 'table_name' is not null."))
@@ -51,7 +49,6 @@ func PatchIgnoreStation(userId int64, param *Struct_IgnoreStation_InputParam) (s
 
 	//Check Exist Partition Table of param.Table in param.Year
 	_, sqlCmdIgnoreInfo, err := getIgnoreStationInfo(db, param.TableName, param.StationID, param.ID, param.IsIgnore, userId)
-	log.Println(sqlCmdIgnoreInfo)
 	if err != nil {
 		return "", err
 	}

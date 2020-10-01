@@ -46,11 +46,10 @@ type Struct_TeleStation struct {
 type Param_Rainfall24 struct {
 	Region_Code   string `json:"region_code"`   // required:false example:`1` รหัสภาค ไม่ใส่ = ทุกภาค เลือกได้ทีละภาค
 	Province_Code string `json:"province_code"` // required:false example:`10` รหัสจังหวัด ไม่ใส่ = ทุกจังหวัด เลือกได้หลายจังหวัด เช่น 10,51,62
-	Station_id    string `json:"station_id"`
-	Start_Date    string `json:"start_date"` // วันที่เริ่มต้น
-	End_Date      string `json:"end_date"`   // วันที่สิ้นสุด
-	Data_Limit    int    `json:"data_limit"` // จำนวนข้อมูล
-	IsDaily       bool   `json:"isDaily"`    // เป็นรายวัน
+	Start_Date    string `json:"start_date"`    // วันที่เริ่มต้น
+	End_Date      string `json:"end_date"`      // วันที่สิ้นสุด
+	Data_Limit    int    `json:"data_limit"`    // จำนวนข้อมูล
+	IsDaily       bool   `json:"isDaily"`       // เป็นรายวัน
 	Is24          bool
 	IsHourly      bool
 	Include_zero  string `json:"include_zero"` // required:false example:`1` ต้องการให้แสดงข้อมูลสถานนีที่มีค่าฝนเป็น 0 ด้วยหรือไม่ 1=แสดง
